@@ -1,0 +1,151 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>
+<title>Homework: Who Are You, Really?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a single study sheet; the forum post is the shared context, tasks follow it */
+:root{--paper:#F4F6F9;--card:#FFFFFF;--ink:#16203A;--muted:#566079;--line:#D9DFE9;--hl:#F6CB45;--hl-soft:#FCEFC0;--teal:#1E7568;--teal-soft:#DCEFEB;--wrong:#B93C26;--wrong-soft:#F8E1DB;
+--display:"Young Serif",Georgia,serif;--body:"Figtree",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#0F1420;--card:#171E2E;--ink:#E7EBF4;--muted:#9BA4BA;--line:#2A3349;--hl:#E9BC36;--hl-soft:#3A3218;--teal:#58B9A9;--teal-soft:#16302C;--wrong:#E6765F;--wrong-soft:#3A1F1A;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0F1420;--card:#171E2E;--ink:#E7EBF4;--muted:#9BA4BA;--line:#2A3349;--hl:#E9BC36;--hl-soft:#3A3218;--teal:#58B9A9;--teal-soft:#16302C;--wrong:#E6765F;--wrong-soft:#3A1F1A;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:780px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:22px}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,5vw,42px)} h2{font-size:22px}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:0 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.post{border-left:4px solid var(--hl)}
+.post .by{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.item{display:flex;flex-direction:column;gap:6px;padding-top:10px;border-top:1px solid var(--line)}
+.item .wrongq{font-style:italic;color:var(--muted)}
+.n{font-family:var(--mono);font-size:12px;color:var(--muted);margin-right:6px}
+input[type=text],textarea{width:100%;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--paper);color:var(--ink)}
+input.ok{border-color:var(--teal);background:var(--teal-soft)} input.no{border-color:var(--wrong);background:var(--wrong-soft)}
+.fb{font-size:14px;min-height:1.2em}.fb.ok{color:var(--teal)}.fb.no{color:var(--wrong)}
+.btn{font:inherit;cursor:pointer;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:8px 18px;font-weight:600;font-size:15px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.build{min-height:42px;border:1px dashed var(--line);border-radius:8px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;background:var(--paper)}
+.tiles{display:flex;flex-wrap:wrap;gap:6px}
+.tile{font:inherit;font-size:15px;cursor:pointer;border:1px solid var(--ink);background:var(--card);color:var(--ink);border-radius:6px;padding:3px 10px}
+.tile.used{visibility:hidden}
+.score{font-family:var(--mono);font-size:14px;color:var(--muted)}
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.checklist label{display:flex;gap:10px;cursor:pointer}
+.checklist input{margin-top:5px;width:18px;height:18px;accent-color:var(--teal)}
+.profile{line-height:2.1}
+select{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:var(--paper);color:var(--ink);max-width:100%}
+select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border-color:var(--wrong);background:var(--wrong-soft)}
+select:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.tip{background:var(--hl-soft);border:1px solid var(--hl);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.aaa{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
+.aaa div{background:var(--card);border-radius:8px;padding:10px 12px}
+.aaa b{font-family:var(--display);font-size:20px;font-weight:400;display:block}
+.btn:focus-visible,.tile:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+</style>
+<div class="wrap">
+<header>
+  <p class="eyebrow">Homework · Module 1 · Lesson 1 · about 30 minutes</p>
+  <h1>Who Are You, Really?</h1>
+</header>
+
+<section class="card post">
+  <p class="by">New Students Forum · posted by Tomás</p>
+  <p>Hi everyone! I'm Tomás, from Buenos Aires. I've just started a master's in marine biology and I don't know anyone yet. My research focuses on coral reefs and how they adapt to warmer oceans. In my free time I surf (badly) and play the drums. My flatmate convinced me to write this post, so here I am. Does anyone want to grab a coffee this week? Ask me anything!</p>
+</section>
+
+<section class="card" id="partA">
+  <p class="eyebrow">Part 1 · Fix the replies</p>
+  <h2>Six students replied to Tomás, but each question has one mistake. Write the correct question.</h2>
+  <div class="item" data-ok="where are you living now"><p><span class="n">1</span><span class="wrongq">Where you are living now?</span></p><input type="text" aria-label="Correct question 1"><span class="fb"></span></div>
+  <div class="item" data-ok="what does your research focus on"><p><span class="n">2</span><span class="wrongq">What does your research focus?</span></p><input type="text" aria-label="Correct question 2"><span class="fb"></span></div>
+  <div class="item" data-ok="who convinced you to write the post|who convinced you to write this post"><p><span class="n">3</span><span class="wrongq">Who did convince you to write the post?</span></p><input type="text" aria-label="Correct question 3"><span class="fb"></span></div>
+  <div class="item" data-ok="how long have you been here"><p><span class="n">4</span><span class="wrongq">How long you have been here?</span></p><input type="text" aria-label="Correct question 4"><span class="fb"></span></div>
+  <div class="item" data-ok="i was wondering if you could recommend a good cafe|i was wondering whether you could recommend a good cafe"><p><span class="n">5</span><span class="wrongq">I was wondering if could you recommend a good café.</span></p><input type="text" aria-label="Correct question 5"><span class="fb"></span></div>
+  <div class="item" data-ok="could you tell me where the marine biology building is"><p><span class="n">6</span><span class="wrongq">Could you tell me where is the marine biology building?</span></p><input type="text" aria-label="Correct question 6"><span class="fb"></span></div>
+  <div class="row"><button class="btn" id="checkA">Check my answers</button><span class="score" id="scoreA"></span></div>
+</section>
+
+<section class="card" id="partB">
+  <p class="eyebrow">Part 2 · Answer first</p>
+  <h2>Here are Tomás's answers. Tap the words to build the question that got each answer.</h2>
+  <div class="item" data-builder="Who told you about the event ?"><p><span class="n">7</span>“My flatmate told me about the event.”</p><div class="build"></div><div class="tiles" data-tiles="about|told|Who|the|you|event|?"></div><span class="fb"></span></div>
+  <div class="item" data-builder="When do you go surfing ?"><p><span class="n">8</span>“I go surfing at the weekend.”</p><div class="build"></div><div class="tiles" data-tiles="go|When|surfing|you|do|?"></div><span class="fb"></span></div>
+  <div class="item" data-builder="What inspired you to study reefs ?"><p><span class="n">9</span>“A documentary inspired me to study reefs.”</p><div class="build"></div><div class="tiles" data-tiles="to|inspired|What|reefs|you|study|?"></div><span class="fb"></span></div>
+  <div class="item" data-builder="What are you working on ?"><p><span class="n">10</span>“I'm working on a paper about coral reefs.”</p><div class="build"></div><div class="tiles" data-tiles="working|you|on|What|are|?"></div><span class="fb"></span></div>
+  <p class="score" id="scoreB"></p>
+</section>
+
+<section class="card" id="partV">
+  <p class="eyebrow">Part 3 · Vocabulary in context</p>
+  <h2>Tomás's supervisor wrote this short profile of him for the department website. Complete it.</h2>
+  <div class="profile" id="vprof">
+    Tomás Ferrer has an <select data-gap="academic background"></select> in oceanography. Volunteering on a reef restoration project in Brazil was <select data-gap="a turning point"></select> for him, and since then he has been <select data-gap="drawn to"></select> questions about how ecosystems recover. He is now <select data-gap="pursuing"></select> a master's in marine biology, <select data-gap="specialising in"></select> coral ecology. His approach is <select data-gap="interdisciplinary"></select>, combining biology, chemistry and data science. He <select data-gap="aspires to"></select> lead a research team in his home country.
+  </div>
+  <div class="row"><button class="btn" id="checkV">Check</button><span class="score" id="scoreV"></span></div>
+  <h2 style="margin-top:8px">Now write about you.</h2>
+  <p>Write a 4–5 sentence profile of yourself for the same website. Use at least four expressions: academic background, major in, specialise in, pursue, be drawn to, research interests, interdisciplinary, a turning point, shape, aspire to.</p>
+  <textarea id="myprof" rows="5" aria-label="Your profile"></textarea>
+</section>
+
+<section class="card">
+  <p class="eyebrow">Part 4 · Your reply</p>
+  <h2>Write your own reply to Tomás.</h2>
+  <p>Introduce yourself in 3–4 sentences, then ask him three questions.</p>
+  <textarea id="reply" rows="7" aria-label="Your reply to Tomás" placeholder="Hi Tomás! I'm…"></textarea>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="r1"> I asked at least one follow-up question about something in his post.</label></li>
+    <li><label><input type="checkbox" id="r2"> I asked one subject question (Who… / What made you…?).</label></li>
+    <li><label><input type="checkbox" id="r3"> I asked one polite question (I was wondering if… / Would you mind telling me…?).</label></li>
+    <li><label><input type="checkbox" id="r4"> I checked the word order in every question.</label></li>
+  </ul>
+  <p class="score">Copy your reply and send it to your teacher.</p>
+  <div class="row"><button class="btn ghost" id="copyReply">Copy my reply</button><span class="score" id="copyMsg"></span></div>
+</section>
+
+<section class="card">
+  <p class="eyebrow">Part 5 · Speak</p>
+  <h2>Record a 90-second voice message for Tomás.</h2>
+  <p>Introduce your academic path using three expressions from the vocabulary set, tell him in one sentence what the Harvard research found about questions, and suggest a time for coffee. Send the recording to your teacher.</p>
+</section>
+
+<section class="tip">
+  <p class="eyebrow">Tip of the week</p>
+  <h2>The A-A-A rule for conversations that don't die</h2>
+  <p>Short answers end conversations. When someone asks you a question, do three things:</p>
+  <div class="aaa">
+    <div><b>Answer</b>“I'm from São Bernardo.”</div>
+    <div><b>Add</b>“It's near São Paulo, famous for cars.”</div>
+    <div><b>Ask back</b>“What about you? Where did you grow up?”</div>
+  </div>
+  <p>Practise it this week: every time you answer a question in English, add one detail and ask one back.</p>
+</section>
+</div>
+<script>
+(function(){
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z' ]/g,' ').replace(/\s+/g,' ').trim();
+document.getElementById('checkA').onclick=()=>{
+  const items=[...document.querySelectorAll('#partA .item')];let r=0;
+  items.forEach(it=>{const inp=it.querySelector('input'),fb=it.querySelector('.fb');const oks=it.dataset.ok.split('|');
+    if(!inp.value.trim()){inp.className='';fb.className='fb';fb.textContent='';return}
+    const ok=oks.includes(norm(inp.value));if(ok)r++;inp.className=ok?'ok':'no';fb.className='fb '+(ok?'ok':'no');
+    fb.textContent=ok?'Correct.':'Try again. Check the auxiliary and the word order.';});
+  document.getElementById('scoreA').textContent=`${r} / ${items.length}`;
+};
+const bItems=[...document.querySelectorAll('#partB .item')];
+const upd=()=>{const d=bItems.filter(x=>x.dataset.done);document.getElementById('scoreB').textContent=d.length?`Score: ${d.filter(x=>x.dataset.done==='1').length} / ${bItems.length}`:''};
+bItems.forEach(it=>{
+  const target=it.dataset.builder,box=it.querySelector('.build'),tiles=it.querySelector('.tiles'),fb=it.querySelector('.fb');
+  const words=tiles.dataset.tiles.split('|');
+  words.forEach(w=>{const b=document.createElement('button');b.className='tile';b.textContent=w;b.onclick=()=>{if(it.dataset.done)return;b.classList.add('used');const c=document.createElement('button');c.className='tile';c.textContent=w;c.onclick=()=>{if(it.dataset.done)return;c.remove();b.classList.remove('used')};box.appendChild(c);
+    if(box.children.length===words.length){const ok=[...box.children].map(x=>x.textContent).join(' ')===target;it.dataset.done=ok?'1':'0';fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?'Correct.':'The answer is: '+target.replace(' ?','?');upd()}};tiles.appendChild(b)});
+});
+const vg=[...document.querySelectorAll('#vprof select')];const vo=vg.map(g=>g.dataset.gap).concat(['shaped','research interests','majored in']).sort();
+vg.forEach(g=>{g.innerHTML='<option value="">……</option>'+vo.map(o=>`<option>${o}</option>`).join('');g.setAttribute('aria-label','Gap')});
+document.getElementById('checkV').onclick=()=>{let r=0;vg.forEach(g=>{const ok=g.value===g.dataset.gap;if(ok)r++;g.className=g.value?(ok?'ok':'no'):''});document.getElementById('scoreV').textContent=`${r} / ${vg.length}`};
+document.getElementById('copyReply').onclick=async()=>{const t=document.getElementById('reply'),m=document.getElementById('copyMsg');
+  try{await navigator.clipboard.writeText(t.value);m.textContent='Copied.'}catch(e){t.focus();t.select();m.textContent='Text selected. Press Ctrl+C or Cmd+C to copy.'}};
+})();
+</script>
+</body></html>

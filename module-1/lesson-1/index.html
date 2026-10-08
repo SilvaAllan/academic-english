@@ -1,0 +1,789 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>
+<title>Who Are You, Really?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one slide at a time, like a projected deck; highlighter-yellow marks what to notice */
+:root{
+  --paper:#F4F6F9; --card:#FFFFFF; --ink:#16203A; --muted:#566079; --line:#D9DFE9;
+  --hl:#F6CB45; --hl-soft:#FCEFC0; --teal:#1E7568; --teal-soft:#DCEFEB; --wrong:#B93C26; --wrong-soft:#F8E1DB;
+  --display:"Young Serif", Georgia, serif; --body:"Figtree", system-ui, sans-serif; --mono:"JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0F1420; --card:#171E2E; --ink:#E7EBF4; --muted:#9BA4BA; --line:#2A3349;
+  --hl:#E9BC36; --hl-soft:#3A3218; --teal:#58B9A9; --teal-soft:#16302C; --wrong:#E6765F; --wrong-soft:#3A1F1A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0F1420; --card:#171E2E; --ink:#E7EBF4; --muted:#9BA4BA; --line:#2A3349;
+  --hl:#E9BC36; --hl-soft:#3A3218; --teal:#58B9A9; --teal-soft:#16302C; --wrong:#E6765F; --wrong-soft:#3A1F1A; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.top .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.top .name{font-family:var(--display);font-size:17px}
+.top .count{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;background:var(--hl);width:0;transition:width .3s}
+main{flex:1;padding-block:28px 110px;padding-inline:16px;width:100%;max-width:1000px;margin:0 auto}
+.slide{display:none}.slide.on{display:block;animation:in .35s ease}
+@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.on{animation:none}}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:0 0 6px}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:balance;margin:0 0 14px}
+h1{font-size:clamp(38px,7vw,68px)} h2{font-size:clamp(26px,4vw,38px)}
+h3{font-size:18px;margin:0 0 8px}
+p{margin:0 0 12px;max-width:68ch}
+.lead{font-size:20px;color:var(--muted)}
+mark{background:var(--hl-soft);color:inherit;padding:0 3px;border-radius:3px;box-shadow:inset 0 -2px 0 var(--hl)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px}
+.grid2>*,.grid3>*{min-width:0}
+.stack{display:flex;flex-direction:column;gap:14px}
+ol.prompts{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px;font-size:19px}
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:9px 18px;font-weight:600;font-size:15px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn:focus-visible,.opt:focus-visible,.chip:focus-visible,.tile:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.bin:focus-visible,.flip:focus-visible,.wordbtn:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cover{display:grid;gap:22px;padding-top:4vh}
+.cover .meta{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--muted);background:var(--card)}
+.spin-card{min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--display);font-size:clamp(22px,3.4vw,30px);line-height:1.25;padding:24px}
+.spin-card.rolling{color:var(--muted)}
+/* article */
+.article{font-family:var(--body);font-size:17px;line-height:1.7}
+.article h3{font-family:var(--display);font-weight:400;font-size:24px;line-height:1.2;margin-bottom:4px}
+.article .src{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.03em;margin-bottom:14px}
+.article p{margin-bottom:12px}
+.article .pn{font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:6px}
+/* dialogue */
+.dialogue{display:flex;flex-direction:column;gap:4px;font-size:16px}
+.line{display:grid;grid-template-columns:70px 1fr;gap:10px;padding:5px 8px;border-radius:8px}
+.line b{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding-top:3px}
+.line.m b{color:var(--teal)} .line.d b{color:var(--muted)}
+.line.speaking{background:var(--hl-soft)}
+.context{font-style:italic;color:var(--muted)}
+/* quiz */
+.item{display:flex;flex-direction:column;gap:8px;padding:12px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0;padding-top:0}
+.item .q{font-weight:500}
+.n{font-family:var(--mono);font-size:12px;color:var(--muted);margin-right:6px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:6px 12px;font-size:15px;text-align:left}
+.opt.right{background:var(--teal-soft);border-color:var(--teal)}
+.opt.wrong{background:var(--wrong-soft);border-color:var(--wrong)}
+.fb{font-size:14px;min-height:1.2em}.fb.ok{color:var(--teal)}.fb.no{color:var(--wrong)}
+.build{min-height:44px;border:1px dashed var(--line);border-radius:8px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;background:var(--paper)}
+.tiles{display:flex;flex-wrap:wrap;gap:6px}
+.tile{border:1px solid var(--ink);background:var(--card);color:var(--ink);border-radius:6px;padding:4px 10px;font-size:15px}
+.tile.used{visibility:hidden}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 10px;font-size:15px;text-align:left}
+.chip.sel{border-color:var(--ink);box-shadow:0 0 0 2px var(--hl)}
+.chip.right{border-color:var(--teal);background:var(--teal-soft)} .chip.wrong{border-color:var(--wrong);background:var(--wrong-soft)}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+.bin{border:2px dashed var(--line);border-radius:12px;padding:12px;min-height:130px;background:var(--card);text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:8px}
+.bin h4{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.bin .chips{flex-direction:column}
+details.reveal{border:1px solid var(--line);border-radius:10px;background:var(--card)}
+details.reveal summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details.reveal summary::-webkit-details-marker{display:none}
+details.reveal summary::after{content:"Show";float:right;font-family:var(--mono);font-size:12px;color:var(--teal);padding-top:3px}
+details.reveal[open] summary::after{content:"Hide"}
+details.reveal .body{padding:0 16px 14px}
+.formula{display:flex;flex-wrap:wrap;gap:6px}
+.formula span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;text-align:center;min-width:90px}
+.formula span small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.into{font-size:21px;font-family:var(--display)}
+.into em{font-style:normal;color:var(--teal)}
+input[type=text],textarea{width:100%;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--paper);color:var(--ink)}
+select{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:var(--paper);color:var(--ink);max-width:100%}
+select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border-color:var(--wrong);background:var(--wrong-soft)}
+.profile{font-size:17px;line-height:2.1}
+.model{font-size:14px;color:var(--teal);display:none}.show-models .model{display:block}
+.flip{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:14px;min-height:110px;text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:6px}
+.flip .w{font-family:var(--display);font-size:20px}
+.flip .back{display:none;font-size:14px;color:var(--muted)}
+.flip.on .back{display:block}
+.flip .hint{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:auto}
+/* challenge */
+.challenge{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:18px}
+.challenge>*{min-width:0}
+.words3{display:flex;flex-wrap:wrap;gap:10px}
+.wordbtn{border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 14px;font-family:var(--display);font-size:20px}
+.wordbtn.used{background:var(--teal-soft);border-color:var(--teal);text-decoration:line-through;text-decoration-color:var(--teal)}
+.bank{display:flex;flex-wrap:wrap;gap:6px}
+.bank span{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--muted)}
+.role{border:2px solid var(--ink);border-radius:14px;background:var(--card);padding:20px;display:flex;flex-direction:column;gap:6px;min-height:200px}
+.role .who{font-family:var(--display);font-size:28px}
+.role dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:6px 0 0;font-size:15px}
+.role dt{font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.role dd{margin:0}
+.timer{font-family:var(--mono);font-size:40px;font-variant-numeric:tabular-nums}
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.checklist label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.checklist input{margin-top:5px;width:18px;height:18px;accent-color:var(--teal);flex:none}
+.score{font-family:var(--mono);font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.big{font-family:var(--display);font-size:34px}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);z-index:5}
+.nav .mid{font-family:var(--mono);font-size:12px;color:var(--muted);align-self:center;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}
+</style>
+
+<header class="top">
+  <span class="tag">Module 1 · Lesson 1</span>
+  <span class="name">Who Are You, Really?</span>
+  <span class="count" id="count">1 / 20</span>
+</header>
+<div class="bar"><i id="prog"></i></div>
+
+<main id="deck">
+
+<!-- 1 -->
+<section class="slide" data-label="Welcome">
+  <div class="cover">
+    <p class="eyebrow">Academic English &amp; Conversation · Module 1 · Identity &amp; First Impressions</p>
+    <h1>Who Are You, <mark>Really?</mark></h1>
+    <p class="lead">Today you will read what research says about good conversations, talk about your academic path with precise vocabulary, and ask questions like a confident speaker.</p>
+    <div class="meta"><span class="pill">Reading research</span><span class="pill">Your academic path</span><span class="pill">Direct, subject &amp; polite questions</span><span class="pill">Follow-up questions</span></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-label="Let's talk">
+  <p class="eyebrow">Let's talk</p>
+  <h2>What makes someone a great person to talk to?</h2>
+  <div class="grid2">
+    <div class="panel">
+      <ol class="prompts">
+        <li>Think of the best conversation you had with someone you had just met. Why was it good?</li>
+        <li>Do people like us more when we talk about ourselves, or when we ask about them?</li>
+        <li>How long does it take you to form a first impression of someone? Is it usually right?</li>
+      </ol>
+    </div>
+    <div class="panel stack">
+      <h3>Quick vote</h3>
+      <p>To make a good first impression, it's more important to…</p>
+      <div class="opts" id="vote">
+        <button class="opt" data-v="a">be interesting</button>
+        <button class="opt" data-v="b">be interested</button>
+      </div>
+      <p class="score" id="voteMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-label="Icebreaker Spinner">
+  <p class="eyebrow">Icebreaker Spinner</p>
+  <h2>Spin, answer, then ask a follow-up question.</h2>
+  <div class="panel spin-card" id="spinCard" aria-live="polite">Press Spin to get your first question.</div>
+  <div class="row" style="margin-top:14px">
+    <button class="btn" id="spinBtn">Spin</button>
+    <span class="score" id="spinLeft">12 questions left</span>
+  </div>
+  <p style="margin-top:14px;color:var(--muted)">Rule: answer in at least two sentences. Your partner can't change the topic; they must ask about what you just said.</p>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-label="Read: It Doesn't Hurt to Ask">
+  <p class="eyebrow">Read</p>
+  <h2>Was your vote right? Read and find out.</h2>
+  <div class="grid2">
+    <article class="panel article">
+      <h3>It Doesn't Hurt to Ask</h3>
+      <p class="src">Adapted from research by Huang, Yeomans, Brooks, Minson &amp; Gino · Journal of Personality and Social Psychology, 2017</p>
+      <p><span class="pn">¶1</span>Most of us assume that the key to a good first impression is to talk about ourselves in an interesting way. Research, however, suggests that the opposite may be true. In a series of studies at Harvard Business School, psychologists analysed hundreds of conversations between people who were meeting for the first time, both in online chats and at face-to-face speed-dating events.</p>
+      <p><span class="pn">¶2</span>The researchers found that participants who asked more questions were perceived as significantly more likeable by their conversation partners. Not all questions, though, had the same effect. The strongest effect came from <b>follow-up questions</b>: questions that build directly on what the other person has just said, such as “What made you choose that?” In the speed-dating data, people who asked more follow-up questions were more likely to be offered a second date.</p>
+      <p><span class="pn">¶3</span>Why do follow-up questions work so well? According to the authors, they signal responsiveness. They show that the listener has understood, cares about the answer and wants to know more.</p>
+      <p><span class="pn">¶4</span>Despite these benefits, people do not seem to realise how much asking questions helps, and many of us ask too few. One explanation is that we are often busy planning what we want to say next instead of listening. The practical implication is simple: if you want to build rapport, be curious first and interesting second.</p>
+    </article>
+    <div class="stack">
+      <div class="panel" data-quiz>
+        <h3>The main argument</h3>
+        <p style="font-size:15px;color:var(--muted)">Which sentence best summarises the text?</p>
+        <div class="item" data-answer="b"><div class="opts" style="flex-direction:column">
+          <button class="opt" data-v="a">Interesting people talk about themselves more than others.</button>
+          <button class="opt" data-v="b">Asking questions, especially follow-up questions, makes other people like us more.</button>
+          <button class="opt" data-v="c">Speed dating is the best way to study how people communicate.</button>
+        </div><div class="fb"></div></div>
+      </div>
+      <div class="panel">
+        <h3>Read closely</h3>
+        <ol class="prompts" style="font-size:16px">
+          <li>Where did the data come from? Name two contexts.</li>
+          <li>What exactly is a follow-up question? Give your own example.</li>
+          <li>According to ¶4, why do people ask too few questions?</li>
+          <li>Which word in ¶1 shows that the text is going to contradict a common belief?</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-label="Finding or interpretation?">
+  <p class="eyebrow">Think like an academic</p>
+  <h2>Is it something the researchers <mark>found</mark>, or how they <mark>interpret</mark> it?</h2>
+  <div class="grid2">
+    <div class="panel" data-quiz>
+      <div class="item" data-answer="F"><div class="q"><span class="n">1</span>Participants who asked more questions were rated as more likeable.</div><div class="opts"><button class="opt" data-v="F">Finding</button><button class="opt" data-v="I">Interpretation</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="I" data-why="This is the authors' explanation of why the effect happens."><div class="q"><span class="n">2</span>Follow-up questions show that the listener cares about the answer.</div><div class="opts"><button class="opt" data-v="F">Finding</button><button class="opt" data-v="I">Interpretation</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="F"><div class="q"><span class="n">3</span>Speed daters who asked more follow-up questions got more second dates.</div><div class="opts"><button class="opt" data-v="F">Finding</button><button class="opt" data-v="I">Interpretation</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="I" data-why="“One explanation is…” introduces a possible reason, not data."><div class="q"><span class="n">4</span>People ask too few questions because they are planning what to say next.</div><div class="opts"><button class="opt" data-v="F">Finding</button><button class="opt" data-v="I">Interpretation</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="I" data-why="This is advice based on the results: a practical implication."><div class="q"><span class="n">5</span>If you want to build rapport, be curious first.</div><div class="opts"><button class="opt" data-v="F">Finding</button><button class="opt" data-v="I">Interpretation</button></div><div class="fb"></div></div>
+      <p class="score" data-score></p>
+      <p style="font-size:15px;color:var(--muted);margin-top:8px">Which words in the text helped you decide? Look for <i>found</i>, <i>according to</i>, <i>one explanation is</i>.</p>
+    </div>
+    <div class="stack">
+      <h3>Words from the research</h3>
+      <p style="color:var(--muted);font-size:15px">Guess the meaning from the text first. Then tap to check.</p>
+      <div class="grid3">
+        <button class="flip"><span class="w">participants</span><span class="back">the people who take part in a study. “Participants who asked more questions…”</span><span class="hint">tap</span></button>
+        <button class="flip"><span class="w">perceive as</span><span class="back">to see or judge someone in a certain way. “They were perceived as more likeable.”</span><span class="hint">tap</span></button>
+        <button class="flip"><span class="w">significantly</span><span class="back">in research: by an amount large enough to be meaningful, not by chance.</span><span class="hint">tap</span></button>
+        <button class="flip"><span class="w">signal (v.)</span><span class="back">to show or suggest something. “Follow-up questions signal responsiveness.”</span><span class="hint">tap</span></button>
+        <button class="flip"><span class="w">rapport</span><span class="back">a friendly connection in which people understand each other. <i>build / establish rapport</i></span><span class="hint">tap</span></button>
+        <button class="flip"><span class="w">implication</span><span class="back">a possible effect or conclusion. “The practical implication is simple…”</span><span class="hint">tap</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-label="Listen: The Welcome Mixer">
+  <p class="eyebrow">Listen</p>
+  <h2>The research in action: The Welcome Mixer</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <p class="context">It's the first week of the semester. The International Office is hosting a welcome event for new postgraduate students. Marina, from Brazil, sits down next to Daniel.</p>
+      <div class="row"><button class="btn" id="playBtn">Listen</button><button class="btn ghost" id="stopBtn">Stop</button></div>
+      <ol class="prompts" style="font-size:17px">
+        <li>What do Marina and Daniel have in common?</li>
+        <li>Find three <b>follow-up questions</b>. What does each one build on?</li>
+        <li>Who is the better conversationalist, according to the research? Why?</li>
+      </ol>
+    </div>
+    <div class="panel dialogue" id="dialogue">
+      <div class="line m"><b>Marina</b><span>Hi! Is this seat free?</span></div>
+      <div class="line d"><b>Daniel</b><span>Sure, go ahead. I'm Daniel, by the way.</span></div>
+      <div class="line m"><b>Marina</b><span>Nice to meet you, I'm Marina. So, where are you from?</span></div>
+      <div class="line d"><b>Daniel</b><span>Toronto, originally. And you?</span></div>
+      <div class="line m"><b>Marina</b><span>Brazil, São Paulo. What are you studying here?</span></div>
+      <div class="line d"><b>Daniel</b><span>I'm doing a master's in urban planning. What about you?</span></div>
+      <div class="line m"><b>Marina</b><span>Environmental science. I'm researching how cities deal with heat waves.</span></div>
+      <div class="line d"><b>Daniel</b><span>No way! That's really close to my area. What made you choose this university?</span></div>
+      <div class="line m"><b>Marina</b><span>Mainly the research group. My supervisor's work focuses on climate adaptation. How long have you been here?</span></div>
+      <div class="line d"><b>Daniel</b><span>Just two weeks. I'm still getting lost on campus! Who told you about this event?</span></div>
+      <div class="line m"><b>Marina</b><span>A girl from my department. She said the food was good. Did she lie?</span></div>
+      <div class="line d"><b>Daniel</b><span>Not at all. Have you tried the cheese bread? Someone brought it especially for the Brazilian students.</span></div>
+      <div class="line m"><b>Marina</b><span>Seriously? Who brought it?</span></div>
+      <div class="line d"><b>Daniel</b><span>I think the coordinator did. So, what do you do when you're not studying?</span></div>
+      <div class="line m"><b>Marina</b><span>I play volleyball, and I'm trying to learn to cook properly. Which neighbourhood are you living in?</span></div>
+      <div class="line d"><b>Daniel</b><span>Near the river. Why? Are you looking for a place?</span></div>
+      <div class="line m"><b>Marina</b><span>Yes! Actually, I was wondering if you could tell me where the housing office is.</span></div>
+      <div class="line d"><b>Daniel</b><span>Of course. Come on, I'll show you after we eat.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-label="Keep it going">
+  <p class="eyebrow">From the conversation</p>
+  <h2>How do Marina and Daniel keep the conversation going?</h2>
+  <div class="panel stack" style="max-width:760px">
+    <p>Find each phrase in the dialogue. What does it help you do?</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Phrase</th><th>It helps you to…</th></tr></thead>
+      <tbody>
+        <tr><td><mark>…, by the way.</mark></td><td><select aria-label="by the way" data-match="add"><option value="">choose</option><option value="add">add information casually</option><option value="surprise">show surprise</option><option value="return">return the question</option><option value="change">move to a new question</option><option value="soft">introduce a request softly</option></select></td></tr>
+        <tr><td><mark>And you? / What about you?</mark></td><td><select aria-label="and you" data-match="return"><option value="">choose</option><option value="add">add information casually</option><option value="surprise">show surprise</option><option value="return">return the question</option><option value="change">move to a new question</option><option value="soft">introduce a request softly</option></select></td></tr>
+        <tr><td><mark>No way! / Seriously?</mark></td><td><select aria-label="no way" data-match="surprise"><option value="">choose</option><option value="add">add information casually</option><option value="surprise">show surprise</option><option value="return">return the question</option><option value="change">move to a new question</option><option value="soft">introduce a request softly</option></select></td></tr>
+        <tr><td><mark>So, …</mark></td><td><select aria-label="so" data-match="change"><option value="">choose</option><option value="add">add information casually</option><option value="surprise">show surprise</option><option value="return">return the question</option><option value="change">move to a new question</option><option value="soft">introduce a request softly</option></select></td></tr>
+        <tr><td><mark>Actually, I was wondering if…</mark></td><td><select aria-label="actually" data-match="soft"><option value="">choose</option><option value="add">add information casually</option><option value="surprise">show surprise</option><option value="return">return the question</option><option value="change">move to a new question</option><option value="soft">introduce a request softly</option></select></td></tr>
+      </tbody>
+    </table></div>
+    <div class="row"><button class="btn ghost" data-check-match>Check</button><span class="score" data-match-score></span></div>
+    <p style="color:var(--muted)">Which of these phrases would the researchers like? Which ones only return the conversation to the speaker?</p>
+  </div>
+</section>
+
+<!-- 8a -->
+<section class="slide" data-label="Voices from the mixer">
+  <p class="eyebrow">Vocabulary · Talking about your academic path</p>
+  <h2>Voices from the Welcome Mixer: how did they get here?</h2>
+  <p style="color:var(--muted)">Four postgraduates describe their path. Read each quote and guess the meaning of the highlighted expression. Then tap to check.</p>
+  <div class="grid3" id="voices">
+    <button class="flip"><span class="score">Kenji · neuroscience</span><span>“I have an <mark>academic background</mark> in psychology, so neuroscience felt like a natural next step.”</span><span class="back"><b>your previous studies</b> · have a background in + field</span><span class="hint">tap</span></button>
+    <button class="flip"><span class="score">Sofia · law</span><span>“I <mark>majored in</mark> law at the University of Bologna.”</span><span class="back"><b>studied as my main subject</b> at undergraduate level · major in + subject</span><span class="hint">tap</span></button>
+    <button class="flip"><span class="score">Sofia · law</span><span>“Now I'm <mark>specialising in</mark> international human rights.”</span><span class="back"><b>focusing on one specific area</b> · specialise in + noun / -ing</span><span class="hint">tap</span></button>
+    <button class="flip"><span class="score">Amara · public health</span><span>“I worked as a nurse for six years before I decided to <mark>pursue</mark> a master's.”</span><span class="back"><b>try to achieve over time</b> · pursue + a degree / career / goal</span><span class="hint">tap</span></button>
+    <button class="flip"><span class="score">Kenji · neuroscience</span><span>“I've always been <mark>drawn to</mark> the question of why we forget things.”</span><span class="back"><b>attracted to, interested in</b> · be drawn to + noun / -ing</span><span class="hint">tap</span></button>
+    <button class="flip"><span class="score">Amara · public health</span><span>“My <mark>research interests</mark> include vaccination and community health.”</span><span class="back"><b>the topics you want to investigate</b> · my research interests include…</span><span class="hint">tap</span></button>
+    <button class="flip"><span class="score">Lucas · robotics</span><span>“My PhD is <mark>interdisciplinary</mark>: it combines robotics and medicine.”</span><span class="back"><b>combining two or more fields</b> · an interdisciplinary project / approach</span><span class="hint">tap</span></button>
+    <button class="flip"><span class="score">Lucas · robotics</span><span>“Watching a robotic surgery was <mark>a turning point</mark> for me.”</span><span class="back"><b>a moment when things change direction</b> · be a turning point in / for…</span><span class="hint">tap</span></button>
+    <button class="flip"><span class="score">Sofia · law</span><span>“My grandfather was a judge, and he <mark>shaped</mark> the way I think about justice.”</span><span class="back"><b>influenced how something developed</b> · shape + views / interests / career</span><span class="hint">tap</span></button>
+    <button class="flip"><span class="score">Amara · public health</span><span>“I <mark>aspire to</mark> lead health campaigns back home one day.”</span><span class="back"><b>hope to achieve something important</b> · aspire to + verb / noun</span><span class="hint">tap</span></button>
+  </div>
+  <div class="row" style="margin-top:14px"><button class="btn ghost" id="allMeanings">Show all meanings</button></div>
+  <div class="panel" style="margin-top:14px">
+    <h3>Notice</h3>
+    <p style="margin:0">Which expressions describe the <b>past</b>, which the <b>present</b>, and which the <b>future</b>? Which one would you use first when you introduce yourself at a conference?</p>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-label="Your academic path">
+  <p class="eyebrow">Vocabulary · Talking about your academic path</p>
+  <h2>Complete Marina's profile on the department website.</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <p class="eyebrow" style="margin:0">Meet our new researchers</p>
+      <div class="profile" id="profile">
+        Marina Alves has an <select data-gap="academic background"></select> in biology, and she <select data-gap="majored in"></select> ecology at the University of São Paulo. A field trip to the Amazon was <select data-gap="a turning point"></select> in her degree: she was <select data-gap="drawn to"></select> the question of how climate change affects people in cities. Her <select data-gap="research interests"></select> include urban heat, green spaces and public health. Her work is <select data-gap="interdisciplinary"></select>, combining ecology, geography and urban planning. Marina is now <select data-gap="pursuing"></select> a master's in environmental science, <select data-gap="specialising in"></select> climate adaptation. She says her grandmother, a farmer, <select data-gap="shaped"></select> her respect for nature, and she <select data-gap="aspires to"></select> work with city governments on greener neighbourhoods.
+      </div>
+      <div class="row"><button class="btn" id="gapCheck">Check</button><span class="score" id="gapScore"></span></div>
+    </div>
+    <div class="stack">
+      <details class="reveal"><summary>Check the patterns</summary><div class="body">
+        <div class="tbl"><table><thead><tr><th>Expression</th><th>Pattern</th></tr></thead><tbody>
+          <tr><td>have a background in</td><td>+ field: <i>a background in law</i></td></tr>
+          <tr><td>major in / specialise in</td><td>+ noun / -ing</td></tr>
+          <tr><td>pursue</td><td>+ a degree / a career / a goal</td></tr>
+          <tr><td>be drawn to</td><td>+ noun / -ing</td></tr>
+          <tr><td>aspire to</td><td>+ verb / + noun: <i>aspire to a career in…</i></td></tr>
+          <tr><td>shape</td><td>+ someone's views / interests / career</td></tr>
+          <tr><td>a turning point</td><td>in my life / career / degree</td></tr>
+          <tr><td>interdisciplinary</td><td>combining two or more fields</td></tr>
+        </tbody></table></div>
+      </div></details>
+      <div class="panel">
+        <h3>Your turn</h3>
+        <p>Which three expressions are true for your own path? Tell your teacher, with details.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-label="Three-Word Challenge">
+  <p class="eyebrow">Three-Word Challenge</p>
+  <h2>Answer the question in 60 seconds using all three words.</h2>
+  <div class="challenge">
+    <div class="panel stack">
+      <div class="big" id="chQ" aria-live="polite">Press Deal to start round 1.</div>
+      <div class="words3" id="chW"></div>
+      <p style="font-size:15px;color:var(--muted)">Tap a word when you use it correctly. Your teacher then asks one follow-up question. Answer it with a new word from the bank for a bonus point.</p>
+      <div class="row"><button class="btn" id="chDeal">Deal</button><button class="btn ghost" id="chBonus" disabled>+1 bonus</button></div>
+    </div>
+    <div class="panel stack">
+      <div class="row" style="justify-content:space-between"><span class="timer" id="chT">1:00</span><button class="btn ghost" id="chStart">Start timer</button></div>
+      <div><span class="score">Round</span> <span class="big" id="chR">0</span> <span class="score" style="margin-left:18px">Points</span> <span class="big" id="chP">0</span></div>
+      <h3>Word bank</h3>
+      <div class="bank"><span>academic background</span><span>major in</span><span>specialise in</span><span>pursue</span><span>be drawn to</span><span>research interests</span><span>interdisciplinary</span><span>a turning point</span><span>shape</span><span>aspire to</span><span>rapport</span><span>perceive as</span></div>
+      <p style="font-size:15px;color:var(--muted)">Swap roles in round 3: you deal, your teacher answers, and you ask the follow-up.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-label="Sort the questions">
+  <p class="eyebrow">Notice</p>
+  <h2>Sort the questions from the dialogue into three groups.</h2>
+  <p style="color:var(--muted)">Tap a question, then tap a group.</p>
+  <div class="panel stack">
+    <div class="chips" id="pool">
+      <button class="chip" data-g="a">What do you do when you're not studying?</button>
+      <button class="chip" data-g="b">Where are you from?</button>
+      <button class="chip" data-g="c">Who told you about this event?</button>
+      <button class="chip" data-g="a">Did she lie?</button>
+      <button class="chip" data-g="b">What are you studying here?</button>
+      <button class="chip" data-g="c">What made you choose this university?</button>
+      <button class="chip" data-g="b">Have you tried the cheese bread?</button>
+      <button class="chip" data-g="c">Who brought it?</button>
+      <button class="chip" data-g="b">How long have you been here?</button>
+    </div>
+    <div class="bins">
+      <button class="bin" data-bin="a"><h4>Group A · uses do / does / did</h4><div class="chips"></div></button>
+      <button class="bin" data-bin="b"><h4>Group B · uses be, have or a modal</h4><div class="chips"></div></button>
+      <button class="bin" data-bin="c"><h4>Group C · no extra helper verb</h4><div class="chips"></div></button>
+    </div>
+    <div class="row"><button class="btn" id="sortCheck">Check</button><button class="btn ghost" id="sortReset">Start again</button><span class="score" id="sortScore"></span></div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-label="How is a question built?">
+  <p class="eyebrow">Notice</p>
+  <h2>Look at Groups A and B. How is the question built?</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <p class="into">What <mark>do</mark> you <em>do</em> when you're not studying?</p>
+      <p class="into">What <mark>are</mark> you <em>studying</em> here?</p>
+      <p class="into">How long <mark>have</mark> you <em>been</em> here?</p>
+      <ol class="prompts" style="font-size:17px">
+        <li>What comes right after the question word?</li>
+        <li>Where is the subject (<i>you</i>)?</li>
+        <li>Why is there no <i>do</i> in “What are you studying?”</li>
+        <li>Where is the preposition in “Which neighbourhood are you living in?”</li>
+      </ol>
+    </div>
+    <div class="stack">
+      <details class="reveal"><summary>The pattern</summary><div class="body stack">
+        <div class="formula">
+          <span><small>Question word</small>What</span>
+          <span><small>Auxiliary</small>do / are / have</span>
+          <span><small>Subject</small>you</span>
+          <span><small>Main verb</small>do / studying / been</span>
+          <span><small>Rest</small>…?</span>
+        </div>
+        <p>Use <b>do / does / did</b> only when there is no other auxiliary. If the sentence already has <b>be</b>, <b>have</b> or a modal, move it before the subject.</p>
+      </div></details>
+      <details class="reveal"><summary>Prepositions</summary><div class="body">
+        <p>Where are you <mark>from</mark>? · What does your research focus <mark>on</mark>? · Who are you working <mark>with</mark>?</p>
+        <p>In speech, the preposition goes at the <b>end</b>. In very formal writing you may see it first: <i>With whom are you working?</i></p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-label="Who did what? Polite questions">
+  <p class="eyebrow">Notice</p>
+  <h2>Group C, and a more polite way to ask.</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <p class="into"><mark>Who</mark> told you about this event?<br><span style="font-size:16px;color:var(--muted)">→ A girl from my department told me.</span></p>
+      <p class="into">Who <mark>did</mark> the girl tell?<br><span style="font-size:16px;color:var(--muted)">→ She told Marina.</span></p>
+      <p class="into">I was wondering if you could tell me where the housing office <mark>is</mark>.</p>
+      <ol class="prompts" style="font-size:17px">
+        <li>In the first question, is <i>Who</i> the person who told, or the person who was told?</li>
+        <li>Why is there no <i>did</i> in the first question?</li>
+        <li>In the last sentence, why is it “where the housing office <b>is</b>”, not “where <b>is</b> the housing office”?</li>
+      </ol>
+    </div>
+    <div class="stack">
+      <details class="reveal"><summary>Subject questions</summary><div class="body">
+        <p>When <b>who</b> or <b>what</b> is the subject (the doer), there is no do / does / did. The order is like a statement.</p>
+        <div class="tbl"><table><thead><tr><th>About the subject</th><th>About the object</th></tr></thead>
+          <tbody><tr><td>Who <b>brought</b> it?</td><td>What <b>did</b> the coordinator <b>bring</b>?</td></tr>
+          <tr><td>What <b>made</b> you choose this university?</td><td>Which university <b>did</b> you <b>choose</b>?</td></tr>
+          <tr><td>Who <b>has influenced</b> you most?</td><td>Who <b>have</b> you <b>worked</b> with?</td></tr></tbody></table></div>
+      </div></details>
+      <details class="reveal"><summary>Polite and tentative questions</summary><div class="body">
+        <p>After these frames, use <b>statement order</b> and no do / does / did:</p>
+        <ul>
+          <li>Could you tell me what your thesis <b>is</b> about?</li>
+          <li>Do you know when the seminar <b>starts</b>?</li>
+          <li>I was wondering <b>if / whether</b> you <b>could</b> help me.</li>
+          <li>Would you mind telling me how you <b>got</b> funding?</li>
+          <li>Do you mind if I ask why you <b>left</b> your job?</li>
+        </ul>
+        <p>Yes/no questions use <b>if</b> or <b>whether</b>: <i>Is there a café?</i> → <i>Do you know if there is a café?</i></p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-label="Say it naturally">
+  <p class="eyebrow">Say it naturally</p>
+  <h2>Listen to the music of the question.</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <h3>Wh- questions go down ↘ · Yes/no questions go up ↗</h3>
+      <p class="into">What made you <mark>choose</mark> it? ↘</p>
+      <p class="into">Have you <mark>tried</mark> it? ↗</p>
+      <p class="into">I was wondering if you could <mark>help</mark> me. ↘</p>
+      <div class="row"><button class="btn ghost" data-say="What made you choose it? Have you tried it? I was wondering if you could help me.">Listen</button></div>
+    </div>
+    <div class="panel stack">
+      <h3>Fast speech joins words</h3>
+      <div class="tbl"><table><thead><tr><th>Written</th><th>Sounds like</th></tr></thead><tbody>
+        <tr><td>What do you do?</td><td>“whaja do”</td></tr>
+        <tr><td>Did you…?</td><td>“dija”</td></tr>
+        <tr><td>Have you tried…?</td><td>“havya”</td></tr>
+        <tr><td>Would you mind…?</td><td>“wudja mind”</td></tr>
+      </tbody></table></div>
+      <p>Say each question three times: slowly, normally, fast.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-label="Practice 1">
+  <p class="eyebrow">Practice 1</p>
+  <h2>Build the right question.</h2>
+  <div class="grid2" data-quiz>
+    <div class="panel">
+      <div class="item" data-answer="if"><div class="q"><span class="n">1</span>I was wondering ___ you could recommend a good supervisor.</div><div class="opts"><button class="opt" data-v="that">that</button><button class="opt" data-v="if">if</button><button class="opt" data-v="do">do</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="organized"><div class="q"><span class="n">2</span>Who ___ the welcome event?</div><div class="opts"><button class="opt" data-v="organized">organized</button><button class="opt" data-v="did organize">did organize</button><button class="opt" data-v="did organized">did organized</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="is"><div class="q"><span class="n">3</span>What ___ your research about?</div><div class="opts"><button class="opt" data-v="does">does</button><button class="opt" data-v="is">is</button><button class="opt" data-v="do">do</button></div><div class="fb"></div></div>
+      <div class="item" data-builder="What does your research focus on ?"><div class="q"><span class="n">4</span>Put the words in order.</div><div class="build"></div><div class="tiles" data-tiles="focus|does|on|What|research|your|?"></div><div class="fb"></div></div>
+      <div class="item" data-builder="What made you choose this field ?"><div class="q"><span class="n">5</span>Put the words in order.</div><div class="build"></div><div class="tiles" data-tiles="choose|made|field|What|this|you|?"></div><div class="fb"></div></div>
+    </div>
+    <div class="panel">
+      <div class="item" data-builder="Who has influenced your work the most ?"><div class="q"><span class="n">6</span>Put the words in order.</div><div class="build"></div><div class="tiles" data-tiles="the|influenced|Who|most|your|has|work|?"></div><div class="fb"></div></div>
+      <div class="item" data-answer="Would you mind telling me what your thesis is about?"><div class="q"><span class="n">7</span>Choose the correct question.</div><div class="opts" style="flex-direction:column"><button class="opt" data-v="Would you mind telling me what is your thesis about?">Would you mind telling me what is your thesis about?</button><button class="opt" data-v="Would you mind telling me what your thesis is about?">Would you mind telling me what your thesis is about?</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="Who encouraged you to apply?"><div class="q"><span class="n">8</span><i>My professor encouraged me to apply.</i> Ask about the <b>professor</b>.</div><div class="opts" style="flex-direction:column"><button class="opt" data-v="Who did encourage you to apply?">Who did encourage you to apply?</button><button class="opt" data-v="Who encouraged you to apply?">Who encouraged you to apply?</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="Who did Daniel invite?"><div class="q"><span class="n">9</span><i>Daniel invited Marina.</i> Ask about <b>Marina</b>.</div><div class="opts" style="flex-direction:column"><button class="opt" data-v="Who invited Marina?">Who invited Marina?</button><button class="opt" data-v="Who did Daniel invite?">Who did Daniel invite?</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="Do you know whether the library is open on Sundays?"><div class="q"><span class="n">10</span>Make it polite: <i>Is the library open on Sundays?</i></div><div class="opts" style="flex-direction:column"><button class="opt" data-v="Do you know is the library open on Sundays?">Do you know is the library open on Sundays?</button><button class="opt" data-v="Do you know whether the library is open on Sundays?">Do you know whether the library is open on Sundays?</button></div><div class="fb"></div></div>
+      <p class="score" data-score></p>
+    </div>
+  </div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-label="Practice 2">
+  <p class="eyebrow">Practice 2</p>
+  <h2>Aiko is a new PhD student. Ask, follow up, then talk.</h2>
+  <div class="grid2" id="p2">
+    <div class="panel stack">
+      <h3>Here are Aiko's answers. Write the question, then a follow-up question.</h3>
+      <div><label for="q1">1. “I have a background in computer science, but now I'm in linguistics.”</label><input type="text" id="q1"><span class="model">What's your academic background? → Follow-up: What made you switch to linguistics?</span></div>
+      <div><label for="q2">2. “A professor I met at a conference convinced me to apply.”</label><input type="text" id="q2"><span class="model">Who convinced you to apply? → Follow-up: What did she say that convinced you?</span></div>
+      <div><label for="q3">3. “My research focuses on how children learn two languages.”</label><input type="text" id="q3"><span class="model">What does your research focus on? → Follow-up: Did you grow up bilingual yourself?</span></div>
+      <h3 style="margin-top:6px">Finish these questions for your teacher.</h3>
+      <div><label for="q4">4. Who… (a subject question about influence)</label><input type="text" id="q4"><span class="model">e.g. Who shaped your interest in languages?</span></div>
+      <div><label for="q5">5. What made you…</label><input type="text" id="q5"><span class="model">e.g. What made you become a teacher?</span></div>
+      <div><label for="q6">6. I was wondering if…</label><input type="text" id="q6"><span class="model">e.g. I was wondering if you have ever studied abroad.</span></div>
+      <div><label for="q7">7. Would you mind telling me…</label><input type="text" id="q7"><span class="model">e.g. Would you mind telling me what your biggest challenge was?</span></div>
+    </div>
+    <div class="panel stack">
+      <h3>Ask each other. Every answer must get a follow-up question.</h3>
+      <ol class="prompts" start="8">
+        <li>What was a turning point in your studies or career?</li>
+        <li>Which field are you drawn to that has nothing to do with your work?</li>
+        <li>Who has shaped the way you think the most?</li>
+      </ol>
+      <p style="color:var(--muted)">Follow-up starters: <mark>What made you…?</mark> <mark>How did that feel?</mark> <mark>What happened next?</mark> <mark>Why do you think…?</mark></p>
+      <div class="row" style="margin-top:auto"><button class="btn ghost" id="showModels">Show model answers</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-label="Practice 3">
+  <p class="eyebrow">Practice 3</p>
+  <h2>Test the research: who can ask more follow-up questions?</h2>
+  <div class="panel stack" style="max-width:760px">
+    <p class="lead">Talk for five minutes about anything. Every time you ask a follow-up question, make a mark. At the end, compare your scores. Who found out more?</p>
+    <details class="reveal"><summary>Stuck? Start here</summary><div class="body">
+      <ul><li>What's something you've changed your mind about recently?</li><li>Which place in the world feels most like home to you?</li><li>What's the best piece of advice you've ever received?</li></ul>
+    </div></details>
+  </div>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-label="Welcome Mixer role-play">
+  <p class="eyebrow">Your turn</p>
+  <h2>The Welcome Mixer: meet a researcher.</h2>
+  <div class="grid2">
+    <div class="stack">
+      <div class="role" id="role" aria-live="polite">
+        <span class="eyebrow">Your new contact</span>
+        <span class="who">Draw a card</span>
+        <p style="color:var(--muted)">Your teacher becomes a postgraduate student at the event. You only see the name and country. Find out the rest.</p>
+      </div>
+      <div class="row"><button class="btn" id="drawBtn">Draw a card</button><button class="btn ghost" id="revealBtn" disabled>Reveal the profile</button></div>
+    </div>
+    <div class="panel stack">
+      <div class="row" style="justify-content:space-between"><span class="timer" id="timer">5:00</span>
+        <span class="row"><button class="btn" id="tStart">Start</button><button class="btn ghost" id="tReset">Reset</button></span></div>
+      <h3>In five minutes, try to…</h3>
+      <ul class="checklist">
+        <li><label><input type="checkbox" id="c1"> find out their background, research focus and what made them choose it</label></li>
+        <li><label><input type="checkbox" id="c2"> ask at least three follow-up questions</label></li>
+        <li><label><input type="checkbox" id="c3"> ask one subject question and one polite question (I was wondering if… / Would you mind…?)</label></li>
+        <li><label><input type="checkbox" id="c4"> use three expressions from the vocabulary set</label></li>
+        <li><label><input type="checkbox" id="c5"> discover their secret</label></li>
+      </ul>
+      <p style="color:var(--muted);font-size:15px">Then introduce your contact in one minute, as if presenting them at a seminar: “Let me introduce… She has a background in… Her research focuses on… Interestingly, …”</p>
+    </div>
+  </div>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-label="Phrases to keep">
+  <p class="eyebrow">Take these with you</p>
+  <h2>Phrases for any class, seminar or conversation</h2>
+  <div class="grid3">
+    <div class="panel"><h3>Asking for clarification</h3><p>Sorry, could you say that again?<br>What do you mean by…?<br>Sorry, I didn't quite catch that.</p></div>
+    <div class="panel"><h3>Following up</h3><p>What made you…?<br>How did that come about?<br>Could you say a bit more about…?</p></div>
+    <div class="panel"><h3>Buying time</h3><p>Good question, let me think.<br>That's a tough one.<br>Well, it depends on…</p></div>
+  </div>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-label="Before you go">
+  <p class="eyebrow">Before you go</p>
+  <h2>Three quick questions</h2>
+  <div class="panel stack" style="max-width:760px">
+    <div><label for="e1">1. In one sentence, what did the research find?</label><textarea id="e1" rows="2"></textarea></div>
+    <div><label for="e2">2. Write one subject question and one polite question you could ask a new classmate.</label><textarea id="e2" rows="2"></textarea></div>
+    <div><label for="e3">3. Which two expressions from the vocabulary set will you use this week? Write a true sentence with each.</label><textarea id="e3" rows="2"></textarea></div>
+  </div>
+</section>
+
+</main>
+
+<nav class="nav">
+  <button class="btn ghost" id="prev">← Back</button>
+  <span class="mid" id="mid"></span>
+  <button class="btn" id="next">Next →</button>
+</nav>
+
+<script>
+(function(){
+const slides=[...document.querySelectorAll('.slide')];
+let i=0;
+const count=document.getElementById('count'),prog=document.getElementById('prog'),mid=document.getElementById('mid');
+function show(n){
+  i=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+  count.textContent=(i+1)+' / '+slides.length;
+  prog.style.width=((i+1)/slides.length*100)+'%';
+  mid.textContent=slides[i].dataset.label||'';
+  document.getElementById('prev').disabled=i===0;
+  document.getElementById('next').disabled=i===slides.length-1;
+  try{history.replaceState(null,'','#s'+(i+1))}catch(e){}
+  window.scrollTo(0,0);
+}
+document.getElementById('prev').onclick=()=>show(i-1);
+document.getElementById('next').onclick=()=>show(i+1);
+document.addEventListener('keydown',e=>{
+  if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
+  if(e.key==='ArrowRight'||e.key==='PageDown')show(i+1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1);
+});
+const m=/^#s(\d+)$/.exec(location.hash);show(m?+m[1]-1:0);
+
+// vote
+document.querySelectorAll('#vote .opt').forEach(b=>b.onclick=()=>{document.querySelectorAll('#vote .opt').forEach(x=>x.classList.remove('right'));b.classList.add('right');document.getElementById('voteMsg').textContent='Vote saved. Keep it in mind: the text will test it.'});
+
+// speech
+function speak(text,voiceIdx,onend){
+  try{
+    const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=.95;
+    const vs=speechSynthesis.getVoices().filter(v=>/^en/.test(v.lang));
+    if(vs.length)u.voice=vs[voiceIdx%vs.length];
+    if(onend)u.onend=onend;speechSynthesis.speak(u);return true;
+  }catch(e){return false}
+}
+document.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>{try{speechSynthesis.cancel()}catch(e){};speak(b.dataset.say,0)});
+const lines=[...document.querySelectorAll('#dialogue .line')];
+let playing=false;
+function playFrom(k){
+  lines.forEach(l=>l.classList.remove('speaking'));
+  if(!playing||k>=lines.length){playing=false;return}
+  const l=lines[k];l.classList.add('speaking');
+  if(!speak(l.querySelector('span').textContent,l.classList.contains('m')?1:0,()=>playFrom(k+1)))playing=false;
+}
+document.getElementById('playBtn').onclick=()=>{try{speechSynthesis.cancel()}catch(e){};playing=true;playFrom(0)};
+document.getElementById('stopBtn').onclick=()=>{playing=false;try{speechSynthesis.cancel()}catch(e){};lines.forEach(l=>l.classList.remove('speaking'))};
+
+// spinner
+const qs=["What's the best thing that happened to you this month?","If you could study anything for free, what would it be?","What's a skill you'd love to master this year?","Which city would you love to live in for a year?","What do you do to switch off after a long day?","What's a small thing that always makes you happy?","Who is the most interesting person you've met recently?","What's the last thing you learned that surprised you?","Are you a morning person or a night person?","What did you want to be when you were a child?","What's a book, series or podcast you'd recommend?","What's something you're looking forward to?"];
+let pool=[...qs];
+const card=document.getElementById('spinCard'),left=document.getElementById('spinLeft');
+document.getElementById('spinBtn').onclick=()=>{
+  if(!pool.length)pool=[...qs];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let t=0;card.classList.add('rolling');
+  const final=pool.splice(Math.floor(Math.random()*pool.length),1)[0];
+  const tick=()=>{card.textContent=qs[Math.floor(Math.random()*qs.length)];if(++t<10&&!reduce)setTimeout(tick,60+t*12);else{card.textContent=final;card.classList.remove('rolling');left.textContent=pool.length+' questions left'}};
+  tick();
+};
+
+// quizzes
+document.querySelectorAll('[data-quiz]').forEach(q=>{
+  const items=[...q.querySelectorAll('.item')];const score=q.querySelector('[data-score]');
+  const upd=()=>{const done=items.filter(it=>it.dataset.done);const right=done.filter(it=>it.dataset.done==='1').length;if(score)score.textContent=done.length?`Score: ${right} / ${items.length}`:''};
+  items.forEach(it=>{
+    const fb=it.querySelector('.fb');
+    if(it.dataset.answer!==undefined){
+      it.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+        if(it.dataset.done)return;
+        const ok=o.dataset.v===it.dataset.answer;o.classList.add(ok?'right':'wrong');
+        if(!ok)it.querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===it.dataset.answer)x.classList.add('right')});
+        it.dataset.done=ok?'1':'0';
+        fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?'Correct.':(it.dataset.why||'Not quite. Look at the correct answer.');
+        upd();
+      });
+    }
+    if(it.dataset.builder){
+      const target=it.dataset.builder,box=it.querySelector('.build'),tiles=it.querySelector('.tiles');
+      const words=tiles.dataset.tiles.split('|');
+      words.forEach(w=>{const b=document.createElement('button');b.className='tile';b.textContent=w;b.onclick=()=>{if(it.dataset.done)return;b.classList.add('used');const c=document.createElement('button');c.className='tile';c.textContent=w;c.onclick=()=>{if(it.dataset.done)return;c.remove();b.classList.remove('used')};box.appendChild(c);
+        if(box.children.length===words.length){const ok=[...box.children].map(x=>x.textContent).join(' ')===target;it.dataset.done=ok?'1':'0';fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?'Correct.':'The answer is: '+target.replace(' ?','?');upd()}};tiles.appendChild(b)});
+    }
+  });
+});
+
+// phrase match
+document.querySelectorAll('[data-check-match]').forEach(b=>b.onclick=()=>{
+  const p=b.closest('.panel'),sels=[...p.querySelectorAll('select[data-match]')];let r=0;
+  sels.forEach(s=>{const ok=s.value===s.dataset.match;if(ok)r++;s.className=ok?'ok':'no'});
+  p.querySelector('[data-match-score]').textContent=`${r} / ${sels.length}`;
+});
+document.querySelectorAll('.flip').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+document.getElementById('allMeanings').onclick=e=>{const cards=[...document.querySelectorAll('#voices .flip')];const open=!cards.every(c=>c.classList.contains('on'));cards.forEach(c=>c.classList.toggle('on',open));e.target.textContent=open?'Hide all meanings':'Show all meanings'};
+
+// profile gap fill
+const gaps=[...document.querySelectorAll('#profile select')];
+const opts=gaps.map(g=>g.dataset.gap).sort();
+gaps.forEach(g=>{g.innerHTML='<option value="">……</option>'+opts.map(o=>`<option>${o}</option>`).join('');g.setAttribute('aria-label','Gap')});
+document.getElementById('gapCheck').onclick=()=>{let r=0;gaps.forEach(g=>{const ok=g.value===g.dataset.gap;if(ok)r++;g.className=g.value?(ok?'ok':'no'):''});document.getElementById('gapScore').textContent=`${r} / ${gaps.length}`};
+
+// three-word challenge
+const chQs=["Tell me about your academic journey so far.","What are you most curious about right now, and why?","Describe a person who changed the way you think.","Where would you like to be in five years?","Describe a moment that changed your plans.","If you started university again, what would you study?","What kind of people do you connect with easily?","What would your ideal job look like?"];
+const chWords=["academic background","major in","specialise in","pursue","be drawn to","research interests","interdisciplinary","a turning point","shape","aspire to","rapport","perceive as"];
+let chPool=[],rounds=0,points=0,bonusUsed=false;
+const chQ=document.getElementById('chQ'),chW=document.getElementById('chW'),chR=document.getElementById('chR'),chP=document.getElementById('chP'),chB=document.getElementById('chBonus');
+const shuffle=a=>{for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+document.getElementById('chDeal').onclick=()=>{
+  if(!chPool.length)chPool=shuffle([...chQs]);
+  chQ.textContent=chPool.pop();rounds++;chR.textContent=rounds;
+  chW.innerHTML='';shuffle([...chWords]).slice(0,3).forEach(w=>{const b=document.createElement('button');b.className='wordbtn';b.textContent=w;b.onclick=()=>{b.classList.toggle('used');points+=b.classList.contains('used')?1:-1;chP.textContent=points};chW.appendChild(b)});
+  chB.disabled=false;bonusUsed=false;resetCh();
+};
+chB.onclick=()=>{if(bonusUsed)return;bonusUsed=true;points++;chP.textContent=points;chB.disabled=true};
+let cs=60,cid=null;const chT=document.getElementById('chT'),chS=document.getElementById('chStart');
+const cf=()=>chT.textContent=Math.floor(cs/60)+':'+String(cs%60).padStart(2,'0');
+function resetCh(){clearInterval(cid);cid=null;cs=60;cf();chS.textContent='Start timer'}
+chS.onclick=()=>{if(cid){clearInterval(cid);cid=null;chS.textContent='Start timer';return}chS.textContent='Pause';cid=setInterval(()=>{cs--;cf();if(cs<=0){clearInterval(cid);cid=null;chS.textContent='Start timer';chT.textContent="Time's up"}},1000)};
+
+// sorter
+const poolEl=document.getElementById('pool');const chips=[...poolEl.children];let sel=null;
+chips.forEach(c=>c.onclick=e=>{e.stopPropagation();chips.forEach(x=>x.classList.remove('sel'));if(sel===c){sel=null;return}sel=c;c.classList.add('sel')});
+document.querySelectorAll('.bin').forEach(b=>b.onclick=()=>{if(!sel)return;sel.classList.remove('sel','right','wrong');b.querySelector('.chips').appendChild(sel);sel=null});
+document.getElementById('sortCheck').onclick=()=>{let r=0,n=0;document.querySelectorAll('.bin').forEach(b=>b.querySelectorAll('.chip').forEach(c=>{n++;const ok=c.dataset.g===b.dataset.bin;if(ok)r++;c.classList.toggle('right',ok);c.classList.toggle('wrong',!ok)}));document.getElementById('sortScore').textContent=`${r} / ${chips.length} correct`+(n<chips.length?` · ${chips.length-n} still to sort`:'')};
+document.getElementById('sortReset').onclick=()=>{chips.forEach(c=>{c.classList.remove('sel','right','wrong');poolEl.appendChild(c)});sel=null;document.getElementById('sortScore').textContent=''};
+
+// models
+document.getElementById('showModels').onclick=e=>{const p=document.getElementById('p2');p.classList.toggle('show-models');e.target.textContent=p.classList.contains('show-models')?'Hide model answers':'Show model answers'};
+
+// role cards
+const roles=[
+ {n:"Kenji",c:"Japan",b:"a background in psychology",s:"PhD in neuroscience; his lab studies how sleep affects memory",w:"A paper by his future supervisor was a turning point for him.",h:"Plays jazz piano in a bar on Fridays.",x:"He grew up in Sapporo, one of the snowiest cities in the world, and he still hates the cold."},
+ {n:"Sofia",c:"Italy",b:"a law degree from Bologna",s:"Exchange semester in international human rights law",w:"A professor she met at a conference invited her.",h:"Runs marathons, five so far.",x:"She speaks four languages but can't ride a bike."},
+ {n:"Amara",c:"Nigeria",b:"a background in nursing",s:"Master's in public health, specialising in vaccination programmes",w:"She aspires to lead health campaigns back home.",h:"Volunteers at a food bank every Saturday.",x:"She was a national chess champion at 15."},
+ {n:"Lucas",c:"Chile",b:"a degree in mechanical engineering",s:"Interdisciplinary PhD in robotics and medicine",w:"His university has a partnership with a lab here.",h:"Plays guitar in a band with other students.",x:"He once built a robot that makes coffee, badly."}
+];
+let rp=[],cur=null;const roleEl=document.getElementById('role'),rv=document.getElementById('revealBtn');
+const card2=(c,open)=>`<span class="eyebrow">Your new contact</span><span class="who">${c.n}</span><dl><dt>From</dt><dd>${c.c}</dd><dt>Background</dt><dd>${open?c.b:'?'}</dd><dt>Research</dt><dd>${open?c.s:'?'}</dd><dt>Why here</dt><dd>${open?c.w:'?'}</dd><dt>Free time</dt><dd>${open?c.h:'?'}</dd><dt>Secret</dt><dd>${open?c.x:'?'}</dd></dl>`;
+document.getElementById('drawBtn').onclick=()=>{if(!rp.length)rp=[...roles];cur=rp.splice(Math.floor(Math.random()*rp.length),1)[0];roleEl.innerHTML=card2(cur,false);rv.disabled=false};
+rv.onclick=()=>{if(!cur)return;roleEl.innerHTML=card2(cur,true);rv.disabled=true};
+
+// timer
+let secs=300,tid=null;const tEl=document.getElementById('timer'),tS=document.getElementById('tStart');
+const fmt=()=>tEl.textContent=Math.floor(secs/60)+':'+String(secs%60).padStart(2,'0');
+tS.onclick=()=>{if(tid){clearInterval(tid);tid=null;tS.textContent='Start';return}tS.textContent='Pause';tid=setInterval(()=>{secs--;fmt();if(secs<=0){clearInterval(tid);tid=null;tS.textContent='Start';tEl.textContent="Time's up"}},1000)};
+document.getElementById('tReset').onclick=()=>{clearInterval(tid);tid=null;secs=300;fmt();tS.textContent='Start'};
+})();
+</script>
+</body></html>
