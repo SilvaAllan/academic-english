@@ -1,0 +1,151 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>
+<title>Homework: My Journey So Far</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a single study sheet; Tomás's application is the shared context, tasks follow it */
+:root{--paper:#F4F6F9;--card:#FFFFFF;--ink:#16203A;--muted:#566079;--line:#D9DFE9;--hl:#F6CB45;--hl-soft:#FCEFC0;--teal:#1E7568;--teal-soft:#DCEFEB;--wrong:#B93C26;--wrong-soft:#F8E1DB;
+--display:"Young Serif",Georgia,serif;--body:"Figtree",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#0F1420;--card:#171E2E;--ink:#E7EBF4;--muted:#9BA4BA;--line:#2A3349;--hl:#E9BC36;--hl-soft:#3A3218;--teal:#58B9A9;--teal-soft:#16302C;--wrong:#E6765F;--wrong-soft:#3A1F1A;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0F1420;--card:#171E2E;--ink:#E7EBF4;--muted:#9BA4BA;--line:#2A3349;--hl:#E9BC36;--hl-soft:#3A3218;--teal:#58B9A9;--teal-soft:#16302C;--wrong:#E6765F;--wrong-soft:#3A1F1A;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:780px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:22px}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,5vw,42px)} h2{font-size:22px}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:0 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.post{border-left:4px solid var(--hl)}
+.post .by{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.item{display:flex;flex-direction:column;gap:6px;padding-top:10px;border-top:1px solid var(--line)}
+.item .wrongq{font-style:italic;color:var(--muted)}
+.n{font-family:var(--mono);font-size:12px;color:var(--muted);margin-right:6px}
+input[type=text],textarea{width:100%;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--paper);color:var(--ink)}
+input.ok{border-color:var(--teal);background:var(--teal-soft)} input.no{border-color:var(--wrong);background:var(--wrong-soft)}
+.fb{font-size:14px;min-height:1.2em}.fb.ok{color:var(--teal)}.fb.no{color:var(--wrong)}
+.btn{font:inherit;cursor:pointer;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:8px 18px;font-weight:600;font-size:15px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.build{min-height:42px;border:1px dashed var(--line);border-radius:8px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;background:var(--paper)}
+.tiles{display:flex;flex-wrap:wrap;gap:6px}
+.tile{font:inherit;font-size:15px;cursor:pointer;border:1px solid var(--ink);background:var(--card);color:var(--ink);border-radius:6px;padding:3px 10px}
+.tile.used{visibility:hidden}
+.score{font-family:var(--mono);font-size:14px;color:var(--muted)}
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.checklist label{display:flex;gap:10px;cursor:pointer}
+.checklist input{margin-top:5px;width:18px;height:18px;accent-color:var(--teal)}
+.profile{line-height:2.1}
+select{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:var(--paper);color:var(--ink);max-width:100%}
+select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border-color:var(--wrong);background:var(--wrong-soft)}
+select:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.tip{background:var(--hl-soft);border:1px solid var(--hl);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.aaa{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
+.aaa div{background:var(--card);border-radius:8px;padding:10px 12px}
+.aaa b{font-family:var(--display);font-size:20px;font-weight:400;display:block}
+.btn:focus-visible,.tile:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.lit{line-height:2.1}
+.tt{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.tt div{background:var(--card);border-radius:8px;padding:10px 12px}
+.tt b{font-family:var(--display);font-size:18px;font-weight:400;display:block}
+</style>
+<div class="wrap">
+<header>
+  <p class="eyebrow">Homework · Module 1 · Lesson 2 · about 35 minutes</p>
+  <h1>My Journey So Far</h1>
+</header>
+
+<section class="card post">
+  <p class="by">Email draft · from Tomás Ferrer to Dr Laura Méndez, Coral Futures Lab</p>
+  <p>Remember Tomás, the marine biology student from the New Students Forum? He wants to apply for a part-time research assistant job in Dr Méndez's lab. Before he sends his application, he asks you to check his English. Everything in this homework comes from his application.</p>
+</section>
+
+<section class="card" id="partA">
+  <p class="eyebrow">Part 1 · Fix the tenses</p>
+  <h2>Each sentence from Tomás's email has one tense mistake. Write the correct sentence.</h2>
+  <div class="item" data-ok="i graduated in oceanography in 2021"><p><span class="n">1</span><span class="wrongq">I have graduated in oceanography in 2021.</span></p><input type="text" aria-label="Correct sentence 1"><span class="fb"></span></div>
+  <div class="item" data-ok="since then i have worked on three research projects|since then i've worked on three research projects"><p><span class="n">2</span><span class="wrongq">Since then, I worked on three research projects.</span></p><input type="text" aria-label="Correct sentence 2"><span class="fb"></span></div>
+  <div class="item" data-ok="two years ago i volunteered on a reef restoration project in brazil"><p><span class="n">3</span><span class="wrongq">Two years ago, I have volunteered on a reef restoration project in Brazil.</span></p><input type="text" aria-label="Correct sentence 3"><span class="fb"></span></div>
+  <div class="item" data-ok="i have never used underwater drones but i am a fast learner|i've never used underwater drones but i'm a fast learner|i have never used underwater drones but i'm a fast learner|i've never used underwater drones but i am a fast learner"><p><span class="n">4</span><span class="wrongq">I never used underwater drones, but I'm a fast learner.</span></p><input type="text" aria-label="Correct sentence 4"><span class="fb"></span></div>
+  <div class="item" data-ok="last semester i took a course in data analysis"><p><span class="n">5</span><span class="wrongq">Last semester I have taken a course in data analysis.</span></p><input type="text" aria-label="Correct sentence 5"><span class="fb"></span></div>
+  <div class="item" data-ok="to date i have collected more than 2000 photos of damaged corals|to date i've collected more than 2000 photos of damaged corals|to date i have collected more than 2 000 photos of damaged corals|to date i've collected more than 2 000 photos of damaged corals"><p><span class="n">6</span><span class="wrongq">To date, I collected more than 2,000 photos of damaged corals.</span></p><input type="text" aria-label="Correct sentence 6"><span class="fb"></span></div>
+  <div class="row"><button class="btn" id="checkA">Check my answers</button><span class="score" id="scoreA"></span></div>
+</section>
+
+<section class="card" id="partB">
+  <p class="eyebrow">Part 2 · Write like a researcher</p>
+  <h2>Tomás also sends a short research summary. Choose the right tense in each gap.</h2>
+  <p style="font-size:14px;color:var(--muted)">Remember: present perfect for the research field up to now, past simple for one named study.</p>
+  <div class="lit">
+    Over the past thirty years, coral reefs <select data-ans="have suffered" data-opts="suffered|have suffered"></select> serious damage from rising ocean temperatures. In a major global study, Hughes et al. (2018) <select data-ans="analysed" data-opts="analysed|have analysed"></select> 100 reef locations and <select data-ans="found" data-opts="found|have found"></select> that the time between severe bleaching events <select data-ans="fell" data-opts="fell|has fallen"></select> from about 25 years in the early 1980s to about six years by 2016. Since then, many researchers <select data-ans="have tested" data-opts="tested|have tested"></select> ways to help reefs recover. However, few studies <select data-ans="have looked" data-opts="looked|have looked"></select> at reefs in the South Atlantic.
+  </div>
+  <div class="row"><button class="btn" id="checkB">Check</button><span class="score" id="scoreB"></span></div>
+  <p style="font-size:13px;color:var(--muted)">Hughes et al. (2018) is a real study published in <i>Science</i>.</p>
+</section>
+
+<section class="card" id="partV">
+  <p class="eyebrow">Part 3 · Vocabulary in context</p>
+  <h2>Tomás's professor wrote a reference letter for him. Complete it.</h2>
+  <div class="profile" id="vprof">
+    I am happy to recommend Tomás Ferrer. He <select data-gap="made the transition"></select> from oceanography to marine biology last year, and he has adapted remarkably well. In a short time, he has <select data-gap="acquired"></select> excellent skills in underwater photography and data analysis. His volunteer work in Brazil was <select data-gap="a milestone"></select> in his development, and he has a strong <select data-gap="track record"></select> of careful fieldwork. <select data-gap="To date"></select>, he has <select data-gap="contributed to"></select> two of our lab's research reports. When his first experiment failed, he treated the <select data-gap="setback"></select> as a chance to learn. His <select data-gap="transferable skills"></select>, especially teamwork and clear writing, would make him an asset to any lab.
+  </div>
+  <div class="row"><button class="btn" id="checkV">Check</button><span class="score" id="scoreV"></span></div>
+</section>
+
+<section class="card">
+  <p class="eyebrow">Part 4 · Your turn to write</p>
+  <h2>Write your “Meet our students” profile.</h2>
+  <p>Dr Méndez's lab website has a page where every team member tells their journey so far. Write yours in 120–150 words.</p>
+  <textarea id="journey" rows="8" aria-label="Your journey so far" placeholder="I started out as…"></textarea>
+  <p class="score" id="wc">0 words</p>
+  <ul class="checklist">
+    <li><label><input type="checkbox"><span>I opened with the big picture in the present perfect.</span></label></li>
+    <li><label><input type="checkbox"><span>I told at least three steps in the past simple, each with a clear time.</span></label></li>
+    <li><label><input type="checkbox"><span>I mentioned one milestone and one setback.</span></label></li>
+    <li><label><input type="checkbox"><span>I used at least four expressions from Lesson 2 and one from Lesson 1.</span></label></li>
+    <li><label><input type="checkbox"><span>I ended with “To date / So far / Since then, I've…”.</span></label></li>
+  </ul>
+  <div class="row"><button class="btn ghost" id="copyJ">Copy my text</button><span class="score" id="copyMsg"></span></div>
+  <p class="score">Send your text to your teacher.</p>
+</section>
+
+<section class="card">
+  <p class="eyebrow">Part 5 · Speak</p>
+  <h2>Record a 2-minute voice message: your journey so far.</h2>
+  <p>Imagine you are the guest on <i>Second Acts</i>. Use your text from Part 4 as notes, but don't read it: tell it. Include one sentence that cites research, for example: “Research has shown that… / Huang et al. (2017) found that…”. Send the recording to your teacher. This is the first draft of your Lesson 4 project, <b>My Story in 3 Minutes</b>.</p>
+</section>
+
+<section class="tip">
+  <p class="eyebrow">Tip of the week</p>
+  <h2>The “When exactly?” test</h2>
+  <p>Portuguese often uses one past tense where English needs two. Before you choose, ask yourself one question: <b>can I answer “When exactly?” with a finished time?</b></p>
+  <div class="tt">
+    <div><b>Yes → past simple</b>“I moved to Lisbon <u>in 2019</u>.”<br>“She failed the exam <u>in her first year</u>.”</div>
+    <div><b>No, or it's not important → present perfect</b>“I've lived in three countries.”<br>“To date, I've published two papers.”</div>
+  </div>
+  <p>Practise it this week: when you read an article in English, find one sentence with each tense and ask “When exactly?”</p>
+</section>
+</div>
+<script>
+(function(){
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9' ]/g,' ').replace(/\s+/g,' ').trim();
+document.getElementById('checkA').onclick=()=>{
+  const items=[...document.querySelectorAll('#partA .item')];let r=0;
+  items.forEach(it=>{const inp=it.querySelector('input'),fb=it.querySelector('.fb');const oks=it.dataset.ok.split('|');
+    if(!inp.value.trim()){inp.className='';fb.className='fb';fb.textContent='';return}
+    const ok=oks.includes(norm(inp.value));if(ok)r++;inp.className=ok?'ok':'no';fb.className='fb '+(ok?'ok':'no');
+    fb.textContent=ok?'Correct.':'Try again. Ask yourself: “When exactly?”';});
+  document.getElementById('scoreA').textContent=`${r} / ${items.length}`;
+};
+const bs=[...document.querySelectorAll('#partB select')];
+bs.forEach(s=>{s.innerHTML='<option value="">……</option>'+s.dataset.opts.split('|').map(o=>`<option>${o}</option>`).join('');s.setAttribute('aria-label','Choose the verb form')});
+document.getElementById('checkB').onclick=()=>{let r=0;bs.forEach(s=>{const ok=s.value===s.dataset.ans;if(ok)r++;s.className=s.value?(ok?'ok':'no'):''});document.getElementById('scoreB').textContent=`${r} / ${bs.length}`};
+const vg=[...document.querySelectorAll('#vprof select')];const vo=vg.map(g=>g.dataset.gap).concat(['broadened','gain experience']).sort((a,b)=>a.localeCompare(b));
+vg.forEach(g=>{g.innerHTML='<option value="">……</option>'+vo.map(o=>`<option>${o}</option>`).join('');g.setAttribute('aria-label','Gap')});
+document.getElementById('checkV').onclick=()=>{let r=0;vg.forEach(g=>{const ok=g.value===g.dataset.gap;if(ok)r++;g.className=g.value?(ok?'ok':'no'):''});document.getElementById('scoreV').textContent=`${r} / ${vg.length}`};
+const j=document.getElementById('journey'),wc=document.getElementById('wc');
+j.oninput=()=>{const n=(j.value.trim().match(/\S+/g)||[]).length;wc.textContent=n+' words'+(n>=120&&n<=150?' · good length':'')};
+document.getElementById('copyJ').onclick=async()=>{const m=document.getElementById('copyMsg');
+  try{await navigator.clipboard.writeText(j.value);m.textContent='Copied.'}catch(e){j.focus();j.select();m.textContent='Text selected. Press Ctrl+C or Cmd+C to copy.'}};
+})();
+</script>
+</body></html>

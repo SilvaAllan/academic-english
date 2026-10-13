@@ -1,0 +1,782 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>
+<title>My Journey So Far</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one slide at a time, like a projected deck; highlighter-yellow marks what to notice */
+:root{
+  --paper:#F4F6F9; --card:#FFFFFF; --ink:#16203A; --muted:#566079; --line:#D9DFE9;
+  --hl:#F6CB45; --hl-soft:#FCEFC0; --teal:#1E7568; --teal-soft:#DCEFEB; --wrong:#B93C26; --wrong-soft:#F8E1DB;
+  --display:"Young Serif", Georgia, serif; --body:"Figtree", system-ui, sans-serif; --mono:"JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0F1420; --card:#171E2E; --ink:#E7EBF4; --muted:#9BA4BA; --line:#2A3349;
+  --hl:#E9BC36; --hl-soft:#3A3218; --teal:#58B9A9; --teal-soft:#16302C; --wrong:#E6765F; --wrong-soft:#3A1F1A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0F1420; --card:#171E2E; --ink:#E7EBF4; --muted:#9BA4BA; --line:#2A3349;
+  --hl:#E9BC36; --hl-soft:#3A3218; --teal:#58B9A9; --teal-soft:#16302C; --wrong:#E6765F; --wrong-soft:#3A1F1A; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.top .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.top .name{font-family:var(--display);font-size:17px}
+.top .count{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;background:var(--hl);width:0;transition:width .3s}
+main{flex:1;padding-block:28px 110px;padding-inline:16px;width:100%;max-width:1000px;margin:0 auto}
+.slide{display:none}.slide.on{display:block;animation:in .35s ease}
+@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.on{animation:none}}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:0 0 6px}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:balance;margin:0 0 14px}
+h1{font-size:clamp(38px,7vw,68px)} h2{font-size:clamp(26px,4vw,38px)}
+h3{font-size:18px;margin:0 0 8px}
+p{margin:0 0 12px;max-width:68ch}
+.lead{font-size:20px;color:var(--muted)}
+mark{background:var(--hl-soft);color:inherit;padding:0 3px;border-radius:3px;box-shadow:inset 0 -2px 0 var(--hl)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px}
+.grid2>*,.grid3>*{min-width:0}
+.stack{display:flex;flex-direction:column;gap:14px}
+ol.prompts{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px;font-size:19px}
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:9px 18px;font-weight:600;font-size:15px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn:focus-visible,.opt:focus-visible,.chip:focus-visible,.tile:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.bin:focus-visible,.flip:focus-visible,.wordbtn:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cover{display:grid;gap:22px;padding-top:4vh}
+.cover .meta{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--muted);background:var(--card)}
+.spin-card{min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--display);font-size:clamp(22px,3.4vw,30px);line-height:1.25;padding:24px}
+.spin-card.rolling{color:var(--muted)}
+/* article */
+.article{font-family:var(--body);font-size:17px;line-height:1.7}
+.article h3{font-family:var(--display);font-weight:400;font-size:24px;line-height:1.2;margin-bottom:4px}
+.article .src{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.03em;margin-bottom:14px}
+.article p{margin-bottom:12px}
+.article .pn{font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:6px}
+/* dialogue */
+.dialogue{display:flex;flex-direction:column;gap:4px;font-size:16px}
+.line{display:grid;grid-template-columns:70px 1fr;gap:10px;padding:5px 8px;border-radius:8px}
+.line b{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding-top:3px}
+.line.m b{color:var(--teal)} .line.d b{color:var(--muted)}
+.line.speaking{background:var(--hl-soft)}
+.context{font-style:italic;color:var(--muted)}
+/* quiz */
+.item{display:flex;flex-direction:column;gap:8px;padding:12px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0;padding-top:0}
+.item .q{font-weight:500}
+.n{font-family:var(--mono);font-size:12px;color:var(--muted);margin-right:6px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:6px 12px;font-size:15px;text-align:left}
+.opt.right{background:var(--teal-soft);border-color:var(--teal)}
+.opt.wrong{background:var(--wrong-soft);border-color:var(--wrong)}
+.fb{font-size:14px;min-height:1.2em}.fb.ok{color:var(--teal)}.fb.no{color:var(--wrong)}
+.build{min-height:44px;border:1px dashed var(--line);border-radius:8px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;background:var(--paper)}
+.tiles{display:flex;flex-wrap:wrap;gap:6px}
+.tile{border:1px solid var(--ink);background:var(--card);color:var(--ink);border-radius:6px;padding:4px 10px;font-size:15px}
+.tile.used{visibility:hidden}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 10px;font-size:15px;text-align:left}
+.chip.sel{border-color:var(--ink);box-shadow:0 0 0 2px var(--hl)}
+.chip.right{border-color:var(--teal);background:var(--teal-soft)} .chip.wrong{border-color:var(--wrong);background:var(--wrong-soft)}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+.bin{border:2px dashed var(--line);border-radius:12px;padding:12px;min-height:130px;background:var(--card);text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:8px}
+.bin h4{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.bin .chips{flex-direction:column}
+details.reveal{border:1px solid var(--line);border-radius:10px;background:var(--card)}
+details.reveal summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details.reveal summary::-webkit-details-marker{display:none}
+details.reveal summary::after{content:"Show";float:right;font-family:var(--mono);font-size:12px;color:var(--teal);padding-top:3px}
+details.reveal[open] summary::after{content:"Hide"}
+details.reveal .body{padding:0 16px 14px}
+.formula{display:flex;flex-wrap:wrap;gap:6px}
+.formula span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;text-align:center;min-width:90px}
+.formula span small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.into{font-size:21px;font-family:var(--display)}
+.into em{font-style:normal;color:var(--teal)}
+input[type=text],textarea{width:100%;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--paper);color:var(--ink)}
+select{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:var(--paper);color:var(--ink);max-width:100%}
+select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border-color:var(--wrong);background:var(--wrong-soft)}
+.profile{font-size:17px;line-height:2.1}
+.model{font-size:14px;color:var(--teal);display:none}.show-models .model{display:block}
+.flip{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:14px;min-height:110px;text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:6px}
+.flip .w{font-family:var(--display);font-size:20px}
+.flip .back{display:none;font-size:14px;color:var(--muted)}
+.flip.on .back{display:block}
+.flip .hint{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:auto}
+/* challenge */
+.challenge{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:18px}
+.challenge>*{min-width:0}
+.words3{display:flex;flex-wrap:wrap;gap:10px}
+.wordbtn{border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 14px;font-family:var(--display);font-size:20px}
+.wordbtn.used{background:var(--teal-soft);border-color:var(--teal);text-decoration:line-through;text-decoration-color:var(--teal)}
+.bank{display:flex;flex-wrap:wrap;gap:6px}
+.bank span{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--muted)}
+.role{border:2px solid var(--ink);border-radius:14px;background:var(--card);padding:20px;display:flex;flex-direction:column;gap:6px;min-height:200px}
+.role .who{font-family:var(--display);font-size:28px}
+.role dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:6px 0 0;font-size:15px}
+.role dt{font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.role dd{margin:0}
+.timer{font-family:var(--mono);font-size:40px;font-variant-numeric:tabular-nums}
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.checklist label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.checklist input{margin-top:5px;width:18px;height:18px;accent-color:var(--teal);flex:none}
+.score{font-family:var(--mono);font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.big{font-family:var(--display);font-size:34px}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);z-index:5}
+.nav .mid{font-family:var(--mono);font-size:12px;color:var(--muted);align-self:center;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}
+/* Lesson 2 additions: podcast player card, timeline infographic, literature review, inline select gaps */
+.pod{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.pod .art{width:56px;height:56px;border-radius:10px;background:var(--ink);color:var(--hl);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:22px;flex:none}
+.pod .t{font-weight:600}.pod .s{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.dialogue.scroll{max-height:62vh;overflow-y:auto}
+.tl{list-style:none;margin:0;padding:0;position:relative}
+.tl::before{content:"";position:absolute;left:62px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl li{display:grid;grid-template-columns:52px 1fr;gap:22px;padding:8px 0;position:relative;line-height:2}
+.tl li::before{content:"";position:absolute;left:57px;top:17px;width:12px;height:12px;border-radius:50%;background:var(--hl);border:2px solid var(--card)}
+.tl .yr{font-family:var(--mono);font-size:13px;color:var(--teal);text-align:right;padding-top:2px}
+.lit{font-family:var(--body);font-size:17px;line-height:1.8}
+.lit .v{font-weight:600;border-bottom:2px solid var(--hl)}
+.email{line-height:2.1}
+.email .hdr{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.6;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}
+.notes{font-family:var(--mono);font-size:14px;line-height:1.7;background:var(--hl-soft);border:1px solid var(--hl);border-radius:10px;padding:14px 16px}
+</style>
+
+<header class="top">
+  <span class="tag">Module 1 · Lesson 2</span>
+  <span class="name">My Journey So Far</span>
+  <span class="count" id="count">1 / 19</span>
+</header>
+<div class="bar"><i id="prog"></i></div>
+
+<main id="deck">
+
+<!-- 1 -->
+<section class="slide" data-label="Welcome">
+  <div class="cover">
+    <p class="eyebrow">Academic English &amp; Conversation · Module 1 · Identity &amp; First Impressions</p>
+    <h1>My Journey <mark>So Far</mark></h1>
+    <p class="lead">Today you will listen to a podcast about a scientist who changed direction, tell the story of your own path, and choose the right tense the way academic writers do.</p>
+    <div class="meta"><span class="pill">Podcast</span><span class="pill">Timeline infographic</span><span class="pill">Past simple vs present perfect</span><span class="pill">Tense in literature reviews</span></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-label="Let's talk">
+  <p class="eyebrow">Let's talk</p>
+  <h2>Is your path a straight line or a zigzag?</h2>
+  <div class="grid2">
+    <div class="panel">
+      <ol class="prompts">
+        <li>At 15, what did you think you would do with your life? How close are you to that now?</li>
+        <li>Do you know someone who changed careers completely? What happened?</li>
+        <li>Is it a good or bad thing to change direction after 30? Why?</li>
+      </ol>
+    </div>
+    <div class="panel stack">
+      <h3>Quick vote</h3>
+      <p>My path so far has been…</p>
+      <div class="opts" id="vote">
+        <button class="opt" data-v="a">a straight line</button>
+        <button class="opt" data-v="b">a gentle curve</button>
+        <button class="opt" data-v="c">a total zigzag</button>
+      </div>
+      <p class="score" id="voteMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-label="Have you ever…? Spinner">
+  <p class="eyebrow">Warm-up game · Have you ever…?</p>
+  <h2>Spin. Answer yes or no, then your partner asks for the story.</h2>
+  <div class="panel spin-card" id="spinCard" aria-live="polite">Press Spin to get your first question.</div>
+  <div class="row" style="margin-top:14px">
+    <button class="btn" id="spinBtn">Spin</button>
+    <span class="score" id="spinLeft">12 questions left</span>
+  </div>
+  <p style="margin-top:14px;color:var(--muted)">Rule: if the answer is <b>yes</b>, your partner must ask two more questions: <mark>When was that?</mark> <mark>What happened?</mark> If the answer is <b>no</b>, say if you would like to.</p>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-label="Listen: Second Acts podcast">
+  <p class="eyebrow">Listen</p>
+  <h2>Second Acts · Episode 14: From Buildings to Brains</h2>
+  <div class="grid2">
+    <div class="stack">
+      <div class="pod"><div class="art">2A</div><div><div class="t">Second Acts</div><div class="s">A podcast about people who changed direction · 7 min</div></div></div>
+      <p class="context">Host Ruth talks to Dr Helena Costa, a cognitive neuroscientist who started her career as an architect.</p>
+      <div class="row"><button class="btn" id="playBtn">Listen</button><button class="btn ghost" id="stopBtn">Stop</button><button class="btn ghost" id="hideTx">Hide transcript</button></div>
+      <div class="panel" data-quiz>
+        <h3>First listening · the big idea</h3>
+        <p style="font-size:15px;color:var(--muted)">What is Helena's main message?</p>
+        <div class="item" data-answer="b"><div class="opts" style="flex-direction:column">
+          <button class="opt" data-v="a">Architecture is a better career than science.</button>
+          <button class="opt" data-v="b">Changing fields is hard, but the skills you already have travel with you.</button>
+          <button class="opt" data-v="c">You should choose one career early and never change it.</button>
+        </div><div class="fb"></div></div>
+      </div>
+    </div>
+    <div class="panel dialogue scroll" id="dialogue">
+      <div class="line d"><b>Ruth</b><span>Welcome back to Second Acts, the podcast about people who changed direction. My guest today has worked as an architect, a lighting designer and, for the last eight years, a neuroscientist. Helena, welcome.</span></div>
+      <div class="line m"><b>Helena</b><span>Thanks, Ruth. When you say it like that, it sounds like I can't make up my mind!</span></div>
+      <div class="line d"><b>Ruth</b><span>So let's start at the beginning. What did you study first?</span></div>
+      <div class="line m"><b>Helena</b><span>Architecture. I graduated in 2009 and spent five years designing hospitals in Lisbon. I gained a lot of experience in a short time, but something was bothering me.</span></div>
+      <div class="line d"><b>Ruth</b><span>What was it?</span></div>
+      <div class="line m"><b>Helena</b><span>We designed these beautiful buildings, but nobody ever asked how patients actually felt inside them. In 2013 I read a famous study from the 1980s. It showed that patients with a view of trees recovered faster than patients who faced a brick wall. That was a real milestone for me.</span></div>
+      <div class="line d"><b>Ruth</b><span>So you decided to switch fields.</span></div>
+      <div class="line m"><b>Helena</b><span>Not immediately. First I made the transition to lighting design, because light affects our mood and our sleep. Then, in 2018, I went back to university to do a PhD in cognitive neuroscience.</span></div>
+      <div class="line d"><b>Ruth</b><span>That's a big change. Was it hard?</span></div>
+      <div class="line m"><b>Helena</b><span>Very. In my first year I failed a statistics exam. It was a serious setback, and I almost quit. But then I realised that architects have a lot of transferable skills. We think in three dimensions, we sketch ideas, we manage complex projects.</span></div>
+      <div class="line d"><b>Ruth</b><span>And what have you done since then?</span></div>
+      <div class="line m"><b>Helena</b><span>Quite a lot, actually. I've acquired a completely new set of skills, from brain imaging to coding. To date, I've published eleven papers on how hospital design affects recovery, and I've contributed to new design guidelines for two hospitals.</span></div>
+      <div class="line d"><b>Ruth</b><span>Have you ever regretted leaving architecture?</span></div>
+      <div class="line m"><b>Helena</b><span>Never. And I haven't really left it. I've just broadened my perspective. Now I design studies instead of buildings.</span></div>
+      <div class="line d"><b>Ruth</b><span>Final question. What would you say to a listener who wants to change direction?</span></div>
+      <div class="line m"><b>Helena</b><span>Look at your track record, not your job title. You've probably built more skills than you think.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-label="Listen again: details">
+  <p class="eyebrow">Listen again</p>
+  <h2>True or false? Correct the false sentences.</h2>
+  <div class="grid2">
+    <div class="panel" data-quiz>
+      <div class="item" data-answer="T"><div class="q"><span class="n">1</span>Helena designed hospitals for about five years.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="F" data-why="False. She moved to lighting design first, and started her PhD in 2018."><div class="q"><span class="n">2</span>She went directly from architecture to neuroscience.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="F" data-why="False. The study was from the 1980s. She read it in 2013."><div class="q"><span class="n">3</span>The study about trees was published in 2013.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="T"><div class="q"><span class="n">4</span>She almost gave up during her PhD.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="F" data-why="False. She says she has never regretted it, and that she hasn't really left architecture."><div class="q"><span class="n">5</span>She sometimes regrets leaving architecture.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+      <p class="score" data-score></p>
+    </div>
+    <div class="panel stack">
+      <h3>Think deeper</h3>
+      <ol class="prompts" style="font-size:17px">
+        <li>Why did the tree study matter so much to Helena?</li>
+        <li>Which three skills did she bring from architecture? Which of them do <b>you</b> have?</li>
+        <li>“Look at your track record, not your job title.” What does she mean? Do you agree?</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-label="Vocabulary in context">
+  <p class="eyebrow">Vocabulary · Telling the story of your path</p>
+  <h2>Helena's words: guess the meaning, then tap to check.</h2>
+  <p style="color:var(--muted)">Every quote is from the podcast. Use the context to guess before you tap.</p>
+  <div class="grid3" id="voices">
+    <button class="flip"><span>“I <mark>gained</mark> a lot of <mark>experience</mark> in a short time.”</span><span class="back"><b>got experience gradually, by doing</b> · gain experience / knowledge / insight into…</span><span class="hint">tap</span></button>
+    <button class="flip"><span>“That was a real <mark>milestone</mark> for me.”</span><span class="back"><b>an important event or stage in a process</b> · reach / mark a milestone</span><span class="hint">tap</span></button>
+    <button class="flip"><span>“First I <mark>made the transition</mark> to lighting design.”</span><span class="back"><b>changed from one situation or field to another</b> · make the transition from X to Y</span><span class="hint">tap</span></button>
+    <button class="flip"><span>“It was a serious <mark>setback</mark>, and I almost quit.”</span><span class="back"><b>a problem that stops or delays progress</b> · suffer / overcome a setback</span><span class="hint">tap</span></button>
+    <button class="flip"><span>“Architects have a lot of <mark>transferable skills</mark>.”</span><span class="back"><b>skills you can use in a different job or field</b> · e.g. writing, project management</span><span class="hint">tap</span></button>
+    <button class="flip"><span>“I've <mark>acquired</mark> a completely new set of skills.”</span><span class="back"><b>gained or learned (formal)</b> · acquire skills / knowledge / a language</span><span class="hint">tap</span></button>
+    <button class="flip"><span>“<mark>To date</mark>, I've published eleven papers.”</span><span class="back"><b>until now (formal)</b> · used with the present perfect · = so far</span><span class="hint">tap</span></button>
+    <button class="flip"><span>“I've <mark>contributed to</mark> new design guidelines.”</span><span class="back"><b>helped to create or achieve something</b> · contribute to + noun / -ing</span><span class="hint">tap</span></button>
+    <button class="flip"><span>“I've just <mark>broadened</mark> my perspective.”</span><span class="back"><b>made wider, included more things</b> · broaden your perspective / horizons / knowledge</span><span class="hint">tap</span></button>
+    <button class="flip"><span>“Look at your <mark>track record</mark>, not your job title.”</span><span class="back"><b>your past achievements, seen together</b> · have a strong / proven track record in…</span><span class="hint">tap</span></button>
+  </div>
+  <div class="row" style="margin-top:14px"><button class="btn ghost" id="allMeanings">Show all meanings</button></div>
+  <div class="panel" style="margin-top:14px">
+    <h3>Notice</h3>
+    <p style="margin:0">Which expressions are <b>positive</b>, which are <b>negative</b>, and which are <b>neutral</b>? Which two are more formal, typical of a CV or a research profile?</p>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-label="Infographic: Helena's path">
+  <p class="eyebrow">Vocabulary · Infographic</p>
+  <h2>The podcast website made a timeline of Helena's path. Complete it.</h2>
+  <div class="grid2">
+    <div class="panel">
+      <p class="eyebrow" style="margin:0 0 6px">From Buildings to Brains · Dr Helena Costa</p>
+      <ol class="tl" id="tlGaps">
+        <li><span class="yr">2009</span><span>Graduates in architecture and starts to <select data-gap="gain experience"></select> designing hospitals in Lisbon.</span></li>
+        <li><span class="yr">2013</span><span>Reads a 1980s study about patients and trees: <select data-gap="a milestone"></select> in her thinking.</span></li>
+        <li><span class="yr">2014</span><span><select data-gap="makes the transition"></select> to lighting design.</span></li>
+        <li><span class="yr">2018</span><span>Starts a PhD in cognitive neuroscience.</span></li>
+        <li><span class="yr">2019</span><span>Fails a statistics exam: a serious <select data-gap="setback"></select>. Almost quits.</span></li>
+        <li><span class="yr">since</span><span>Has <select data-gap="acquired"></select> skills in brain imaging and coding, and uses three <select data-gap="transferable skills"></select> from architecture.</span></li>
+        <li><span class="yr">now</span><span><select data-gap="To date"></select>, 11 papers published. Has <select data-gap="contributed to"></select> design guidelines for two hospitals, and has a strong <select data-gap="track record"></select> in design research.</span></li>
+      </ol>
+      <div class="row" style="margin-top:10px"><button class="btn" id="gapCheck">Check</button><span class="score" id="gapScore"></span></div>
+    </div>
+    <div class="stack">
+      <details class="reveal"><summary>Check the patterns</summary><div class="body">
+        <div class="tbl"><table><thead><tr><th>Expression</th><th>Pattern</th></tr></thead><tbody>
+          <tr><td>gain / acquire</td><td>+ experience / skills / knowledge</td></tr>
+          <tr><td>make the transition</td><td>from X to Y</td></tr>
+          <tr><td>contribute to</td><td>+ noun / -ing: <i>contribute to improving…</i></td></tr>
+          <tr><td>a track record</td><td>in / of: <i>a track record in research</i></td></tr>
+          <tr><td>to date</td><td>+ present perfect</td></tr>
+          <tr><td>a milestone / a setback</td><td>reach a milestone · overcome a setback</td></tr>
+          <tr><td>broaden</td><td>+ your perspective / horizons</td></tr>
+        </tbody></table></div>
+      </div></details>
+      <div class="panel">
+        <h3>Your turn</h3>
+        <p>What has been the biggest <b>milestone</b> on your path so far? And the biggest <b>setback</b>? Tell your teacher, with details.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-label="Milestone Challenge">
+  <p class="eyebrow">Speaking challenge · Milestone Challenge</p>
+  <h2>Answer the question in 60 seconds using all three words.</h2>
+  <div class="challenge">
+    <div class="panel stack">
+      <div class="big" id="chQ" aria-live="polite">Press Deal to start round 1.</div>
+      <div class="words3" id="chW"></div>
+      <p style="font-size:15px;color:var(--muted)">Tap a word when you use it correctly. Your teacher then asks one follow-up question. Answer it with a new word from the bank for a bonus point.</p>
+      <div class="row"><button class="btn" id="chDeal">Deal</button><button class="btn ghost" id="chBonus" disabled>+1 bonus</button></div>
+    </div>
+    <div class="panel stack">
+      <div class="row" style="justify-content:space-between"><span class="timer" id="chT">1:00</span><button class="btn ghost" id="chStart">Start timer</button></div>
+      <div><span class="score">Round</span> <span class="big" id="chR">0</span> <span class="score" style="margin-left:18px">Points</span> <span class="big" id="chP">0</span></div>
+      <h3>Word bank</h3>
+      <div class="bank"><span>gain experience</span><span>a milestone</span><span>make the transition</span><span>a setback</span><span>transferable skills</span><span>acquire</span><span>to date</span><span>contribute to</span><span>broaden</span><span>track record</span><span>pursue</span><span>a turning point</span></div>
+      <p style="font-size:15px;color:var(--muted)">Swap roles in round 3: you deal, your teacher answers, and you ask the follow-up.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-label="Sort: finished or up to now?">
+  <p class="eyebrow">Notice</p>
+  <h2>Sort these sentences from the podcast into two groups.</h2>
+  <p style="color:var(--muted)">Tap a sentence, then tap a group.</p>
+  <div class="panel stack" data-sorter>
+    <div class="chips pool">
+      <button class="chip" data-g="a">I graduated in 2009.</button>
+      <button class="chip" data-g="b">To date, I've published eleven papers.</button>
+      <button class="chip" data-g="a">In 2013 I read a famous study.</button>
+      <button class="chip" data-g="b">My guest has worked as an architect, a lighting designer…</button>
+      <button class="chip" data-g="a">In my first year I failed a statistics exam.</button>
+      <button class="chip" data-g="b">Have you ever regretted leaving architecture?</button>
+      <button class="chip" data-g="a">In 2018, I went back to university.</button>
+      <button class="chip" data-g="b">I've acquired a completely new set of skills.</button>
+      <button class="chip" data-g="b">I haven't really left it.</button>
+    </div>
+    <div class="bins">
+      <button class="bin" data-bin="a"><h4>Group A · the time is finished and clear</h4><div class="chips"></div></button>
+      <button class="bin" data-bin="b"><h4>Group B · no finished time / up to now</h4><div class="chips"></div></button>
+    </div>
+    <div class="row"><button class="btn" data-sort-check>Check</button><button class="btn ghost" data-sort-reset>Start again</button><span class="score" data-sort-score></span></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-label="Past simple or present perfect?">
+  <p class="eyebrow">Notice</p>
+  <h2>Look at the two groups. When does Helena use each tense?</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <p class="into">I <mark>graduated</mark> <em>in 2009</em>.</p>
+      <p class="into"><em>To date</em>, I<mark>'ve published</mark> eleven papers.</p>
+      <p class="into">She <mark>has worked</mark> as an architect.</p>
+      <ol class="prompts" style="font-size:17px">
+        <li>Which group always has a finished time (<i>in 2009, in my first year</i>)?</li>
+        <li>Is Helena still an architect? So why does Ruth say “She <b>has worked</b> as an architect”?</li>
+        <li>Can Helena publish more papers in the future? How does the tense show this?</li>
+        <li>Why is it wrong to say “I <s>have graduated</s> in 2009”?</li>
+      </ol>
+    </div>
+    <div class="stack">
+      <details class="reveal"><summary>Past simple</summary><div class="body">
+        <p>Use it for a <b>finished</b> action at a <b>finished</b> time. The time is said or clear from context: <i>in 2009, last year, two years ago, when I was a student, in my first year</i>.</p>
+        <p>It tells the <b>story</b>: what happened, step by step.</p>
+      </div></details>
+      <details class="reveal"><summary>Present perfect</summary><div class="body">
+        <p><b>have / has + past participle.</b> Use it when the time is <b>not finished</b> or <b>not important</b>, and the past connects to now:</p>
+        <ul>
+          <li><b>life experience</b>, no time given: <i>She has worked as an architect.</i></li>
+          <li><b>up to now</b>, maybe more later: <i>To date, I've published eleven papers.</i></li>
+          <li><b>a result now</b>: <i>I've acquired new skills</i> (I have them now).</li>
+        </ul>
+        <p>Typical words: <i>ever, never, so far, to date, since, for, already, yet, recently</i>.</p>
+      </div></details>
+      <details class="reveal"><summary>How the two work together</summary><div class="body">
+        <p>Speakers often <b>open</b> with the present perfect and <b>continue</b> with the past simple when they give details:</p>
+        <p><i>“<b>Have</b> you ever <b>regretted</b> it?” “Yes, once. I <b>regretted</b> it when I <b>failed</b> that exam.”</i></p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-label="Tense in academic writing">
+  <p class="eyebrow">Think like an academic · Literature reviews</p>
+  <h2>Helena's papers start like this. Why does the tense change?</h2>
+  <div class="grid2">
+    <article class="panel lit">
+      <p class="eyebrow" style="margin:0">Introduction · paragraph 1</p>
+      <p>Over the past four decades, researchers <span class="v">have examined</span> how the physical environment affects patient recovery. In a landmark study, Ulrich (1984) <span class="v">found</span> that surgical patients with a window view of trees <span class="v">left</span> hospital earlier than patients who <span class="v">faced</span> a brick wall. Since then, numerous studies <span class="v">have confirmed</span> the benefits of natural light and green views. However, few studies <span class="v">have investigated</span> the effect of lighting at night. Costa (2023) <span class="v">addressed</span> this gap with a study of 240 patients in two Lisbon hospitals.</p>
+      <p class="src" style="font-family:var(--mono);font-size:11px;color:var(--muted);margin:0">Illustrative paragraph. Ulrich (1984) is a real study published in <i>Science</i>; Costa (2023) is fictional.</p>
+    </article>
+    <div class="panel" data-quiz>
+      <h3>What does each verb describe?</h3>
+      <div class="item" data-answer="G"><div class="q"><span class="n">1</span>researchers <b>have examined</b></div><div class="opts"><button class="opt" data-v="G">the research field in general</button><button class="opt" data-v="S">one specific study</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="S"><div class="q"><span class="n">2</span>Ulrich (1984) <b>found</b></div><div class="opts"><button class="opt" data-v="G">the research field in general</button><button class="opt" data-v="S">one specific study</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="G"><div class="q"><span class="n">3</span>numerous studies <b>have confirmed</b></div><div class="opts"><button class="opt" data-v="G">the research field in general</button><button class="opt" data-v="S">one specific study</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="G" data-why="“Few studies” is a statement about the whole field up to now: a gap in the research."><div class="q"><span class="n">4</span>few studies <b>have investigated</b></div><div class="opts"><button class="opt" data-v="G">the research field in general</button><button class="opt" data-v="S">one specific study</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="S"><div class="q"><span class="n">5</span>Costa (2023) <b>addressed</b></div><div class="opts"><button class="opt" data-v="G">the research field in general</button><button class="opt" data-v="S">one specific study</button></div><div class="fb"></div></div>
+      <p class="score" data-score></p>
+      <details class="reveal" style="margin-top:8px"><summary>The academic rule</summary><div class="body">
+        <p><b>Present perfect</b> = the state of the field up to now: <i>Research has shown… · Several studies have found… · Few studies have examined…</i></p>
+        <p><b>Past simple</b> = one study with a name and a year: <i>Smith (2019) found… · In a 2020 study, researchers measured…</i></p>
+        <p>Signal phrases for the field: <i>over the past decade, in recent years, since then, to date</i>.</p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-label="Time expressions">
+  <p class="eyebrow">Notice · Time expressions</p>
+  <h2>All of these come from Helena's story and her paper. Which tense do they go with?</h2>
+  <p style="color:var(--muted)">Tap an expression, then tap a tense.</p>
+  <div class="panel stack" data-sorter>
+    <div class="chips pool">
+      <button class="chip" data-g="a">in 2009</button>
+      <button class="chip" data-g="b">to date</button>
+      <button class="chip" data-g="b">over the past four decades</button>
+      <button class="chip" data-g="a">in my first year</button>
+      <button class="chip" data-g="b">since then</button>
+      <button class="chip" data-g="a">in the 1980s</button>
+      <button class="chip" data-g="b">ever</button>
+      <button class="chip" data-g="a">five years ago</button>
+      <button class="chip" data-g="b">so far</button>
+      <button class="chip" data-g="a">when I was an architect</button>
+    </div>
+    <div class="bins">
+      <button class="bin" data-bin="a"><h4>Past simple</h4><div class="chips"></div></button>
+      <button class="bin" data-bin="b"><h4>Present perfect</h4><div class="chips"></div></button>
+    </div>
+    <div class="row"><button class="btn" data-sort-check>Check</button><button class="btn ghost" data-sort-reset>Start again</button><span class="score" data-sort-score></span></div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-label="Say it naturally">
+  <p class="eyebrow">Say it naturally</p>
+  <h2>The present perfect is often very short in speech.</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <h3>Contractions</h3>
+      <p class="into">I<mark>'ve</mark> published eleven papers.</p>
+      <p class="into">She<mark>'s</mark> worked in three fields.</p>
+      <p class="into">We <mark>haven't</mark> finished yet.</p>
+      <div class="row"><button class="btn ghost" data-say="I've published eleven papers. She's worked in three fields. We haven't finished yet.">Listen</button></div>
+      <p style="font-size:15px;color:var(--muted)">Careful: <i>She's worked</i> = she <b>has</b> worked. <i>She's working</i> = she <b>is</b> working.</p>
+    </div>
+    <div class="panel stack">
+      <h3>Weak forms in questions</h3>
+      <div class="tbl"><table><thead><tr><th>Written</th><th>Sounds like</th></tr></thead><tbody>
+        <tr><td>Have you ever…?</td><td>“havya EVer”</td></tr>
+        <tr><td>Has she finished?</td><td>“hazshe FINished”</td></tr>
+        <tr><td>What have you done?</td><td>“whatəv ya DONE”</td></tr>
+        <tr><td>I've been there.</td><td>“ivbin THERE”</td></tr>
+      </tbody></table></div>
+      <div class="row"><button class="btn ghost" data-say="Have you ever changed fields? What have you done since then?">Listen</button></div>
+      <p>Stress goes on the main verb, not on <i>have</i>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-label="Practice 1: Helena's email">
+  <p class="eyebrow">Practice 1</p>
+  <h2>Helena writes to her old boss at the architecture firm. Choose the right tense.</h2>
+  <div class="grid2">
+    <div class="panel email">
+      <div class="hdr">From: Helena Costa · To: Paulo Ribeiro · Subject: Long time no see!</div>
+      Dear Paulo,<br>
+      I hope you're well. I <select data-ans="left" data-opts="left|have left"></select> the firm twelve years ago, and a lot <select data-ans="has happened" data-opts="happened|has happened"></select> since then! In 2018 I <select data-ans="started" data-opts="started|have started"></select> a PhD in neuroscience, and I <select data-ans="finished" data-opts="finished|have finished"></select> it in 2022. Since then, I <select data-ans="have worked" data-opts="worked|have worked"></select> at the Lisbon Health Design Lab. To date, our team <select data-ans="has published" data-opts="published|has published"></select> eleven papers, and last month we <select data-ans="presented" data-opts="presented|have presented"></select> our results to the Ministry of Health.<br>
+      I <select data-ans="have never forgotten" data-opts="never forgot|have never forgotten"></select> the hospital projects we did together. <select data-ans="Have you ever thought" data-opts="Did you ever think|Have you ever thought"></select> about designing hospitals again? I'd love to hear your news.<br>
+      Best wishes,<br>Helena
+      <div class="row" style="margin-top:8px"><button class="btn" data-sel-check>Check</button><span class="score" data-sel-score></span></div>
+    </div>
+    <div class="panel stack">
+      <h3>Explain it</h3>
+      <ol class="prompts" style="font-size:17px">
+        <li>Find two time expressions that forced you to use the past simple.</li>
+        <li>Find two that forced the present perfect.</li>
+        <li>Why is <i>“a lot has happened since then”</i> more natural than <i>“a lot happened”</i> here?</li>
+      </ol>
+      <p style="color:var(--muted);font-size:15px">Then imagine you are Paulo. Reply to Helena aloud in four sentences: two in the present perfect, two in the past simple.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-label="Practice 2: write like a researcher">
+  <p class="eyebrow">Practice 2</p>
+  <h2>Helena's research notes for her next paper. Turn them into academic sentences.</h2>
+  <div class="grid2" id="p2">
+    <div class="stack">
+      <div class="notes">
+        Topic: noise in hospital wards<br>
+        • field in general: lots of research since the 1990s → noise disturbs patients' sleep<br>
+        • Buxton et al. (2012), lab study → recorded hospital sounds woke healthy sleepers<br>
+        • many studies: noise levels above WHO guidelines<br>
+        • GAP: very few studies on single vs shared rooms at night
+      </div>
+      <p style="font-size:15px;color:var(--muted)">Use the present perfect for the field and the past simple for the named study.</p>
+    </div>
+    <div class="panel stack">
+      <div><label for="w1">1. The field in general (Since the 1990s, …)</label><input type="text" id="w1"><span class="model">Since the 1990s, many researchers have shown that noise disturbs patients' sleep.</span></div>
+      <div><label for="w2">2. The specific study (Buxton et al. (2012) …)</label><input type="text" id="w2"><span class="model">Buxton et al. (2012) found that recorded hospital sounds woke healthy sleepers in a laboratory.</span></div>
+      <div><label for="w3">3. More evidence (Numerous studies …)</label><input type="text" id="w3"><span class="model">Numerous studies have found noise levels above WHO guidelines.</span></div>
+      <div><label for="w4">4. The gap (However, …)</label><input type="text" id="w4"><span class="model">However, very few studies have compared single and shared rooms at night.</span></div>
+      <div class="row"><button class="btn ghost" data-models="p2">Show model answers</button></div>
+      <p style="font-size:13px;color:var(--muted);margin:0">Buxton et al. (2012) is a real sleep study published in <i>Annals of Internal Medicine</i>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-label="Timeline Detective">
+  <p class="eyebrow">Practice 3 · Game</p>
+  <h2>Timeline Detective: rebuild a stranger's path in five minutes.</h2>
+  <div class="grid2">
+    <div class="stack">
+      <div class="role" id="role" aria-live="polite">
+        <span class="eyebrow">Mystery guest</span>
+        <span class="who">Draw a card</span>
+        <p style="color:var(--muted)">Your teacher becomes a guest on Second Acts. You are the host. You only see the name and today's job. Find out the path that led there.</p>
+      </div>
+      <div class="row"><button class="btn" id="drawBtn">Draw a card</button><button class="btn ghost" id="revealBtn" disabled>Reveal the timeline</button></div>
+    </div>
+    <div class="panel stack">
+      <div class="row" style="justify-content:space-between"><span class="timer" id="timer">5:00</span>
+        <span class="row"><button class="btn" id="tStart">Start</button><button class="btn ghost" id="tReset">Reset</button></span></div>
+      <h3>Rules</h3>
+      <ul class="checklist">
+        <li><label><input type="checkbox"><span>open each topic with <b>Have you ever…?</b> or <b>What have you done since…?</b></span></label></li>
+        <li><label><input type="checkbox"><span>every “yes” gets two past simple follow-ups: <b>When did you…? What happened?</b></span></label></li>
+        <li><label><input type="checkbox"><span>find their biggest milestone and their biggest setback</span></label></li>
+        <li><label><input type="checkbox"><span>find the year of every step on the timeline</span></label></li>
+        <li><label><input type="checkbox"><span>use three expressions from today's vocabulary</span></label></li>
+      </ul>
+      <p style="color:var(--muted);font-size:15px">Then present your guest to the listeners in one minute: “My guest today has… She started out as… In 2015, she… Since then, she has…”</p>
+    </div>
+  </div>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-label="Your turn: My Journey So Far">
+  <p class="eyebrow">Your turn · Production</p>
+  <h2>Be the guest on Second Acts: tell your journey so far in two minutes.</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <h3>1 · Plan your timeline (3 minutes)</h3>
+      <div class="tbl"><table><thead><tr><th style="width:90px">When</th><th>What happened</th></tr></thead><tbody>
+        <tr><td><input type="text" aria-label="Year 1" placeholder="2012"></td><td><input type="text" aria-label="Event 1" placeholder="started university…"></td></tr>
+        <tr><td><input type="text" aria-label="Year 2"></td><td><input type="text" aria-label="Event 2" placeholder="a milestone…"></td></tr>
+        <tr><td><input type="text" aria-label="Year 3"></td><td><input type="text" aria-label="Event 3" placeholder="a setback…"></td></tr>
+        <tr><td><input type="text" aria-label="Year 4"></td><td><input type="text" aria-label="Event 4"></td></tr>
+        <tr><td>now</td><td><input type="text" aria-label="Up to now" placeholder="To date, I've… / Since then, I've…"></td></tr>
+      </tbody></table></div>
+    </div>
+    <div class="panel stack">
+      <h3>2 · Tell it (2 minutes), then answer the host's questions</h3>
+      <ul class="checklist">
+        <li><label><input type="checkbox"><span>I opened with the big picture in the present perfect (I've worked in… / I've always been drawn to…).</span></label></li>
+        <li><label><input type="checkbox"><span>I told the steps in the past simple, with clear times.</span></label></li>
+        <li><label><input type="checkbox"><span>I mentioned one milestone and one setback.</span></label></li>
+        <li><label><input type="checkbox"><span>I finished with “To date / So far / Since then, I've…”.</span></label></li>
+        <li><label><input type="checkbox"><span>I used at least four expressions from today and one from Lesson 1.</span></label></li>
+      </ul>
+      <p style="color:var(--muted);font-size:15px">Keep your notes. In Lesson 4 this becomes your project: <b>My Story in 3 Minutes</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-label="Phrases to keep">
+  <p class="eyebrow">Take these with you</p>
+  <h2>Phrases for telling your story and citing research</h2>
+  <div class="grid3">
+    <div class="panel"><h3>Starting the story</h3><p>I started out as…<br>Originally, I trained as…<br>My first job was…</p></div>
+    <div class="panel"><h3>Moving it forward</h3><p>That's when I realised…<br>Along the way, I've…<br>Looking back, …<br>Since then, I've…</p></div>
+    <div class="panel"><h3>Citing research</h3><p>Research has shown that…<br>Several studies have found…<br>Smith (2019) found that…<br>Few studies have examined…</p></div>
+  </div>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-label="Before you go">
+  <p class="eyebrow">Before you go</p>
+  <h2>Three quick questions</h2>
+  <div class="panel stack" style="max-width:760px">
+    <div><label for="e1">1. In one sentence, why did Helena change fields?</label><textarea id="e1" rows="2"></textarea></div>
+    <div><label for="e2">2. Write one sentence about your path in the past simple and one in the present perfect.</label><textarea id="e2" rows="2"></textarea></div>
+    <div><label for="e3">3. Complete for a literature review: “Research ______ that… However, Lee (2021) ______ that…”</label><textarea id="e3" rows="2"></textarea></div>
+  </div>
+</section>
+
+</main>
+
+<nav class="nav">
+  <button class="btn ghost" id="prev">← Back</button>
+  <span class="mid" id="mid"></span>
+  <button class="btn" id="next">Next →</button>
+</nav>
+
+<script>
+(function(){
+const slides=[...document.querySelectorAll('.slide')];
+let i=0;
+const count=document.getElementById('count'),prog=document.getElementById('prog'),mid=document.getElementById('mid');
+function show(n){
+  i=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+  count.textContent=(i+1)+' / '+slides.length;
+  prog.style.width=((i+1)/slides.length*100)+'%';
+  mid.textContent=slides[i].dataset.label||'';
+  document.getElementById('prev').disabled=i===0;
+  document.getElementById('next').disabled=i===slides.length-1;
+  try{history.replaceState(null,'','#s'+(i+1))}catch(e){}
+  window.scrollTo(0,0);
+}
+document.getElementById('prev').onclick=()=>show(i-1);
+document.getElementById('next').onclick=()=>show(i+1);
+document.addEventListener('keydown',e=>{
+  if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
+  if(e.key==='ArrowRight'||e.key==='PageDown')show(i+1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1);
+});
+const m=/^#s(\d+)$/.exec(location.hash);show(m?+m[1]-1:0);
+const shuffle=a=>{for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+
+// vote
+document.querySelectorAll('#vote .opt').forEach(b=>b.onclick=()=>{document.querySelectorAll('#vote .opt').forEach(x=>x.classList.remove('right'));b.classList.add('right');document.getElementById('voteMsg').textContent='Vote saved. Today you will hear about a real zigzag.'});
+
+// speech
+function speak(text,voiceIdx,onend){
+  try{
+    const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=.95;
+    const vs=speechSynthesis.getVoices().filter(v=>/^en/.test(v.lang));
+    if(vs.length)u.voice=vs[voiceIdx%vs.length];
+    if(onend)u.onend=onend;speechSynthesis.speak(u);return true;
+  }catch(e){return false}
+}
+document.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>{try{speechSynthesis.cancel()}catch(e){};speak(b.dataset.say,0)});
+const dlg=document.getElementById('dialogue');
+const lines=[...dlg.querySelectorAll('.line')];
+let playing=false;
+function playFrom(k){
+  lines.forEach(l=>l.classList.remove('speaking'));
+  if(!playing||k>=lines.length){playing=false;return}
+  const l=lines[k];l.classList.add('speaking');
+  if(dlg.style.visibility!=='hidden')l.scrollIntoView({block:'nearest',behavior:'smooth'});
+  if(!speak(l.querySelector('span').textContent,l.classList.contains('m')?1:0,()=>playFrom(k+1)))playing=false;
+}
+document.getElementById('playBtn').onclick=()=>{try{speechSynthesis.cancel()}catch(e){};playing=true;playFrom(0)};
+document.getElementById('stopBtn').onclick=()=>{playing=false;try{speechSynthesis.cancel()}catch(e){};lines.forEach(l=>l.classList.remove('speaking'))};
+document.getElementById('hideTx').onclick=e=>{const h=dlg.style.visibility==='hidden';dlg.style.visibility=h?'':'hidden';e.target.textContent=h?'Hide transcript':'Show transcript'};
+
+// spinner
+const qs=["Have you ever changed your plans completely?","Have you ever lived in another city or country?","Have you ever taken a course just for fun?","Have you ever given a presentation in English?","Have you ever had a job you didn't like?","Have you ever learned something difficult on your own?","Have you ever met someone who changed your mind about your career?","Have you ever failed at something and tried again?","Have you ever worked or studied in a team with people from other countries?","Have you ever read a book or article that changed the way you think?","Have you ever taught someone a skill?","Have you ever won a prize or competition?"];
+let pool=[...qs];
+const card=document.getElementById('spinCard'),left=document.getElementById('spinLeft');
+document.getElementById('spinBtn').onclick=()=>{
+  if(!pool.length)pool=[...qs];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let t=0;card.classList.add('rolling');
+  const final=pool.splice(Math.floor(Math.random()*pool.length),1)[0];
+  const tick=()=>{card.textContent=qs[Math.floor(Math.random()*qs.length)];if(++t<10&&!reduce)setTimeout(tick,60+t*12);else{card.textContent=final;card.classList.remove('rolling');left.textContent=pool.length+' questions left'}};
+  tick();
+};
+
+// quizzes
+document.querySelectorAll('[data-quiz]').forEach(q=>{
+  const items=[...q.querySelectorAll('.item')];const score=q.querySelector('[data-score]');
+  const upd=()=>{const done=items.filter(it=>it.dataset.done);const right=done.filter(it=>it.dataset.done==='1').length;if(score)score.textContent=done.length?`Score: ${right} / ${items.length}`:''};
+  items.forEach(it=>{
+    const fb=it.querySelector('.fb');
+    it.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+      if(it.dataset.done)return;
+      const ok=o.dataset.v===it.dataset.answer;o.classList.add(ok?'right':'wrong');
+      if(!ok)it.querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===it.dataset.answer)x.classList.add('right')});
+      it.dataset.done=ok?'1':'0';
+      fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?'Correct.':(it.dataset.why||'Not quite. Look at the correct answer.');
+      upd();
+    });
+  });
+});
+
+// flip cards
+document.querySelectorAll('.flip').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+document.getElementById('allMeanings').onclick=e=>{const cards=[...document.querySelectorAll('#voices .flip')];const open=!cards.every(c=>c.classList.contains('on'));cards.forEach(c=>c.classList.toggle('on',open));e.target.textContent=open?'Hide all meanings':'Show all meanings'};
+
+// timeline gap fill
+const gaps=[...document.querySelectorAll('#tlGaps select')];
+const gopts=gaps.map(g=>g.dataset.gap).sort((a,b)=>a.localeCompare(b));
+gaps.forEach(g=>{g.innerHTML='<option value="">……</option>'+gopts.map(o=>`<option>${o}</option>`).join('');g.setAttribute('aria-label','Gap')});
+document.getElementById('gapCheck').onclick=()=>{let r=0;gaps.forEach(g=>{const ok=g.value===g.dataset.gap;if(ok)r++;g.className=g.value?(ok?'ok':'no'):''});document.getElementById('gapScore').textContent=`${r} / ${gaps.length}`};
+
+// inline tense selects
+document.querySelectorAll('select[data-opts]').forEach(s=>{s.innerHTML='<option value="">……</option>'+s.dataset.opts.split('|').map(o=>`<option>${o}</option>`).join('');s.setAttribute('aria-label','Choose the verb form')});
+document.querySelectorAll('[data-sel-check]').forEach(b=>b.onclick=()=>{const p=b.closest('.panel'),ss=[...p.querySelectorAll('select[data-ans]')];let r=0;ss.forEach(s=>{const ok=s.value===s.dataset.ans;if(ok)r++;s.className=s.value?(ok?'ok':'no'):''});p.querySelector('[data-sel-score]').textContent=`${r} / ${ss.length}`});
+
+// three-word challenge
+const chQs=["Tell me about a milestone in your life so far.","Describe a setback and what you learned from it.","What skills have you gained in your current job or studies?","Tell me about a time you changed direction.","What have you achieved this year so far?","Which of your skills would be useful in a completely different field?","Describe a person who has contributed to your success.","What would you like your track record to show in ten years?"];
+const chWords=["gain experience","a milestone","make the transition","a setback","transferable skills","acquire","to date","contribute to","broaden","track record","pursue","a turning point"];
+let chPool=[],rounds=0,points=0,bonusUsed=false;
+const chQ=document.getElementById('chQ'),chW=document.getElementById('chW'),chR=document.getElementById('chR'),chP=document.getElementById('chP'),chB=document.getElementById('chBonus');
+document.getElementById('chDeal').onclick=()=>{
+  if(!chPool.length)chPool=shuffle([...chQs]);
+  chQ.textContent=chPool.pop();rounds++;chR.textContent=rounds;
+  chW.innerHTML='';shuffle([...chWords]).slice(0,3).forEach(w=>{const b=document.createElement('button');b.className='wordbtn';b.textContent=w;b.onclick=()=>{b.classList.toggle('used');points+=b.classList.contains('used')?1:-1;chP.textContent=points};chW.appendChild(b)});
+  chB.disabled=false;bonusUsed=false;resetCh();
+};
+chB.onclick=()=>{if(bonusUsed)return;bonusUsed=true;points++;chP.textContent=points;chB.disabled=true};
+let cs=60,cid=null;const chT=document.getElementById('chT'),chS=document.getElementById('chStart');
+const cf=()=>chT.textContent=Math.floor(cs/60)+':'+String(cs%60).padStart(2,'0');
+function resetCh(){clearInterval(cid);cid=null;cs=60;cf();chS.textContent='Start timer'}
+chS.onclick=()=>{if(cid){clearInterval(cid);cid=null;chS.textContent='Start timer';return}chS.textContent='Pause';cid=setInterval(()=>{cs--;cf();if(cs<=0){clearInterval(cid);cid=null;chS.textContent='Start timer';chT.textContent="Time's up"}},1000)};
+
+// sorters
+document.querySelectorAll('[data-sorter]').forEach(S=>{
+  const poolEl=S.querySelector('.pool'),chips=[...poolEl.children],bins=[...S.querySelectorAll('.bin')],out=S.querySelector('[data-sort-score]');let sel=null;
+  chips.forEach(c=>c.onclick=e=>{e.stopPropagation();const inBin=c.closest('.bin');if(sel&&sel!==c&&inBin){sel.classList.remove('sel','right','wrong');inBin.querySelector('.chips').appendChild(sel);sel=null;return}chips.forEach(x=>x.classList.remove('sel'));if(sel===c){sel=null;return}sel=c;c.classList.add('sel')});
+  bins.forEach(b=>b.onclick=()=>{if(!sel)return;sel.classList.remove('sel','right','wrong');b.querySelector('.chips').appendChild(sel);sel=null});
+  S.querySelector('[data-sort-check]').onclick=()=>{let r=0,n=0;bins.forEach(b=>b.querySelectorAll('.chip').forEach(c=>{n++;const ok=c.dataset.g===b.dataset.bin;if(ok)r++;c.classList.toggle('right',ok);c.classList.toggle('wrong',!ok)}));out.textContent=`${r} / ${chips.length} correct`+(n<chips.length?` · ${chips.length-n} still to sort`:'')};
+  S.querySelector('[data-sort-reset]').onclick=()=>{chips.forEach(c=>{c.classList.remove('sel','right','wrong');poolEl.appendChild(c)});sel=null;out.textContent=''};
+});
+
+// model answers
+document.querySelectorAll('[data-models]').forEach(b=>b.onclick=()=>{const p=document.getElementById(b.dataset.models);p.classList.toggle('show-models');b.textContent=p.classList.contains('show-models')?'Hide model answers':'Show model answers'});
+
+// mystery guest cards
+const roles=[
+ {n:"Dr Marco Bellini",j:"Data scientist at a climate research centre",t:[["2008","Graduated in music (piano) in Milan"],["2010","Played in a cruise ship band for two years"],["2013","Took a free online course in statistics: his milestone"],["2016","Made the transition to data analysis at a record label"],["2019","Started a PhD in climate modelling"]],x:"Has acquired five programming languages. Biggest setback: his first model crashed the university server."},
+ {n:"Yuki Tanaka",j:"Science journalist for an international magazine",t:[["2011","Graduated in chemistry in Osaka"],["2012","Worked in a pharmaceutical lab for four years"],["2016","Started a science blog: 50,000 readers in one year"],["2017","Moved to London for a master's in science communication"],["2020","Joined the magazine"]],x:"To date, has interviewed three Nobel Prize winners. Biggest setback: her first article was rejected eleven times."},
+ {n:"Prof. Ana Duarte",j:"Professor of linguistics",t:[["1998","Trained as a flight attendant"],["2001","Flew to 40 countries and became fascinated by accents"],["2005","Went back to university to study languages"],["2012","Finished a PhD on how pilots and controllers misunderstand each other"],["2018","Became a full professor"]],x:"Has contributed to new radio rules for air traffic. Biggest setback: she failed her first driving test, three times."},
+ {n:"Kwame Mensah",j:"Founder of an educational app",t:[["2010","Graduated in law in Accra"],["2011","Worked as a lawyer for six years"],["2017","Volunteered as a maths teacher: a turning point"],["2018","Learned to code in a 12-week bootcamp"],["2021","Launched his app, now used in 30 schools"]],x:"Has gained investors from three continents. Biggest setback: his first app had zero downloads."}
+];
+let rp=[],cur=null;const roleEl=document.getElementById('role'),rv=document.getElementById('revealBtn');
+const card2=(c,open)=>`<span class="eyebrow">Mystery guest</span><span class="who">${c.n}</span><dl><dt>Today</dt><dd>${c.j}</dd>${c.t.map(([y,e])=>`<dt>${open?y:'????'}</dt><dd>${open?e:'?'}</dd>`).join('')}<dt>Up to now</dt><dd>${open?c.x:'?'}</dd></dl>`;
+document.getElementById('drawBtn').onclick=()=>{if(!rp.length)rp=[...roles];cur=rp.splice(Math.floor(Math.random()*rp.length),1)[0];roleEl.innerHTML=card2(cur,false);rv.disabled=false};
+rv.onclick=()=>{if(!cur)return;roleEl.innerHTML=card2(cur,true);rv.disabled=true};
+
+// timer
+let secs=300,tid=null;const tEl=document.getElementById('timer'),tS=document.getElementById('tStart');
+const fmt=()=>tEl.textContent=Math.floor(secs/60)+':'+String(secs%60).padStart(2,'0');
+tS.onclick=()=>{if(tid){clearInterval(tid);tid=null;tS.textContent='Start';return}tS.textContent='Pause';tid=setInterval(()=>{secs--;fmt();if(secs<=0){clearInterval(tid);tid=null;tS.textContent='Start';tEl.textContent="Time's up"}},1000)};
+document.getElementById('tReset').onclick=()=>{clearInterval(tid);tid=null;secs=300;fmt();tS.textContent='Start'};
+})();
+</script>
+</body></html>
