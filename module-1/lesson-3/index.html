@@ -1,0 +1,794 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>
+<title>What Really Shaped Me</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one slide at a time, like a projected deck; highlighter-yellow marks what to notice */
+:root{
+  --paper:#F4F6F9; --card:#FFFFFF; --ink:#16203A; --muted:#566079; --line:#D9DFE9;
+  --hl:#F6CB45; --hl-soft:#FCEFC0; --teal:#1E7568; --teal-soft:#DCEFEB; --wrong:#B93C26; --wrong-soft:#F8E1DB;
+  --display:"Young Serif", Georgia, serif; --body:"Figtree", system-ui, sans-serif; --mono:"JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0F1420; --card:#171E2E; --ink:#E7EBF4; --muted:#9BA4BA; --line:#2A3349;
+  --hl:#E9BC36; --hl-soft:#3A3218; --teal:#58B9A9; --teal-soft:#16302C; --wrong:#E6765F; --wrong-soft:#3A1F1A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0F1420; --card:#171E2E; --ink:#E7EBF4; --muted:#9BA4BA; --line:#2A3349;
+  --hl:#E9BC36; --hl-soft:#3A3218; --teal:#58B9A9; --teal-soft:#16302C; --wrong:#E6765F; --wrong-soft:#3A1F1A; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.top .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.top .name{font-family:var(--display);font-size:17px}
+.top .count{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;background:var(--hl);width:0;transition:width .3s}
+main{flex:1;padding-block:28px 110px;padding-inline:16px;width:100%;max-width:1000px;margin:0 auto}
+.slide{display:none}.slide.on{display:block;animation:in .35s ease}
+@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.on{animation:none}}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:0 0 6px}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:balance;margin:0 0 14px}
+h1{font-size:clamp(38px,7vw,68px)} h2{font-size:clamp(26px,4vw,38px)}
+h3{font-size:18px;margin:0 0 8px}
+p{margin:0 0 12px;max-width:68ch}
+.lead{font-size:20px;color:var(--muted)}
+mark{background:var(--hl-soft);color:inherit;padding:0 3px;border-radius:3px;box-shadow:inset 0 -2px 0 var(--hl)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px}
+.grid2>*,.grid3>*{min-width:0}
+.stack{display:flex;flex-direction:column;gap:14px}
+ol.prompts{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px;font-size:19px}
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:9px 18px;font-weight:600;font-size:15px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn:focus-visible,.opt:focus-visible,.chip:focus-visible,.tile:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.bin:focus-visible,.flip:focus-visible,.wordbtn:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cover{display:grid;gap:22px;padding-top:4vh}
+.cover .meta{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--muted);background:var(--card)}
+.spin-card{min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--display);font-size:clamp(22px,3.4vw,30px);line-height:1.25;padding:24px}
+.spin-card.rolling{color:var(--muted)}
+/* article */
+.article{font-family:var(--body);font-size:17px;line-height:1.7}
+.article h3{font-family:var(--display);font-weight:400;font-size:24px;line-height:1.2;margin-bottom:4px}
+.article .src{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.03em;margin-bottom:14px}
+.article p{margin-bottom:12px}
+.article .pn{font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:6px}
+/* dialogue */
+.dialogue{display:flex;flex-direction:column;gap:4px;font-size:16px}
+.line{display:grid;grid-template-columns:70px 1fr;gap:10px;padding:5px 8px;border-radius:8px}
+.line b{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding-top:3px}
+.line.m b{color:var(--teal)} .line.d b{color:var(--muted)}
+.line.speaking{background:var(--hl-soft)}
+.context{font-style:italic;color:var(--muted)}
+/* quiz */
+.item{display:flex;flex-direction:column;gap:8px;padding:12px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0;padding-top:0}
+.item .q{font-weight:500}
+.n{font-family:var(--mono);font-size:12px;color:var(--muted);margin-right:6px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:6px 12px;font-size:15px;text-align:left}
+.opt.right{background:var(--teal-soft);border-color:var(--teal)}
+.opt.wrong{background:var(--wrong-soft);border-color:var(--wrong)}
+.fb{font-size:14px;min-height:1.2em}.fb.ok{color:var(--teal)}.fb.no{color:var(--wrong)}
+.build{min-height:44px;border:1px dashed var(--line);border-radius:8px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;background:var(--paper)}
+.tiles{display:flex;flex-wrap:wrap;gap:6px}
+.tile{border:1px solid var(--ink);background:var(--card);color:var(--ink);border-radius:6px;padding:4px 10px;font-size:15px}
+.tile.used{visibility:hidden}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 10px;font-size:15px;text-align:left}
+.chip.sel{border-color:var(--ink);box-shadow:0 0 0 2px var(--hl)}
+.chip.right{border-color:var(--teal);background:var(--teal-soft)} .chip.wrong{border-color:var(--wrong);background:var(--wrong-soft)}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+.bin{border:2px dashed var(--line);border-radius:12px;padding:12px;min-height:130px;background:var(--card);text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:8px}
+.bin h4{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.bin .chips{flex-direction:column}
+details.reveal{border:1px solid var(--line);border-radius:10px;background:var(--card)}
+details.reveal summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details.reveal summary::-webkit-details-marker{display:none}
+details.reveal summary::after{content:"Show";float:right;font-family:var(--mono);font-size:12px;color:var(--teal);padding-top:3px}
+details.reveal[open] summary::after{content:"Hide"}
+details.reveal .body{padding:0 16px 14px}
+.formula{display:flex;flex-wrap:wrap;gap:6px}
+.formula span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;text-align:center;min-width:90px}
+.formula span small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.into{font-size:21px;font-family:var(--display)}
+.into em{font-style:normal;color:var(--teal)}
+input[type=text],textarea{width:100%;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--paper);color:var(--ink)}
+select{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:var(--paper);color:var(--ink);max-width:100%}
+select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border-color:var(--wrong);background:var(--wrong-soft)}
+.profile{font-size:17px;line-height:2.1}
+.model{font-size:14px;color:var(--teal);display:none}.show-models .model{display:block}
+.flip{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:14px;min-height:110px;text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:6px}
+.flip .w{font-family:var(--display);font-size:20px}
+.flip .back{display:none;font-size:14px;color:var(--muted)}
+.flip.on .back{display:block}
+.flip .hint{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:auto}
+/* challenge */
+.challenge{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:18px}
+.challenge>*{min-width:0}
+.words3{display:flex;flex-wrap:wrap;gap:10px}
+.wordbtn{border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 14px;font-family:var(--display);font-size:20px}
+.wordbtn.used{background:var(--teal-soft);border-color:var(--teal);text-decoration:line-through;text-decoration-color:var(--teal)}
+.bank{display:flex;flex-wrap:wrap;gap:6px}
+.bank span{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--muted)}
+.role{border:2px solid var(--ink);border-radius:14px;background:var(--card);padding:20px;display:flex;flex-direction:column;gap:6px;min-height:200px}
+.role .who{font-family:var(--display);font-size:28px}
+.role dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:6px 0 0;font-size:15px}
+.role dt{font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.role dd{margin:0}
+.timer{font-family:var(--mono);font-size:40px;font-variant-numeric:tabular-nums}
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.checklist label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.checklist input{margin-top:5px;width:18px;height:18px;accent-color:var(--teal);flex:none}
+.score{font-family:var(--mono);font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.big{font-family:var(--display);font-size:34px}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);z-index:5}
+.nav .mid{font-family:var(--mono);font-size:12px;color:var(--muted);align-self:center;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}
+/* Lesson 3 additions: talk transcript, cleft formulas, sentence builder, myth cards */
+.talk{display:flex;flex-direction:column;gap:2px;font-size:16px;line-height:1.65}
+.talk p{max-width:none;margin:0;padding:6px 10px;border-radius:8px}
+.talk p.speaking{background:var(--hl-soft)}
+.talk .pn{font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:6px}
+.talk.scroll{max-height:62vh;overflow-y:auto}
+.stage-card{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.stage-card .art{width:56px;height:56px;border-radius:50%;background:var(--ink);color:var(--hl);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:20px;flex:none}
+.stage-card .t{font-weight:600}.stage-card .s{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.bio{line-height:2.1}
+.focus{background:var(--hl-soft);box-shadow:inset 0 -2px 0 var(--hl);border-radius:3px;padding:0 3px}
+.frame{font-family:var(--mono);font-size:14px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 12px;line-height:1.7}
+.answer{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:10px 14px;display:none}
+.answer.on{display:block}
+.mythcard{border:2px solid var(--ink);border-radius:14px;background:var(--card);padding:20px;display:flex;flex-direction:column;gap:10px;min-height:220px}
+.mythcard .myth{font-family:var(--display);font-size:clamp(20px,3vw,26px);line-height:1.3}
+.mythcard .ev{display:none;border-top:1px solid var(--line);padding-top:10px;font-size:15px}
+.mythcard.open .ev{display:block}
+.mythcard .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--wrong)}
+.mythcard.open .tag{color:var(--teal)}
+.bld{display:flex;flex-direction:column;gap:8px;padding:12px 0;border-top:1px solid var(--line)}
+.bld:first-of-type{border-top:0;padding-top:0}
+.build .tile{visibility:visible}
+.interview{line-height:2.2}
+.interview .q{font-weight:600;color:var(--teal);display:block;margin-top:8px;line-height:1.5}
+.interview .q:first-child{margin-top:0}
+</style>
+
+<header class="top">
+  <span class="tag">Module 1 · Lesson 3</span>
+  <span class="name">What Really Shaped Me</span>
+  <span class="count" id="count">1 / 19</span>
+</header>
+<div class="bar"><i id="prog"></i></div>
+
+<main id="deck">
+
+<!-- 1 -->
+<section class="slide" data-label="Welcome">
+  <div class="cover">
+    <p class="eyebrow">Academic English &amp; Conversation · Module 1 · Identity &amp; First Impressions</p>
+    <h1>What Really <mark>Shaped</mark> Me</h1>
+    <p class="lead">Today you will watch a short talk about a teacher with a red pen, talk about the people and moments that made you who you are, and learn how to put the most important idea exactly where your listener will notice it.</p>
+    <div class="meta"><span class="pill">Talk</span><span class="pill">Research study</span><span class="pill">Cleft sentences</span><span class="pill">Emphasis in academic writing</span></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-label="Let's talk">
+  <p class="eyebrow">Let's talk</p>
+  <h2>What made you who you are?</h2>
+  <div class="grid2">
+    <div class="panel">
+      <ol class="prompts">
+        <li>Apart from your parents, who was the most important adult in your childhood? Why?</li>
+        <li>Can you remember a comment from a teacher, good or bad, that stayed with you for years?</li>
+        <li>Are we shaped more by people or by experiences? Give an example.</li>
+      </ol>
+    </div>
+    <div class="panel stack">
+      <h3>Quick vote</h3>
+      <p>What shaped me most was…</p>
+      <div class="opts" id="vote">
+        <button class="opt" data-v="a">a person</button>
+        <button class="opt" data-v="b">a place</button>
+        <button class="opt" data-v="c">an experience</button>
+        <button class="opt" data-v="d">a mistake</button>
+      </div>
+      <p class="score" id="voteMsg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-label="Warm-up: Correct me!">
+  <p class="eyebrow">Warm-up game · Correct me!</p>
+  <h2>Your teacher reads a "fact". It's wrong. Correct it, then check.</h2>
+  <div class="grid2">
+    <div class="stack">
+      <div class="panel spin-card" id="factCard" aria-live="polite">Press Next fact to start.</div>
+      <div class="answer" id="factAns"></div>
+      <div class="row"><button class="btn" id="factBtn">Next fact</button><button class="btn ghost" id="factShow" disabled>Show the correction</button><span class="score" id="factLeft">10 facts</span></div>
+    </div>
+    <div class="panel stack">
+      <h3>How to correct</h3>
+      <p>Start with <b>No</b>, then correct only the wrong part. Try to say it the way the answer card says it.</p>
+      <p class="frame">No, it was <span class="focus">Alexander Fleming</span> who discovered penicillin.</p>
+      <p style="color:var(--muted);font-size:15px">Don't worry about the grammar yet. Just notice how the answers start.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-label="Listen: Ideas Night talk">
+  <p class="eyebrow">Listen</p>
+  <h2>Ideas Night · "A Wrong Answer Is Information"</h2>
+  <div class="grid2">
+    <div class="stack">
+      <div class="stage-card"><div class="art">LH</div><div><div class="t">Dr Leila Haddad</div><div class="s">Educational psychologist · Ideas Night talk · 5 min</div></div></div>
+      <p class="context">Ideas Night is an evening of short talks at a university. Leila tells the story of the moment that shaped her career, and the research that explains it.</p>
+      <div class="row"><button class="btn" id="playBtn">Listen</button><button class="btn ghost" id="stopBtn">Stop</button><button class="btn ghost" id="hideTx">Hide transcript</button></div>
+      <div class="panel" data-quiz>
+        <h3>First listening · the big idea</h3>
+        <p style="font-size:15px;color:var(--muted)">What is Leila's main message?</p>
+        <div class="item" data-answer="b"><div class="opts" style="flex-direction:column">
+          <button class="opt" data-v="a">Talented children need harder exams to stay motivated.</button>
+          <button class="opt" data-v="b">How important people react to our efforts and mistakes can shape who we become.</button>
+          <button class="opt" data-v="c">Teachers should stop correcting students' mistakes.</button>
+        </div><div class="fb"></div></div>
+      </div>
+    </div>
+    <div class="panel talk scroll" id="talk">
+      <p><span class="pn">1</span>When people ask me what made me who I am, they expect a story about talent. They want to hear that I was a brilliant child who loved books. But that's not true. What really shaped me wasn't talent. It was a red pen.</p>
+      <p><span class="pn">2</span>I grew up in Marseille, in a small flat above my parents' bakery. My upbringing was simple: we worked, we ate together, and we didn't talk much about school. Nobody in my family had been to university. So when I failed a maths exam at fourteen, nobody was surprised. I wasn't either. I had decided I just wasn't "a maths person".</p>
+      <p><span class="pn">3</span>Then I met Madame Roux, my new maths teacher. She gave me back my exam covered in red ink. But it wasn't my mistakes that she had circled. It was the questions I had left blank. Next to each one, she wrote the same thing: "Try. A wrong answer is information."</p>
+      <p><span class="pn">4</span>In hindsight, that was the most pivotal moment of my education. Madame Roux never praised me for being clever. She praised me for trying, for asking questions, for coming back after a bad result. What she was doing, I realised much later, was teaching me resilience. She became my first real role model.</p>
+      <p><span class="pn">5</span>Years later, as a psychology student, I discovered that there was research behind her red pen. In 1998, Claudia Mueller and Carol Dweck ran a series of studies with ten- and eleven-year-old children in the United States. After a first set of problems, some children were praised for their intelligence: "You must be smart at this." Others were praised for their effort: "You must have worked hard." Then all the children faced much harder problems, and they failed. The results were striking. It was the children praised for effort who kept trying and still enjoyed the problems. The children praised for intelligence enjoyed them less, gave up sooner and did worse on the next test.</p>
+      <p><span class="pn">6</span>That's why I became a researcher. The reason I study motivation today is that I know what one comment can do. So think about the beliefs you have about what you can and cannot do. Who instilled them in you? For most of us, it's the people around us in our formative years who have the most profound impact on us: a parent, a coach, a teacher with a red pen.</p>
+      <p><span class="pn">7</span>I don't attribute my career to talent. I attribute it to one teacher who fostered curiosity instead of fear. The thing that changed my life wasn't a lesson about numbers. It was a lesson about mistakes. And all I needed was someone to tell me that a wrong answer is information. Thank you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-label="Listen again: details">
+  <p class="eyebrow">Listen again</p>
+  <h2>True or false? Correct the false sentences.</h2>
+  <div class="grid2">
+    <div class="panel" data-quiz>
+      <div class="item" data-answer="F" data-why="False. Nobody in her family had been to university."><div class="q"><span class="n">1</span>Leila's parents both went to university.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="T"><div class="q"><span class="n">2</span>Leila failed a maths exam when she was fourteen.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="F" data-why="False. It wasn't her mistakes that Madame Roux circled. It was the questions she had left blank."><div class="q"><span class="n">3</span>Madame Roux circled all of Leila's mistakes.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="T"><div class="q"><span class="n">4</span>In the 1998 study, the children praised for intelligence gave up sooner.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="F" data-why="False. She attributes her career to one teacher, not to talent."><div class="q"><span class="n">5</span>Leila believes her career is mainly the result of talent.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+      <p class="score" data-score></p>
+    </div>
+    <div class="panel stack">
+      <h3>Think deeper</h3>
+      <ol class="prompts" style="font-size:17px">
+        <li>Why do you think the children praised for intelligence gave up sooner?</li>
+        <li>"A wrong answer is information." Do you agree? Did your school treat mistakes this way?</li>
+        <li>Think like a researcher: a 2018 review of many later studies found that the effects of "growth mindset" programmes in real schools were much smaller than many people expected. Does this change how you see Leila's story? Why is one study rarely enough?</li>
+      </ol>
+      <p style="font-size:13px;color:var(--muted);margin:0">Leila and Ideas Night are fictional. Mueller &amp; Dweck (1998) and the 2018 review (Sisk et al., <i>Psychological Science</i>) are real.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-label="Vocabulary in context">
+  <p class="eyebrow">Vocabulary · Talking about what shaped you</p>
+  <h2>Leila's words: guess the meaning, then tap to check.</h2>
+  <p style="color:var(--muted)">Every quote is from the talk. Use the context to guess before you tap.</p>
+  <div class="grid3" id="voices">
+    <button class="flip"><span>"My <mark>upbringing</mark> was simple."</span><span class="back"><b>the way your parents raised you, and the values you learned as a child</b> · a strict / happy / traditional upbringing</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"<mark>In hindsight</mark>, that was the most pivotal moment."</span><span class="back"><b>looking back now, with what you know today</b> · In hindsight, + sentence</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"…the most <mark>pivotal</mark> moment of my education."</span><span class="back"><b>extremely important, because other things depend on it</b> · a pivotal moment / role / decision</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"She was teaching me <mark>resilience</mark>."</span><span class="back"><b>the ability to recover quickly after problems</b> · build / show resilience · resilient (adj.)</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"She became my first real <mark>role model</mark>."</span><span class="back"><b>a person you admire and want to be like</b> · be a (good) role model for someone</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"Who <mark>instilled</mark> them in you?"</span><span class="back"><b>put an idea, value or feeling into someone's mind, little by little</b> · instil something in someone</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"…the people around us in our <mark>formative</mark> years."</span><span class="back"><b>having a strong influence on how a person develops</b> · formative years / experiences</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"…who <mark>have the most profound impact on</mark> us."</span><span class="back"><b>have a very deep and strong effect on</b> · have a profound impact / effect on + noun</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"I don't <mark>attribute</mark> my career <mark>to</mark> talent."</span><span class="back"><b>say that something is the result of someone or something</b> · attribute X to Y (formal)</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"…one teacher who <mark>fostered</mark> curiosity instead of fear."</span><span class="back"><b>helped something to develop</b> · foster curiosity / creativity / a sense of belonging</span><span class="hint">tap</span></button>
+  </div>
+  <div class="row" style="margin-top:14px"><button class="btn ghost" id="allMeanings">Show all meanings</button></div>
+  <div class="panel" style="margin-top:14px">
+    <h3>Notice</h3>
+    <p style="margin:0">Which two expressions need a preposition after them? Which two are typical of academic writing? Which word means almost the same as <i>shape</i>, the word from Lesson 1?</p>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-label="Speaker bio">
+  <p class="eyebrow">Vocabulary · The speaker bio</p>
+  <h2>The Ideas Night programme has a short bio of Leila. Complete it.</h2>
+  <div class="grid2">
+    <div class="panel bio" id="bioGaps">
+      <p class="eyebrow" style="margin:0 0 6px">Ideas Night · Speaker 3 of 5</p>
+      <b>Dr Leila Haddad</b> grew up above her parents' bakery in Marseille. Her <select data-gap="upbringing"></select> was simple but full of hard work. A failed maths exam at fourteen became a <select data-gap="pivotal"></select> moment: a teacher who praised effort became her first <select data-gap="role model"></select> and helped her build <select data-gap="resilience"></select>. <select data-gap="In hindsight"></select>, Leila says, those <select data-gap="formative"></select> years explain her whole career. She <select data-gap="attributes"></select> her success to that teacher, who <select data-gap="instilled"></select> confidence in her. Today she researches how teachers can <select data-gap="foster"></select> curiosity in the classroom, and how a single comment can <select data-gap="have a profound impact on"></select> a child's motivation.
+      <div class="row" style="margin-top:10px"><button class="btn" id="gapCheck">Check</button><span class="score" id="gapScore"></span></div>
+    </div>
+    <div class="stack">
+      <details class="reveal"><summary>Check the patterns</summary><div class="body">
+        <div class="tbl"><table><thead><tr><th>Expression</th><th>Pattern</th></tr></thead><tbody>
+          <tr><td>attribute</td><td>X <b>to</b> Y: <i>She attributes her success to hard work.</i></td></tr>
+          <tr><td>instil</td><td>something <b>in</b> someone: <i>instil confidence in children</i></td></tr>
+          <tr><td>have a profound impact</td><td><b>on</b> + noun</td></tr>
+          <tr><td>in hindsight</td><td>at the start, + comma</td></tr>
+          <tr><td>formative / pivotal</td><td>adjective + noun: <i>formative years, a pivotal role</i></td></tr>
+          <tr><td>resilience</td><td>build / show resilience · <i>resilient</i> (adj.)</td></tr>
+        </tbody></table></div>
+      </div></details>
+      <div class="panel">
+        <h3>Your turn</h3>
+        <p>Who was a <b>role model</b> in your <b>formative</b> years? What did they <b>instil</b> in you? Tell your teacher, with one example.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-label="Influence Wheel">
+  <p class="eyebrow">Speaking challenge · Influence Wheel</p>
+  <h2>Spin. Talk for 60 seconds and use all three words.</h2>
+  <div class="challenge">
+    <div class="panel stack">
+      <div class="big" id="chQ" aria-live="polite">Press Spin to start round 1.</div>
+      <div class="words3" id="chW"></div>
+      <p style="font-size:15px;color:var(--muted)">Tap a word when you use it correctly. Your teacher then asks one follow-up question. Answer it with a new word from the bank for a bonus point.</p>
+      <div class="row"><button class="btn" id="chDeal">Spin</button><button class="btn ghost" id="chBonus" disabled>+1 bonus</button></div>
+    </div>
+    <div class="panel stack">
+      <div class="row" style="justify-content:space-between"><span class="timer" id="chT">1:00</span><button class="btn ghost" id="chStart">Start timer</button></div>
+      <div><span class="score">Round</span> <span class="big" id="chR">0</span> <span class="score" style="margin-left:18px">Points</span> <span class="big" id="chP">0</span></div>
+      <h3>Word bank</h3>
+      <div class="bank"><span>upbringing</span><span>in hindsight</span><span>pivotal</span><span>resilience</span><span>role model</span><span>instil</span><span>formative</span><span>have a profound impact on</span><span>attribute to</span><span>foster</span><span>shape</span><span>a turning point</span><span>a setback</span><span>a milestone</span></div>
+      <p style="font-size:15px;color:var(--muted)">Swap roles in round 3: you spin, your teacher talks, and you ask the follow-up.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-label="Notice: Leila's emphasis">
+  <p class="eyebrow">Notice</p>
+  <h2>Leila often puts her key idea in a special frame. Sort her sentences.</h2>
+  <p style="color:var(--muted)">Tap a sentence, then tap a group. Look at how each sentence <b>starts</b>.</p>
+  <div class="panel stack" data-sorter>
+    <div class="chips pool">
+      <button class="chip" data-g="b">What really shaped me wasn't talent.</button>
+      <button class="chip" data-g="a">It wasn't my mistakes that she had circled.</button>
+      <button class="chip" data-g="b">What she was doing was teaching me resilience.</button>
+      <button class="chip" data-g="a">It was the children praised for effort who kept trying.</button>
+      <button class="chip" data-g="c">The reason I study motivation today is that I know what one comment can do.</button>
+      <button class="chip" data-g="a">It's the people around us in our formative years who have the most profound impact.</button>
+      <button class="chip" data-g="c">The thing that changed my life wasn't a lesson about numbers.</button>
+      <button class="chip" data-g="c">All I needed was someone to tell me that a wrong answer is information.</button>
+    </div>
+    <div class="bins">
+      <button class="bin" data-bin="a"><h4>Group A · It + be …</h4><div class="chips"></div></button>
+      <button class="bin" data-bin="b"><h4>Group B · What + clause + be …</h4><div class="chips"></div></button>
+      <button class="bin" data-bin="c"><h4>Group C · other frames</h4><div class="chips"></div></button>
+    </div>
+    <div class="row"><button class="btn" data-sort-check>Check</button><button class="btn ghost" data-sort-reset>Start again</button><span class="score" data-sort-score></span></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-label="Cleft sentences: the rules">
+  <p class="eyebrow">Notice · Cleft sentences</p>
+  <h2>Compare the plain sentence with Leila's. What changes?</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <p class="into">A red pen shaped me.</p>
+      <p class="into">What really shaped me was <mark>a red pen</mark>.</p>
+      <p class="into">She circled the blank questions.</p>
+      <p class="into">It was <mark>the blank questions</mark> that she circled.</p>
+      <ol class="prompts" style="font-size:17px">
+        <li>Do the two versions give different information, or the same information with a different focus?</li>
+        <li>Where is the important new idea in Leila's versions: at the start or at the end?</li>
+        <li>Leila says "It wasn't my mistakes… It was the questions…". What is she correcting?</li>
+        <li>Why is "<s>Was the blank questions that she circled</s>" wrong?</li>
+      </ol>
+    </div>
+    <div class="stack">
+      <details class="reveal"><summary>It-clefts</summary><div class="body">
+        <div class="formula"><span><small>start</small>It + be</span><span><small>focus</small>the key idea</span><span><small>link</small>who / that</span><span><small>rest</small>the rest</span></div>
+        <p style="margin-top:10px"><i>It was <b>my maths teacher</b> who changed my mind.</i><br><i>It was <b>in Marseille</b> that I grew up.</i><br><i>It wasn't <b>talent</b> that made the difference. It was <b>practice</b>.</i></p>
+        <p>Use <b>who</b> or <b>that</b> for people, <b>that</b> for everything else, including times and places. Never drop <b>It</b>.</p>
+      </div></details>
+      <details class="reveal"><summary>What-clefts</summary><div class="body">
+        <div class="formula"><span><small>start</small>What + clause</span><span><small>verb</small>is / was</span><span><small>focus</small>the key idea</span></div>
+        <p style="margin-top:10px"><i>What really shaped me <b>was</b> a red pen.</i><br><i>What I need <b>is</b> more time.</i><br><i>What she did <b>was</b> (to) praise my effort.</i></p>
+        <p>The key idea comes <b>last</b>, where listeners expect new information. Don't add <i>it</i>: <s>What I need it is…</s></p>
+      </div></details>
+      <details class="reveal"><summary>Other frames</summary><div class="body">
+        <p><i>The thing that… was…</i> · <i>The person who… was…</i> · <i>The reason (why)… is that…</i> · <i>All I wanted was…</i> · <i>It was not until… that…</i></p>
+        <p>We use all these frames to <b>emphasise</b>, to <b>contrast</b> (not X, but Y) and to <b>correct</b> someone.</p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-label="Build the sentence">
+  <p class="eyebrow">Notice · Word order</p>
+  <h2>Build Leila's answers to questions from the audience.</h2>
+  <p style="color:var(--muted)">Tap the words in order. Tap a word in your sentence to send it back.</p>
+  <div class="panel" id="builder"></div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-label="Clefts in academic writing">
+  <p class="eyebrow">Think like an academic · Emphasis in research writing</p>
+  <h2>Leila's article starts like this. Why does she use these frames?</h2>
+  <div class="grid2">
+    <article class="panel lit">
+      <p class="eyebrow" style="margin:0">Introduction · paragraph 1</p>
+      <p>Praise is often seen as a simple way to motivate students. However, <span class="v">it is not praise itself that matters</span>, but the type of praise students receive. In a series of six studies, Mueller and Dweck (1998) found that children praised for intelligence showed less persistence after failure than children praised for effort. <span class="v">What these findings suggest is that</span> intelligence praise can lead children to see ability as fixed. <span class="v">It is this belief, rather than ability itself, that</span> may explain the drop in performance. More recent research, however, has found much smaller effects of mindset programmes in real classrooms (Sisk et al., 2018). <span class="v">What remains unclear is</span> which students benefit most, and under what conditions.</p>
+      <p class="src" style="font-family:var(--mono);font-size:11px;color:var(--muted);margin:0">Illustrative paragraph. Mueller &amp; Dweck (1998) and Sisk et al. (2018) are real studies.</p>
+    </article>
+    <div class="panel" data-quiz>
+      <h3>What does each highlighted frame do?</h3>
+      <div class="item" data-answer="c"><div class="q"><span class="n">1</span><b>it is not praise itself that matters</b>, but…</div><div class="opts"><button class="opt" data-v="c">corrects a common belief</button><button class="opt" data-v="i">introduces the main interpretation</button><button class="opt" data-v="g">points to a research gap</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="i"><div class="q"><span class="n">2</span><b>What these findings suggest is that</b>…</div><div class="opts"><button class="opt" data-v="c">corrects a common belief</button><button class="opt" data-v="i">introduces the main interpretation</button><button class="opt" data-v="g">points to a research gap</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="k" data-why="It isolates one cause (this belief) and contrasts it with another (ability itself)."><div class="q"><span class="n">3</span><b>It is this belief, rather than ability itself, that</b>…</div><div class="opts"><button class="opt" data-v="k">identifies the cause</button><button class="opt" data-v="i">introduces the main interpretation</button><button class="opt" data-v="g">points to a research gap</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="g"><div class="q"><span class="n">4</span><b>What remains unclear is</b>…</div><div class="opts"><button class="opt" data-v="c">corrects a common belief</button><button class="opt" data-v="k">identifies the cause</button><button class="opt" data-v="g">points to a research gap</button></div><div class="fb"></div></div>
+      <p class="score" data-score></p>
+      <details class="reveal" style="margin-top:8px"><summary>Frames for academic writing</summary><div class="body">
+        <p><b>Correct or contrast:</b> <i>It is not X but Y that… · It is X, rather than Y, that…</i></p>
+        <p><b>Interpret:</b> <i>What these findings suggest / show is that…</i></p>
+        <p><b>Point to a gap:</b> <i>What remains unclear is… · What has not yet been studied is…</i></p>
+        <p><b>History of an idea:</b> <i>It was not until the 1990s that researchers began to…</i></p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-label="Say it naturally">
+  <p class="eyebrow">Say it naturally</p>
+  <h2>In a cleft sentence, your voice goes up on the focus.</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <h3>Pause, then stress</h3>
+      <p class="into">What really shaped me <span style="color:var(--muted)">|</span> was a red <mark>PEN</mark>.</p>
+      <p class="into">It wasn't <mark>TA</mark>lent. <span style="color:var(--muted)">|</span> It was <mark>PRAC</mark>tice.</p>
+      <div class="row"><button class="btn ghost" data-say="What really shaped me... was a red pen. It wasn't talent. It was practice.">Listen</button></div>
+      <p style="font-size:15px;color:var(--muted)">Make a small pause after the What-clause. The listener waits for the important part.</p>
+    </div>
+    <div class="panel stack">
+      <h3>Move the focus, change the meaning</h3>
+      <div class="tbl"><table><thead><tr><th>You say</th><th>You mean</th></tr></thead><tbody>
+        <tr><td>It was my <b>SISTER</b> who taught me English.</td><td>not my brother</td></tr>
+        <tr><td>It was in <b>LONDON</b> that I learned English.</td><td>not in Dublin</td></tr>
+        <tr><td>It was <b>ENGLISH</b> that my sister taught me.</td><td>not Spanish</td></tr>
+      </tbody></table></div>
+      <div class="row"><button class="btn ghost" data-say="It was my sister who taught me English. It was in London that I learned English.">Listen</button></div>
+      <p>Your turn: say each sentence and let your teacher guess what you are correcting.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-label="Practice 1: the magazine interview">
+  <p class="eyebrow">Practice 1</p>
+  <h2>After the talk, the university magazine interviewed Leila. Choose the right words.</h2>
+  <div class="grid2">
+    <div class="panel interview">
+      <span class="q">Was it your parents who encouraged you to study?</span>
+      Actually, it was my maths teacher <select data-ans="who" data-opts="who|which|what"></select> encouraged me. My parents were always busy. <select data-ans="What" data-opts="What|That|It"></select> they gave me <select data-ans="was" data-opts="was|it was|were"></select> a strong work ethic.
+      <span class="q">When did you decide to become a psychologist?</span>
+      It was in my second year at university <select data-ans="that" data-opts="that|which|what"></select> I decided. <select data-ans="What" data-opts="What|That|Which"></select> I loved <select data-ans="was" data-opts="was|it was|were"></select> the research methods course.
+      <span class="q">What do you tell new teachers?</span>
+      <select data-ans="All" data-opts="All|Every|Much"></select> they need to remember is this: <select data-ans="it's" data-opts="it's|is|that's"></select> not the grade that students remember. <select data-ans="It's" data-opts="It's|Is|There's"></select> the comment.
+      <span class="q">What surprised you most in your research?</span>
+      The thing <select data-ans="that" data-opts="that|what|who"></select> surprised me most <select data-ans="was" data-opts="was|it was|were"></select> how quickly children give up. And the reason this matters <select data-ans="is that" data-opts="is that|is why|it's"></select> giving up early becomes a habit.
+      <div class="row" style="margin-top:8px"><button class="btn" data-sel-check>Check</button><span class="score" data-sel-score></span></div>
+    </div>
+    <div class="panel stack">
+      <h3>Explain it</h3>
+      <ol class="prompts" style="font-size:17px">
+        <li>Find one answer where Leila corrects the interviewer.</li>
+        <li>Why is "What I loved <s>it was</s> the course" wrong?</li>
+        <li>In the answer about new teachers, what is Leila contrasting?</li>
+      </ol>
+      <p style="color:var(--muted);font-size:15px">Then your teacher asks you the same four questions about your own life. Answer each one with a cleft sentence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-label="Myth Busters">
+  <p class="eyebrow">Practice 2 · Game</p>
+  <h2>Myth Busters: what does the research really say?</h2>
+  <div class="grid2">
+    <div class="stack">
+      <div class="mythcard" id="myth" aria-live="polite">
+        <span class="tag">Myth</span>
+        <span class="myth">Draw a myth about learning and the brain.</span>
+        <p style="color:var(--muted);margin:0">Many people believe these ideas. Research doesn't support them.</p>
+      </div>
+      <div class="row"><button class="btn" id="mythDraw">Draw a myth</button><button class="btn ghost" id="mythReveal" disabled>Show the evidence</button><span class="score" id="mythLeft">6 myths</span></div>
+    </div>
+    <div class="panel stack">
+      <h3>How to play</h3>
+      <ol class="prompts" style="font-size:16px">
+        <li>Your teacher reads the myth as if it's true.</li>
+        <li>You have 30 seconds to bust it with a cleft frame. Guess what the research says.</li>
+        <li>Show the evidence. How close was your guess? Say it again, now with the facts.</li>
+      </ol>
+      <p class="frame">Actually, it's not… that…, it's…<br>What research actually shows is that…<br>The thing that really helps is…</p>
+      <p style="font-size:15px;color:var(--muted)">Last round: invent a myth from your own field. Your teacher busts it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-label="Correct me if I'm wrong">
+  <p class="eyebrow">Practice 3 · Freer</p>
+  <h2>Correct me if I'm wrong: your teacher guesses your story.</h2>
+  <div class="grid2">
+    <div class="stack">
+      <div class="panel spin-card" id="guessCard" aria-live="polite">Press Next guess.</div>
+      <div class="row"><button class="btn" id="guessBtn">Next guess</button></div>
+      <p style="color:var(--muted);font-size:15px">Your teacher completes the guess about your life. If it's right, say so and add a detail. If it's wrong, correct it with a cleft and add a detail.</p>
+      <p class="frame">"I bet it was your mum who taught you to read."<br>"No, actually it was my grandmother. She…"</p>
+    </div>
+    <div class="panel stack">
+      <div class="row" style="justify-content:space-between"><span class="timer" id="timer">5:00</span>
+        <span class="row"><button class="btn" id="tStart">Start</button><button class="btn ghost" id="tReset">Reset</button></span></div>
+      <h3>Rules</h3>
+      <ul class="checklist">
+        <li><label><input type="checkbox"><span>correct at least three guesses with <b>It wasn't… It was…</b></span></label></li>
+        <li><label><input type="checkbox"><span>use one <b>What…</b> frame and one <b>The reason… is that…</b></span></label></li>
+        <li><label><input type="checkbox"><span>add one detail to every answer</span></label></li>
+        <li><label><input type="checkbox"><span>use three words from today's vocabulary</span></label></li>
+        <li><label><input type="checkbox"><span>swap: you guess three things about your teacher</span></label></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-label="Your turn: What Really Shaped Me">
+  <p class="eyebrow">Your turn · Production</p>
+  <h2>Give your own Ideas Night talk: "What Really Shaped Me", in two minutes.</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <h3>1 · Map your influences (3 minutes)</h3>
+      <div class="tbl"><table><thead><tr><th style="width:120px">Influence</th><th>Who or what? What did it give you?</th></tr></thead><tbody>
+        <tr><td>a person</td><td><input type="text" aria-label="A person" placeholder="my grandmother: she instilled…"></td></tr>
+        <tr><td>a moment</td><td><input type="text" aria-label="A moment" placeholder="a pivotal moment…"></td></tr>
+        <tr><td>a place</td><td><input type="text" aria-label="A place"></td></tr>
+        <tr><td>a mistake</td><td><input type="text" aria-label="A mistake" placeholder="it taught me resilience…"></td></tr>
+        <tr><td>your hook</td><td><input type="text" aria-label="Your opening line" placeholder="What really shaped me wasn't… It was…"></td></tr>
+      </tbody></table></div>
+    </div>
+    <div class="panel stack">
+      <h3>2 · Give the talk (2 minutes), then answer two audience questions</h3>
+      <ul class="checklist">
+        <li><label><input type="checkbox"><span>I opened with a hook: "What really shaped me wasn't… It was…"</span></label></li>
+        <li><label><input type="checkbox"><span>I used an It-cleft to contrast or correct.</span></label></li>
+        <li><label><input type="checkbox"><span>I used one more frame (The reason… / The thing that… / All I…).</span></label></li>
+        <li><label><input type="checkbox"><span>I used at least four expressions from today and one from Lesson 2.</span></label></li>
+        <li><label><input type="checkbox"><span>I ended with "In hindsight, …" or "I attribute… to…".</span></label></li>
+      </ul>
+      <p style="color:var(--muted);font-size:15px">Keep your notes. In Lesson 4, your talk joins your journey from Lesson 2 in your project: <b>My Story in 3 Minutes</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-label="Phrases to keep">
+  <p class="eyebrow">Take these with you</p>
+  <h2>Phrases for emphasis in speaking and in writing</h2>
+  <div class="grid3">
+    <div class="panel"><h3>Starting a talk</h3><p>What really shaped me was…<br>The question I want to ask is…<br>The thing nobody tells you is…</p></div>
+    <div class="panel"><h3>Correcting and contrasting</h3><p>It wasn't X. It was Y.<br>It's not X that matters, it's Y.<br>Actually, it was… who…<br>All I wanted was…</p></div>
+    <div class="panel"><h3>Academic emphasis</h3><p>What these findings suggest is that…<br>It is X, rather than Y, that…<br>What remains unclear is…<br>It was not until… that…</p></div>
+  </div>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-label="Before you go">
+  <p class="eyebrow">Before you go</p>
+  <h2>Three quick questions</h2>
+  <div class="panel stack" style="max-width:760px">
+    <div><label for="e1">1. In one sentence, why did Madame Roux have such a profound impact on Leila?</label><textarea id="e1" rows="2"></textarea></div>
+    <div><label for="e2">2. Rewrite with emphasis on the underlined part: "My grandmother taught me to <u>cook</u>." → What…</label><textarea id="e2" rows="2"></textarea></div>
+    <div><label for="e3">3. Complete for a research paper: "______ these results suggest ______ that… However, ______ remains unclear is…"</label><textarea id="e3" rows="2"></textarea></div>
+  </div>
+</section>
+
+</main>
+
+<nav class="nav">
+  <button class="btn ghost" id="prev">← Back</button>
+  <span class="mid" id="mid"></span>
+  <button class="btn" id="next">Next →</button>
+</nav>
+
+<script>
+(function(){
+const slides=[...document.querySelectorAll('.slide')];
+let i=0;
+const count=document.getElementById('count'),prog=document.getElementById('prog'),mid=document.getElementById('mid');
+function show(n){
+  i=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+  count.textContent=(i+1)+' / '+slides.length;
+  prog.style.width=((i+1)/slides.length*100)+'%';
+  mid.textContent=slides[i].dataset.label||'';
+  document.getElementById('prev').disabled=i===0;
+  document.getElementById('next').disabled=i===slides.length-1;
+  try{history.replaceState(null,'','#s'+(i+1))}catch(e){}
+  window.scrollTo(0,0);
+}
+document.getElementById('prev').onclick=()=>show(i-1);
+document.getElementById('next').onclick=()=>show(i+1);
+document.addEventListener('keydown',e=>{
+  if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
+  if(e.key==='ArrowRight'||e.key==='PageDown')show(i+1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1);
+});
+const m=/^#s(\d+)$/.exec(location.hash);show(m?+m[1]-1:0);
+const shuffle=a=>{for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+
+// vote
+document.querySelectorAll('#vote .opt').forEach(b=>b.onclick=()=>{document.querySelectorAll('#vote .opt').forEach(x=>x.classList.remove('right'));b.classList.add('right');document.getElementById('voteMsg').textContent='Vote saved. Keep your answer: you will need it at the end of the lesson.'});
+
+// speech
+function speak(text,voiceIdx,onend){
+  try{
+    const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=.95;
+    const vs=speechSynthesis.getVoices().filter(v=>/^en/.test(v.lang));
+    if(vs.length)u.voice=vs[voiceIdx%vs.length];
+    if(onend)u.onend=onend;speechSynthesis.speak(u);return true;
+  }catch(e){return false}
+}
+document.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>{try{speechSynthesis.cancel()}catch(e){};speak(b.dataset.say,0)});
+const talk=document.getElementById('talk');
+const paras=[...talk.querySelectorAll('p')];
+let playing=false;
+function playFrom(k){
+  paras.forEach(l=>l.classList.remove('speaking'));
+  if(!playing||k>=paras.length){playing=false;return}
+  const l=paras[k];l.classList.add('speaking');
+  if(talk.style.visibility!=='hidden')l.scrollIntoView({block:'nearest',behavior:'smooth'});
+  const txt=l.textContent.replace(/^\s*\d+/,'');
+  if(!speak(txt,1,()=>playFrom(k+1)))playing=false;
+}
+document.getElementById('playBtn').onclick=()=>{try{speechSynthesis.cancel()}catch(e){};playing=true;playFrom(0)};
+document.getElementById('stopBtn').onclick=()=>{playing=false;try{speechSynthesis.cancel()}catch(e){};paras.forEach(l=>l.classList.remove('speaking'))};
+document.getElementById('hideTx').onclick=e=>{const h=talk.style.visibility==='hidden';talk.style.visibility=h?'':'hidden';e.target.textContent=h?'Hide transcript':'Show transcript'};
+
+// warm-up: correct me
+const facts=[
+ ["Marie Curie discovered penicillin.","No, it was Alexander Fleming who discovered penicillin, in 1928. Marie Curie is famous for her research on radioactivity."],
+ ["Shakespeare wrote Don Quixote.","No, it was Miguel de Cervantes who wrote Don Quixote."],
+ ["Albert Einstein was born in France.","No, it was in Germany that Einstein was born, in the city of Ulm, in 1879."],
+ ["Yuri Gagarin was the first person to walk on the Moon.","No, it was Neil Armstrong who first walked on the Moon, in 1969. Gagarin was the first person in space, in 1961."],
+ ["Brazil became independent in 1889.","No, it was in 1822 that Brazil became independent. 1889 is the year Brazil became a republic."],
+ ["The Mona Lisa is in the British Museum.","No, it's in the Louvre, in Paris, that the Mona Lisa is kept."],
+ ["Tim Berners-Lee invented the telephone.","No, it was Alexander Graham Bell who patented the telephone, in 1876. What Tim Berners-Lee invented was the World Wide Web, in 1989."],
+ ["Frida Kahlo was a Spanish painter.","No, it was Mexico that Frida Kahlo came from. She was born in Coyoacán, Mexico City."],
+ ["Isaac Newton discovered the structure of DNA.","No, it was James Watson and Francis Crick who described the structure of DNA, in 1953, with the help of X-ray images made by Rosalind Franklin."],
+ ["Charles Darwin developed the theory of relativity.","No, it was Albert Einstein who developed the theory of relativity. What Darwin is famous for is the theory of evolution by natural selection."]
+];
+let fPool=[],fCur=null;
+const fCard=document.getElementById('factCard'),fAns=document.getElementById('factAns'),fShow=document.getElementById('factShow'),fLeft=document.getElementById('factLeft');
+document.getElementById('factBtn').onclick=()=>{if(!fPool.length)fPool=shuffle([...facts]);fCur=fPool.pop();fCard.textContent='"'+fCur[0]+'"';fAns.classList.remove('on');fAns.textContent='';fShow.disabled=false;fLeft.textContent=fPool.length+' facts left'};
+fShow.onclick=()=>{if(!fCur)return;fAns.textContent=fCur[1];fAns.classList.add('on');fShow.disabled=true};
+
+// quizzes
+document.querySelectorAll('[data-quiz]').forEach(q=>{
+  const items=[...q.querySelectorAll('.item')];const score=q.querySelector('[data-score]');
+  const upd=()=>{const done=items.filter(it=>it.dataset.done);const right=done.filter(it=>it.dataset.done==='1').length;if(score)score.textContent=done.length?`Score: ${right} / ${items.length}`:''};
+  items.forEach(it=>{
+    const fb=it.querySelector('.fb');
+    it.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+      if(it.dataset.done)return;
+      const ok=o.dataset.v===it.dataset.answer;o.classList.add(ok?'right':'wrong');
+      if(!ok)it.querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===it.dataset.answer)x.classList.add('right')});
+      it.dataset.done=ok?'1':'0';
+      fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?(it.dataset.why?'Correct. '+it.dataset.why:'Correct.'):(it.dataset.why||'Not quite. Look at the correct answer.');
+      upd();
+    });
+  });
+});
+
+// flip cards
+document.querySelectorAll('.flip').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+document.getElementById('allMeanings').onclick=e=>{const cards=[...document.querySelectorAll('#voices .flip')];const open=!cards.every(c=>c.classList.contains('on'));cards.forEach(c=>c.classList.toggle('on',open));e.target.textContent=open?'Hide all meanings':'Show all meanings'};
+
+// bio gap fill
+const gaps=[...document.querySelectorAll('#bioGaps select')];
+const gopts=gaps.map(g=>g.dataset.gap).sort((a,b)=>a.localeCompare(b));
+gaps.forEach(g=>{g.innerHTML='<option value="">……</option>'+gopts.map(o=>`<option>${o}</option>`).join('');g.setAttribute('aria-label','Gap')});
+document.getElementById('gapCheck').onclick=()=>{let r=0;gaps.forEach(g=>{const ok=g.value===g.dataset.gap;if(ok)r++;g.className=g.value?(ok?'ok':'no'):''});document.getElementById('gapScore').textContent=`${r} / ${gaps.length}`};
+
+// inline selects
+document.querySelectorAll('select[data-opts]').forEach(s=>{s.innerHTML='<option value="">……</option>'+s.dataset.opts.split('|').map(o=>`<option>${o}</option>`).join('');s.setAttribute('aria-label','Choose the word')});
+document.querySelectorAll('[data-sel-check]').forEach(b=>b.onclick=()=>{const p=b.closest('.panel'),ss=[...p.querySelectorAll('select[data-ans]')];let r=0;ss.forEach(s=>{const ok=s.value===s.dataset.ans;if(ok)r++;s.className=s.value?(ok?'ok':'no'):''});p.querySelector('[data-sel-score]').textContent=`${r} / ${ss.length}`});
+
+// influence wheel
+const chQs=["Talk about a person who shaped you.","Talk about a place that shaped you.","Talk about a mistake that taught you something.","Talk about a book, film or song that changed the way you think.","Talk about a decision that changed your path.","Talk about a teacher you will never forget.","Talk about a value your family gave you.","Talk about something you only understood years later."];
+const chWords=["upbringing","in hindsight","pivotal","resilience","role model","instil","formative","have a profound impact on","attribute to","foster"];
+let chPool=[],rounds=0,points=0,bonusUsed=false;
+const chQ=document.getElementById('chQ'),chW=document.getElementById('chW'),chR=document.getElementById('chR'),chP=document.getElementById('chP'),chB=document.getElementById('chBonus');
+document.getElementById('chDeal').onclick=()=>{
+  if(!chPool.length)chPool=shuffle([...chQs]);
+  const final=chPool.pop();rounds++;chR.textContent=rounds;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;let t=0;
+  const tick=()=>{chQ.textContent=chQs[Math.floor(Math.random()*chQs.length)];if(++t<8&&!reduce)setTimeout(tick,60+t*14);else chQ.textContent=final};tick();
+  chW.innerHTML='';shuffle([...chWords]).slice(0,3).forEach(w=>{const b=document.createElement('button');b.className='wordbtn';b.textContent=w;b.onclick=()=>{b.classList.toggle('used');points+=b.classList.contains('used')?1:-1;chP.textContent=points};chW.appendChild(b)});
+  chB.disabled=false;bonusUsed=false;resetCh();
+};
+chB.onclick=()=>{if(bonusUsed)return;bonusUsed=true;points++;chP.textContent=points;chB.disabled=true};
+let cs=60,cid=null;const chT=document.getElementById('chT'),chS=document.getElementById('chStart');
+const cf=()=>chT.textContent=Math.floor(cs/60)+':'+String(cs%60).padStart(2,'0');
+function resetCh(){clearInterval(cid);cid=null;cs=60;cf();chS.textContent='Start timer'}
+chS.onclick=()=>{if(cid){clearInterval(cid);cid=null;chS.textContent='Start timer';return}if(cs<=0)cs=60;chS.textContent='Pause';cid=setInterval(()=>{cs--;cf();if(cs<=0){clearInterval(cid);cid=null;chS.textContent='Start timer';chT.textContent="Time's up"}},1000)};
+
+// sorters
+document.querySelectorAll('[data-sorter]').forEach(S=>{
+  const poolEl=S.querySelector('.pool'),chips=[...poolEl.children],bins=[...S.querySelectorAll('.bin')],out=S.querySelector('[data-sort-score]');let sel=null;
+  chips.forEach(c=>c.onclick=e=>{e.stopPropagation();const inBin=c.closest('.bin');if(sel&&sel!==c&&inBin){sel.classList.remove('sel','right','wrong');inBin.querySelector('.chips').appendChild(sel);sel=null;return}chips.forEach(x=>x.classList.remove('sel'));if(sel===c){sel=null;return}sel=c;c.classList.add('sel')});
+  bins.forEach(b=>b.onclick=()=>{if(!sel)return;sel.classList.remove('sel','right','wrong');b.querySelector('.chips').appendChild(sel);sel=null});
+  S.querySelector('[data-sort-check]').onclick=()=>{let r=0,n=0;bins.forEach(b=>b.querySelectorAll('.chip').forEach(c=>{n++;const ok=c.dataset.g===b.dataset.bin;if(ok)r++;c.classList.toggle('right',ok);c.classList.toggle('wrong',!ok)}));out.textContent=`${r} / ${chips.length} correct`+(n<chips.length?` · ${chips.length-n} still to sort`:'')};
+  S.querySelector('[data-sort-reset]').onclick=()=>{chips.forEach(c=>{c.classList.remove('sel','right','wrong');poolEl.appendChild(c)});sel=null;out.textContent=''};
+});
+
+// sentence builder
+const builds=[
+ ["Was it your father who taught you maths?","No, it was Madame Roux who taught me to love maths."],
+ ["What did you need most at fourteen?","What I needed was someone to believe in me."],
+ ["Where did you grow up?","It was in Marseille that I grew up."],
+ ["Did you want to be a famous scientist?","No, all I wanted was to pass the exam."],
+ ["Why do you study motivation?","The reason I study motivation is that one comment changed my life."]
+];
+const B=document.getElementById('builder');
+builds.forEach(([q,a],k)=>{
+  const words=a.split(/\s+/).filter(Boolean);
+  const box=document.createElement('div');box.className='bld';
+  box.innerHTML=`<p style="margin:0"><span class="n">${k+1}</span><i>Audience: "${q}"</i></p><div class="build" aria-label="Your sentence"></div><div class="tiles"></div><div class="row"><button class="btn ghost" data-c>Check</button><span class="fb"></span></div>`;
+  const build=box.querySelector('.build'),tiles=box.querySelector('.tiles'),fb=box.querySelector('.fb');
+  shuffle(words.map((w,ix)=>({w,ix}))).forEach(o=>{const t=document.createElement('button');t.className='tile';t.textContent=o.w;t.onclick=()=>{
+    if(t.parentElement===tiles){build.appendChild(t)}else{tiles.appendChild(t)}fb.textContent='';fb.className='fb'};tiles.appendChild(t)});
+  box.querySelector('[data-c]').onclick=()=>{const got=[...build.children].map(t=>t.textContent).join(' ');const ok=got===words.join(' ');fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?'Correct.':(tiles.children.length?'Use all the words.':'Not quite. Where does the focus go?')};
+  B.appendChild(box);
+});
+
+// myth busters
+const myths=[
+ {m:"We only use 10% of our brains.",e:"Brain scans show that we use virtually all of our brain. Even simple tasks activate many different areas.",x:"What brain scans actually show is that we use almost all of our brain."},
+ {m:"Students learn best when teaching matches their learning style: visual, auditory or kinaesthetic.",e:"A major review (Pashler et al., 2008) found no solid evidence that matching teaching to a student's preferred 'learning style' improves learning.",x:"What the research shows is that matching learning styles doesn't improve learning."},
+ {m:"Re-reading your notes is the best way to study.",e:"A large review of study techniques (Dunlosky et al., 2013) rated re-reading as low utility. Testing yourself and spreading your study over time were rated high utility.",x:"It's testing yourself, not re-reading, that works best."},
+ {m:"Studying everything the night before is the best way to remember it.",e:"The spacing effect: study spread over several days leads to better long-term memory than the same amount of study in one session.",x:"It's spacing your study, not cramming, that helps long-term memory."},
+ {m:"Multitasking makes us more productive.",e:"Research on task switching shows that every switch costs time and increases mistakes, especially with complex tasks.",x:"What actually happens is that we lose time every time we switch tasks."},
+ {m:"Praising children for being smart makes them more confident.",e:"Mueller & Dweck (1998): after failure, children praised for intelligence gave up sooner and enjoyed the problems less than children praised for effort.",x:"It was the children praised for effort who kept trying."}
+];
+let mPool=[],mCur=null;const mEl=document.getElementById('myth'),mRev=document.getElementById('mythReveal'),mLeft=document.getElementById('mythLeft');
+const mHTML=(c,open)=>`<span class="tag">${open?'Busted':'Myth'}</span><span class="myth">"${c.m}"</span><div class="ev"><p style="margin:0 0 6px"><b>The evidence:</b> ${c.e}</p><p style="margin:0;color:var(--teal)"><b>Model:</b> "${c.x}"</p></div>`;
+document.getElementById('mythDraw').onclick=()=>{if(!mPool.length)mPool=shuffle([...myths]);mCur=mPool.pop();mEl.className='mythcard';mEl.innerHTML=mHTML(mCur,false);mRev.disabled=false;mLeft.textContent=mPool.length+' myths left'};
+mRev.onclick=()=>{if(!mCur)return;mEl.className='mythcard open';mEl.innerHTML=mHTML(mCur,true);mRev.disabled=true};
+
+// guesses
+const guesses=["I bet it was your ______ who taught you to read.","I think it was at ______ that you first spoke English with a foreigner.","I guess what you wanted to be as a child was a ______.","I imagine the person who had the biggest impact on you at school was your ______ teacher.","I think it was ______ that made you choose your area of study.","I bet the thing you remember most about your childhood home is ______.","I guess all you wanted at fifteen was ______.","I think it was in ______ that you had your first job.","I imagine the reason you're learning academic English is that ______.","I bet it was your ______ who instilled your love of ______."];
+let gPool=[];const gCard=document.getElementById('guessCard');
+document.getElementById('guessBtn').onclick=()=>{if(!gPool.length)gPool=shuffle([...guesses]);gCard.textContent=gPool.pop()};
+
+// timer
+let secs=300,tid=null;const tEl=document.getElementById('timer'),tS=document.getElementById('tStart');
+const fmt=()=>tEl.textContent=Math.floor(secs/60)+':'+String(secs%60).padStart(2,'0');
+tS.onclick=()=>{if(tid){clearInterval(tid);tid=null;tS.textContent='Start';return}if(secs<=0)secs=300;tS.textContent='Pause';tid=setInterval(()=>{secs--;fmt();if(secs<=0){clearInterval(tid);tid=null;tS.textContent='Start';tEl.textContent="Time's up"}},1000)};
+document.getElementById('tReset').onclick=()=>{clearInterval(tid);tid=null;secs=300;fmt();tS.textContent='Start'};
+})();
+</script>
+</body></html>

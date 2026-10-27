@@ -1,0 +1,156 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>
+<title>Homework: What Really Shaped Me</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a single study sheet; Sofía's magazine pages are the shared context, tasks follow it */
+:root{--paper:#F4F6F9;--card:#FFFFFF;--ink:#16203A;--muted:#566079;--line:#D9DFE9;--hl:#F6CB45;--hl-soft:#FCEFC0;--teal:#1E7568;--teal-soft:#DCEFEB;--wrong:#B93C26;--wrong-soft:#F8E1DB;
+--display:"Young Serif",Georgia,serif;--body:"Figtree",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#0F1420;--card:#171E2E;--ink:#E7EBF4;--muted:#9BA4BA;--line:#2A3349;--hl:#E9BC36;--hl-soft:#3A3218;--teal:#58B9A9;--teal-soft:#16302C;--wrong:#E6765F;--wrong-soft:#3A1F1A;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0F1420;--card:#171E2E;--ink:#E7EBF4;--muted:#9BA4BA;--line:#2A3349;--hl:#E9BC36;--hl-soft:#3A3218;--teal:#58B9A9;--teal-soft:#16302C;--wrong:#E6765F;--wrong-soft:#3A1F1A;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:780px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:22px}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,5vw,42px)} h2{font-size:22px}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:0 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.post{border-left:4px solid var(--hl)}
+.post .by{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.item{display:flex;flex-direction:column;gap:6px;padding-top:10px;border-top:1px solid var(--line)}
+.item .wrongq{font-style:italic;color:var(--muted)}
+.n{font-family:var(--mono);font-size:12px;color:var(--muted);margin-right:6px}
+input[type=text],textarea{width:100%;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--paper);color:var(--ink)}
+input.ok{border-color:var(--teal);background:var(--teal-soft)} input.no{border-color:var(--wrong);background:var(--wrong-soft)}
+.fb{font-size:14px;min-height:1.2em}.fb.ok{color:var(--teal)}.fb.no{color:var(--wrong)}
+.btn{font:inherit;cursor:pointer;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:8px 18px;font-weight:600;font-size:15px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.build{min-height:42px;border:1px dashed var(--line);border-radius:8px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;background:var(--paper)}
+.tiles{display:flex;flex-wrap:wrap;gap:6px}
+.tile{font:inherit;font-size:15px;cursor:pointer;border:1px solid var(--ink);background:var(--card);color:var(--ink);border-radius:6px;padding:3px 10px}
+.tile.used{visibility:hidden}
+.score{font-family:var(--mono);font-size:14px;color:var(--muted)}
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.checklist label{display:flex;gap:10px;cursor:pointer}
+.checklist input{margin-top:5px;width:18px;height:18px;accent-color:var(--teal)}
+.profile{line-height:2.1}
+select{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:var(--paper);color:var(--ink);max-width:100%}
+select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border-color:var(--wrong);background:var(--wrong-soft)}
+select:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.tip{background:var(--hl-soft);border:1px solid var(--hl);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.aaa{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
+.aaa div{background:var(--card);border-radius:8px;padding:10px 12px}
+.aaa b{font-family:var(--display);font-size:20px;font-weight:400;display:block}
+.btn:focus-visible,.tile:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.lit{line-height:2.1}
+.tt{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.tt div{background:var(--card);border-radius:8px;padding:10px 12px}
+.tt b{font-family:var(--display);font-size:18px;font-weight:400;display:block}
+.model{font-size:14px;color:var(--teal);display:none}.show-models .model{display:block}
+.task{font-size:13px;font-family:var(--mono);color:var(--teal)}
+</style>
+<div class="wrap">
+<header>
+  <p class="eyebrow">Homework · Module 1 · Lesson 3 · about 35 minutes</p>
+  <h1>What Really Shaped Me</h1>
+</header>
+
+<section class="card post">
+  <p class="by">Alumni magazine · column: Formative Moments</p>
+  <p>Every month, the university alumni magazine asks a former student what made them who they are. This month it's <b>Dr Sofía Ramírez</b>, an astrophysicist who grew up in a small town in northern Chile. You are helping the editor prepare her interview, her research summary and her column. Everything in this homework comes from Sofía's pages.</p>
+</section>
+
+<section class="card" id="partA">
+  <p class="eyebrow">Part 1 · Add the emphasis</p>
+  <h2>The editor wants Sofía's answers to sound stronger. Rewrite each sentence with the frame given.</h2>
+  <div class="item" data-ok="it was my grandfather who showed me the stars|it was my grandfather that showed me the stars"><p><span class="n">1</span><span class="wrongq">My grandfather showed me the stars.</span> <span class="task">It was…</span></p><input type="text" aria-label="Sentence 1"><span class="fb"></span><span class="model">It was my grandfather who showed me the stars.</span></div>
+  <div class="item" data-ok="it was in the atacama desert that i fell in love with physics"><p><span class="n">2</span><span class="wrongq">I fell in love with physics in the Atacama Desert.</span> <span class="task">It was in…</span></p><input type="text" aria-label="Sentence 2"><span class="fb"></span><span class="model">It was in the Atacama Desert that I fell in love with physics.</span></div>
+  <div class="item" data-ok="what i needed was a good telescope"><p><span class="n">3</span><span class="wrongq">I needed a good telescope.</span> <span class="task">What…</span></p><input type="text" aria-label="Sentence 3"><span class="fb"></span><span class="model">What I needed was a good telescope.</span></div>
+  <div class="item" data-ok="it wasn't the answers that attracted me to astronomy it was the questions|it was not the answers that attracted me to astronomy it was the questions|it wasn't the answers that attracted me to astronomy it was the questions that attracted me|it was not the answers that attracted me to astronomy it was the questions that attracted me"><p><span class="n">4</span><span class="wrongq">The questions attracted me to astronomy, not the answers.</span> <span class="task">It wasn't… It was…</span></p><input type="text" aria-label="Sentence 4"><span class="fb"></span><span class="model">It wasn't the answers that attracted me to astronomy. It was the questions.</span></div>
+  <div class="item" data-ok="all i wanted was to understand how stars are born|all i wanted to do was understand how stars are born|all i wanted to do was to understand how stars are born"><p><span class="n">5</span><span class="wrongq">I only wanted to understand how stars are born.</span> <span class="task">All…</span></p><input type="text" aria-label="Sentence 5"><span class="fb"></span><span class="model">All I wanted was to understand how stars are born.</span></div>
+  <div class="item" data-ok="the reason i studied in germany was that the best astronomy courses were there|the reason why i studied in germany was that the best astronomy courses were there|the reason i studied in germany is that the best astronomy courses were there|the reason why i studied in germany is that the best astronomy courses were there"><p><span class="n">6</span><span class="wrongq">I studied in Germany because the best astronomy courses were there.</span> <span class="task">The reason…</span></p><input type="text" aria-label="Sentence 6"><span class="fb"></span><span class="model">The reason I studied in Germany was that the best astronomy courses were there.</span></div>
+  <div class="item" data-ok="it was not until 2015 that i started observing real stars|it wasn't until 2015 that i started observing real stars|it was not until 2015 that i started to observe real stars|it wasn't until 2015 that i started to observe real stars"><p><span class="n">7</span><span class="wrongq">I didn't start observing real stars until 2015.</span> <span class="task">It was not until…</span></p><input type="text" aria-label="Sentence 7"><span class="fb"></span><span class="model">It was not until 2015 that I started observing real stars.</span></div>
+  <div class="item" data-ok="what my first supervisor taught me was to accept mistakes|what my first supervisor taught me was how to accept mistakes"><p><span class="n">8</span><span class="wrongq">My first supervisor taught me to accept mistakes.</span> <span class="task">What my first supervisor…</span></p><input type="text" aria-label="Sentence 8"><span class="fb"></span><span class="model">What my first supervisor taught me was to accept mistakes.</span></div>
+  <div class="row"><button class="btn" id="checkA">Check my answers</button><button class="btn ghost" id="modelsA">Show model answers</button><span class="score" id="scoreA"></span></div>
+</section>
+
+<section class="card" id="partB">
+  <p class="eyebrow">Part 2 · Write like a researcher</p>
+  <h2>Sofía's research summary opens with this paragraph. Choose the right word in each gap.</h2>
+  <p style="font-size:14px;color:var(--muted)">Remember the academic frames from class: <i>It is… that… · What these data suggest is that… · What remains unclear is…</i></p>
+  <div class="lit">
+    Light pollution is often seen as a problem only for astronomers. However, it is not only astronomers <select data-ans="who" data-opts="who|what|which"></select> are affected. In a global atlas of night sky brightness, Falchi et al. (2016) found that more than 80% of the world's population lives under light-polluted skies, and that the Milky Way is hidden from more than one third of humanity. <select data-ans="What" data-opts="What|That|It"></select> these data suggest <select data-ans="is" data-opts="is|it is|are"></select> that a truly dark sky has become rare. For many animals, <select data-ans="it" data-opts="it|that|what"></select> is the natural cycle of light and dark <select data-ans="that" data-opts="that|what|when"></select> controls when they feed, sleep and migrate. <select data-ans="What" data-opts="What|That|It"></select> remains unclear <select data-ans="is" data-opts="is|it is|are"></select> how artificial light at night affects human health in the long term.
+  </div>
+  <div class="row"><button class="btn" id="checkB">Check</button><span class="score" id="scoreB"></span></div>
+  <p style="font-size:13px;color:var(--muted)">Falchi et al. (2016) is a real study published in <i>Science Advances</i>. Sofía Ramírez is fictional.</p>
+</section>
+
+<section class="card" id="partV">
+  <p class="eyebrow">Part 3 · Vocabulary in context</p>
+  <h2>Sofía's Formative Moments column. Complete it.</h2>
+  <div class="profile" id="vprof">
+    I spent my <select data-gap="formative"></select> years in a small town in northern Chile. My <select data-gap="upbringing"></select> was quiet: no cinema, very little internet, but one of the clearest night skies on Earth. It was my grandfather, a retired miner, who <select data-gap="instilled"></select> a love of the stars in me. He was my first <select data-gap="role model"></select>. <select data-gap="In hindsight"></select>, the most <select data-gap="pivotal"></select> moment came at sixteen, when a science summer school rejected me. I cried for a week, but that rejection taught me <select data-gap="resilience"></select>: I applied again the next year and got in. The teachers there <select data-gap="fostered"></select> my curiosity instead of giving me answers. Today I <select data-gap="attribute"></select> my career to them, and to my grandfather's old binoculars. Those nights in the desert <select data-gap="had a profound impact on"></select> everything I have done since.
+  </div>
+  <div class="row"><button class="btn" id="checkV">Check</button><span class="score" id="scoreV"></span></div>
+</section>
+
+<section class="card">
+  <p class="eyebrow">Part 4 · Your turn to write</p>
+  <h2>Write your own Formative Moments column.</h2>
+  <p>The editor liked Sofía's column so much that she asks you for one too. Write 120–150 words about the person, place or moment that really shaped you.</p>
+  <textarea id="column" rows="8" aria-label="Your column" placeholder="What really shaped me wasn't… It was…"></textarea>
+  <p class="score" id="wc">0 words</p>
+  <ul class="checklist">
+    <li><label><input type="checkbox"><span>I opened with a What-cleft hook.</span></label></li>
+    <li><label><input type="checkbox"><span>I used at least two It-clefts, one of them to contrast (It wasn't… It was…).</span></label></li>
+    <li><label><input type="checkbox"><span>I used one more frame: The reason… / All I… / It was not until… that…</span></label></li>
+    <li><label><input type="checkbox"><span>I used at least five expressions from Lesson 3 and one from Lesson 2.</span></label></li>
+    <li><label><input type="checkbox"><span>I used the past simple for the story and the present perfect for "up to now".</span></label></li>
+  </ul>
+  <div class="row"><button class="btn ghost" id="copyJ">Copy my text</button><span class="score" id="copyMsg"></span></div>
+  <p class="score">Send your text to your teacher.</p>
+</section>
+
+<section class="card">
+  <p class="eyebrow">Part 5 · Speak</p>
+  <h2>Record your Ideas Night talk: "What Really Shaped Me", in two minutes.</h2>
+  <p>Use your column from Part 4 as notes, but don't read it: tell it. Make a small pause after each What-clause and stress the focus. End with "In hindsight, …" or "I attribute… to…". Send the recording to your teacher. In Lesson 4, this talk and your journey from Lesson 2 become your project, <b>My Story in 3 Minutes</b>.</p>
+</section>
+
+<section class="tip">
+  <p class="eyebrow">Tip of the week</p>
+  <h2>Never drop the "It"</h2>
+  <p>Portuguese uses the same structure as English It-clefts all the time, so you already know how to think in clefts. But Portuguese starts the sentence with the verb, and English can't. The two most common mistakes for Brazilian speakers:</p>
+  <div class="tt">
+    <div><b>✗ Was my grandfather who…</b>✓ <u>It</u> was my grandfather who taught me.</div>
+    <div><b>✗ What I need it is…</b>✓ What I need is more time. (no extra <i>it</i>)</div>
+  </div>
+  <p>One more: for times and places, formal English prefers <b>that</b>, not <i>when</i> or <i>where</i>: <i>It was in 2015 <u>that</u> I started.</i> Practise it this week: every time you emphasise something in Portuguese, say the English version in your head.</p>
+</section>
+</div>
+<script>
+(function(){
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]/g,' ').replace(/\s+/g,' ').trim();
+document.getElementById('checkA').onclick=()=>{
+  const items=[...document.querySelectorAll('#partA .item')];let r=0;
+  items.forEach(it=>{const inp=it.querySelector('input'),fb=it.querySelector('.fb');const oks=it.dataset.ok.split('|');
+    if(!inp.value.trim()){inp.className='';fb.className='fb';fb.textContent='';return}
+    const ok=oks.includes(norm(inp.value));if(ok)r++;inp.className=ok?'ok':'no';fb.className='fb '+(ok?'ok':'no');
+    fb.textContent=ok?'Correct.':'Not yet. Check the frame, and don\'t forget "It", "that" or "was".';});
+  document.getElementById('scoreA').textContent=`${r} / ${items.length}`;
+};
+document.getElementById('modelsA').onclick=e=>{const p=document.getElementById('partA');p.classList.toggle('show-models');e.target.textContent=p.classList.contains('show-models')?'Hide model answers':'Show model answers'};
+const bs=[...document.querySelectorAll('#partB select')];
+bs.forEach(s=>{s.innerHTML='<option value="">……</option>'+s.dataset.opts.split('|').map(o=>`<option>${o}</option>`).join('');s.setAttribute('aria-label','Choose the word')});
+document.getElementById('checkB').onclick=()=>{let r=0;bs.forEach(s=>{const ok=s.value===s.dataset.ans;if(ok)r++;s.className=s.value?(ok?'ok':'no'):''});document.getElementById('scoreB').textContent=`${r} / ${bs.length}`};
+const vg=[...document.querySelectorAll('#vprof select')];const vo=vg.map(g=>g.dataset.gap).concat(['a milestone','a setback']).sort((a,b)=>a.localeCompare(b));
+vg.forEach(g=>{g.innerHTML='<option value="">……</option>'+vo.map(o=>`<option>${o}</option>`).join('');g.setAttribute('aria-label','Gap')});
+document.getElementById('checkV').onclick=()=>{let r=0;vg.forEach(g=>{const ok=g.value===g.dataset.gap;if(ok)r++;g.className=g.value?(ok?'ok':'no'):''});document.getElementById('scoreV').textContent=`${r} / ${vg.length}`};
+const j=document.getElementById('column'),wc=document.getElementById('wc');
+j.oninput=()=>{const n=(j.value.trim().match(/\S+/g)||[]).length;wc.textContent=n+' words'+(n>=120&&n<=150?' · good length':'')};
+document.getElementById('copyJ').onclick=async()=>{const m=document.getElementById('copyMsg');
+  try{await navigator.clipboard.writeText(j.value);m.textContent='Copied.'}catch(e){j.focus();j.select();m.textContent='Text selected. Press Ctrl+C or Cmd+C to copy.'}};
+})();
+</script>
+</body></html>
