@@ -230,9 +230,10 @@ select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border
   <h2>Ideas Night · "A Wrong Answer Is Information"</h2>
   <div class="grid2">
     <div class="stack">
-      <div class="stage-card"><div class="art">LH</div><div><div class="t">Dr Leila Haddad</div><div class="s">Educational psychologist · Ideas Night talk · 5 min</div></div></div>
+      <div class="stage-card"><div class="art">LH</div><div><div class="t">Dr Leila Haddad</div><div class="s">Educational psychologist · Ideas Night talk · 2½ min</div></div></div>
       <p class="context">Ideas Night is an evening of short talks at a university. Leila tells the story of the moment that shaped her career, and the research that explains it.</p>
-      <div class="row"><button class="btn" id="playBtn">Listen</button><button class="btn ghost" id="stopBtn">Stop</button><button class="btn ghost" id="hideTx">Hide transcript</button></div>
+      <audio id="talkAudio" controls preload="metadata" src="audio/talk.mp3" style="width:100%"></audio>
+      <div class="row"><button class="btn ghost" id="hideTx">Hide transcript</button><a class="btn ghost" href="audio/talk.mp3" download>Download audio</a></div>
       <div class="panel" data-quiz>
         <h3>First listening · the big idea</h3>
         <p style="font-size:15px;color:var(--muted)">What is Leila's main message?</p>
@@ -459,7 +460,7 @@ select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border
       <h3>Pause, then stress</h3>
       <p class="into">What really shaped me <span style="color:var(--muted)">|</span> was a red <mark>PEN</mark>.</p>
       <p class="into">It wasn't <mark>TA</mark>lent. <span style="color:var(--muted)">|</span> It was <mark>PRAC</mark>tice.</p>
-      <div class="row"><button class="btn ghost" data-say="What really shaped me... was a red pen. It wasn't talent. It was practice.">Listen</button></div>
+      <div class="row"><button class="btn ghost" data-audio="audio/model-1.mp3">Listen</button></div>
       <p style="font-size:15px;color:var(--muted)">Make a small pause after the What-clause. The listener waits for the important part.</p>
     </div>
     <div class="panel stack">
@@ -469,7 +470,7 @@ select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border
         <tr><td>It was in <b>LONDON</b> that I learned English.</td><td>not in Dublin</td></tr>
         <tr><td>It was <b>ENGLISH</b> that my sister taught me.</td><td>not Spanish</td></tr>
       </tbody></table></div>
-      <div class="row"><button class="btn ghost" data-say="It was my sister who taught me English. It was in London that I learned English.">Listen</button></div>
+      <div class="row"><button class="btn ghost" data-audio="audio/model-2.mp3">Listen</button></div>
       <p>Your turn: say each sentence and let your teacher guess what you are correcting.</p>
     </div>
   </div>
@@ -643,29 +644,24 @@ const shuffle=a=>{for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()
 // vote
 document.querySelectorAll('#vote .opt').forEach(b=>b.onclick=()=>{document.querySelectorAll('#vote .opt').forEach(x=>x.classList.remove('right'));b.classList.add('right');document.getElementById('voteMsg').textContent='Vote saved. Keep your answer: you will need it at the end of the lesson.'});
 
-// speech
-function speak(text,voiceIdx,onend){
-  try{
-    const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=.95;
-    const vs=speechSynthesis.getVoices().filter(v=>/^en/.test(v.lang));
-    if(vs.length)u.voice=vs[voiceIdx%vs.length];
-    if(onend)u.onend=onend;speechSynthesis.speak(u);return true;
-  }catch(e){return false}
-}
-document.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>{try{speechSynthesis.cancel()}catch(e){};speak(b.dataset.say,0)});
+// audio
+const clip=new Audio();
+document.querySelectorAll('[data-audio]').forEach(b=>b.onclick=()=>{talkAudio.pause();clip.src=b.dataset.audio;clip.currentTime=0;clip.play()});
 const talk=document.getElementById('talk');
 const paras=[...talk.querySelectorAll('p')];
-let playing=false;
-function playFrom(k){
-  paras.forEach(l=>l.classList.remove('speaking'));
-  if(!playing||k>=paras.length){playing=false;return}
-  const l=paras[k];l.classList.add('speaking');
-  if(talk.style.visibility!=='hidden')l.scrollIntoView({block:'nearest',behavior:'smooth'});
-  const txt=l.textContent.replace(/^\s*\d+/,'');
-  if(!speak(txt,1,()=>playFrom(k+1)))playing=false;
-}
-document.getElementById('playBtn').onclick=()=>{try{speechSynthesis.cancel()}catch(e){};playing=true;playFrom(0)};
-document.getElementById('stopBtn').onclick=()=>{playing=false;try{speechSynthesis.cancel()}catch(e){};paras.forEach(l=>l.classList.remove('speaking'))};
+const talkAudio=document.getElementById('talkAudio');
+const starts=[0.4,13.64,33.66,49.52,68.07,107.97,128.76];
+let cur=-1;
+talkAudio.addEventListener('play',()=>clip.pause());
+talkAudio.addEventListener('timeupdate',()=>{
+  let k=-1;starts.forEach((t,i)=>{if(talkAudio.currentTime>=t-0.1)k=i});
+  if(talkAudio.ended)k=-1;
+  if(k===cur)return;cur=k;
+  paras.forEach((l,i)=>l.classList.toggle('speaking',i===k));
+  if(k>=0&&talk.style.visibility!=='hidden')paras[k].scrollIntoView({block:'nearest',behavior:'smooth'});
+});
+talkAudio.addEventListener('ended',()=>paras.forEach(l=>l.classList.remove('speaking')));
+paras.forEach((l,i)=>{l.style.cursor='pointer';l.title='Play from here';l.onclick=()=>{talkAudio.currentTime=starts[i];talkAudio.play()}});
 document.getElementById('hideTx').onclick=e=>{const h=talk.style.visibility==='hidden';talk.style.visibility=h?'':'hidden';e.target.textContent=h?'Hide transcript':'Show transcript'};
 
 // warm-up: correct me

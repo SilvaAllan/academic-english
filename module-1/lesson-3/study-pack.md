@@ -13,6 +13,8 @@ Academic skill: using emphasis frames to correct a belief, interpret findings an
 
 Context: Ideas Night is an evening of short talks at a university. Dr Leila Haddad, an educational psychologist, tells the story of the moment that shaped her career. (Leila and Ideas Night are fictional. The study she describes is real: Mueller & Dweck, 1998.)
 
+Audio (2½ min): https://silvaallan.github.io/academic-english/module-1/lesson-3/audio/talk.mp3
+
 1. When people ask me what made me who I am, they expect a story about talent. They want to hear that I was a brilliant child who loved books. But that's not true. What really shaped me wasn't talent. It was a red pen.
 
 2. I grew up in Marseille, in a small flat above my parents' bakery. My upbringing was simple: we worked, we ate together, and we didn't talk much about school. Nobody in my family had been to university. So when I failed a maths exam at fourteen, nobody was surprised. I wasn't either. I had decided I just wasn't "a maths person".
