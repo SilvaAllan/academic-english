@@ -1,0 +1,180 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>
+<title>Homework: First Impressions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a single study sheet; Sofía's magazine pages are the shared context, tasks follow it */
+:root{--paper:#F4F6F9;--card:#FFFFFF;--ink:#16203A;--muted:#566079;--line:#D9DFE9;--hl:#F6CB45;--hl-soft:#FCEFC0;--teal:#1E7568;--teal-soft:#DCEFEB;--wrong:#B93C26;--wrong-soft:#F8E1DB;
+--display:"Young Serif",Georgia,serif;--body:"Figtree",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#0F1420;--card:#171E2E;--ink:#E7EBF4;--muted:#9BA4BA;--line:#2A3349;--hl:#E9BC36;--hl-soft:#3A3218;--teal:#58B9A9;--teal-soft:#16302C;--wrong:#E6765F;--wrong-soft:#3A1F1A;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0F1420;--card:#171E2E;--ink:#E7EBF4;--muted:#9BA4BA;--line:#2A3349;--hl:#E9BC36;--hl-soft:#3A3218;--teal:#58B9A9;--teal-soft:#16302C;--wrong:#E6765F;--wrong-soft:#3A1F1A;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:780px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:22px}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,5vw,42px)} h2{font-size:22px}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:0 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.post{border-left:4px solid var(--hl)}
+.post .by{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.item{display:flex;flex-direction:column;gap:6px;padding-top:10px;border-top:1px solid var(--line)}
+.item .wrongq{font-style:italic;color:var(--muted)}
+.n{font-family:var(--mono);font-size:12px;color:var(--muted);margin-right:6px}
+input[type=text],textarea{width:100%;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--paper);color:var(--ink)}
+input.ok{border-color:var(--teal);background:var(--teal-soft)} input.no{border-color:var(--wrong);background:var(--wrong-soft)}
+.fb{font-size:14px;min-height:1.2em}.fb.ok{color:var(--teal)}.fb.no{color:var(--wrong)}
+.btn{font:inherit;cursor:pointer;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:8px 18px;font-weight:600;font-size:15px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.build{min-height:42px;border:1px dashed var(--line);border-radius:8px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;background:var(--paper)}
+.tiles{display:flex;flex-wrap:wrap;gap:6px}
+.tile{font:inherit;font-size:15px;cursor:pointer;border:1px solid var(--ink);background:var(--card);color:var(--ink);border-radius:6px;padding:3px 10px}
+.tile.used{visibility:hidden}
+.score{font-family:var(--mono);font-size:14px;color:var(--muted)}
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.checklist label{display:flex;gap:10px;cursor:pointer}
+.checklist input{margin-top:5px;width:18px;height:18px;accent-color:var(--teal)}
+.profile{line-height:2.1}
+select{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:var(--paper);color:var(--ink);max-width:100%}
+select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border-color:var(--wrong);background:var(--wrong-soft)}
+select:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.tip{background:var(--hl-soft);border:1px solid var(--hl);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.aaa{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
+.aaa div{background:var(--card);border-radius:8px;padding:10px 12px}
+.aaa b{font-family:var(--display);font-size:20px;font-weight:400;display:block}
+.btn:focus-visible,.tile:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.lit{line-height:2.1}
+.tt{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.tt div{background:var(--card);border-radius:8px;padding:10px 12px}
+.tt b{font-family:var(--display);font-size:18px;font-weight:400;display:block}
+.model{font-size:14px;color:var(--teal);display:none}.show-models .model{display:block}
+.task{font-size:13px;font-family:var(--mono);color:var(--teal)}
+</style>
+<div class="wrap">
+<header>
+  <p class="eyebrow">Homework · Module 1 · Lesson 4 · about 40 minutes</p>
+  <h1>First Impressions</h1>
+</header>
+
+<section class="card post">
+  <p class="by">Yuki's folder · interview and open day</p>
+  <p><b>Dr Yuki Tanaka</b> is a marine biologist. This week is a big one: on Friday she has a job interview at an ocean research institute, and on Saturday she gives a short talk at the institute's open day. You are helping her get ready. Everything in this homework comes from Yuki's folder: a message from her mentor, her talk, an article she read and her notes from a networking event.</p>
+</section>
+
+<section class="card" id="partV">
+  <p class="eyebrow">Part 1 · Vocabulary in context</p>
+  <h2>A message from Yuki's mentor. Complete it.</h2>
+  <div class="profile" id="vprof">
+    Hi Yuki, good luck with Friday's interview! Remember, interviewers often make a <select data-gap="snap judgement"></select> in the first few minutes, so the way you greet them can <select data-gap="make a lasting impression"></select>. Smile and look them in the eye, and you'll <select data-gap="come across as"></select> confident. Your publications make you very <select data-gap="credible"></select>, and your students say you're very <select data-gap="approachable"></select>, so mention your teaching too. <select data-gap="tailor"></select> your answers to the institute: they care about coral restoration, not octopus behaviour. Keep each answer <select data-gap="concise"></select>: two minutes maximum. Your story about the night dive is really <select data-gap="engaging"></select>, so use it. Let your voice <select data-gap="convey"></select> your enthusiasm. And please <select data-gap="rehearse"></select> your answers with a friend before Friday! Prof. Lindqvist
+  </div>
+  <div class="row"><button class="btn" id="checkV">Check</button><span class="score" id="scoreV"></span></div>
+  <p style="font-size:13px;color:var(--muted)">Two words in the list are extra.</p>
+</section>
+
+<section class="card" id="partB">
+  <p class="eyebrow">Part 2 · Signposting</p>
+  <h2>Yuki's open-day talk: "What Coral Reefs Can Teach Us About Resilience". Choose the right words.</h2>
+  <div class="lit sel">
+    Good afternoon, everyone. <select data-ans="I'd like to start with" data-opts="I'd like to start with|I'd like start with|I like to start with"></select> a picture. … In the next ten minutes, <select data-ans="I'll tell you" data-opts="I'll tell you|I'll say you|I'll tell to you"></select> about three things: what coral bleaching is, what we found on our study reef, and what you can do to help. <select data-ans="Let me begin with" data-opts="Let me begin with|Let me to begin with|Let me beginning with"></select> bleaching. When the sea gets too hot, corals lose the tiny algae that live inside them, and they turn white. …
+    <select data-ans="That brings me to" data-opts="That brings me to|That brings to me|That bring me to"></select> our study. <select data-ans="As you can see" data-opts="As you can see|As you can look|As you see it"></select> in this photo, half of the corals on our reef turned white in one summer. <select data-ans="What surprised us was" data-opts="What surprised us was|What surprised us it was|That surprised us was"></select> how quickly some of them recovered. …
+    <select data-ans="To sum up" data-opts="To sum up|Resuming|To summary"></select>, reefs can recover if we give them time and cooler water. Thank you. <select data-ans="I'd be happy to answer" data-opts="I'd be happy to answer|I'd be happy to answer to|I'd be happy answering to"></select> your questions.
+  </div>
+  <div class="row"><button class="btn" data-sel-check>Check</button><span class="score" data-sel-score></span></div>
+  <p style="font-size:13px;color:var(--muted)">Yuki and her study reef are fictional. Coral bleaching is real.</p>
+</section>
+
+<section class="card" id="partC">
+  <p class="eyebrow">Part 3 · Write like a researcher</p>
+  <h2>Before her interview, Yuki read a summary of a real study. Choose the right words.</h2>
+  <p style="font-size:14px;color:var(--muted)">Remember the academic language from Lessons 2–4: <i>To date, studies have shown… · What these findings suggest is that… · It was X, rather than Y, that… · What remains unclear is…</i></p>
+  <div class="lit sel">
+    <select data-ans="To date" data-opts="To date|Until now on|Since date"></select>, many studies <select data-ans="have shown" data-opts="have shown|showed since|have show"></select> that first impressions matter in job interviews. Barrick, Swider and Stewart (2010) <select data-ans="found" data-opts="found|have found in 2010|find"></select> that candidates who made a better impression in the first few minutes of the interview, the rapport-building stage, received higher ratings from interviewers and more internship offers. <select data-ans="What these findings suggest" data-opts="What these findings suggest|What suggest these findings|That these findings suggest"></select> <select data-ans="is" data-opts="is|it is|are"></select> that the opening minutes of an interview are not just small talk. Interestingly, <select data-ans="it was" data-opts="it was|it were|was"></select> the interviewers' impression of the candidates' competence, rather than how much they liked them, <select data-ans="that" data-opts="that|what|who"></select> predicted later results. <select data-ans="What remains unclear" data-opts="What remains unclear|That remains unclear|What remain unclear"></select> is whether these early impressions are accurate.
+  </div>
+  <div class="row"><button class="btn" data-sel-check>Check</button><span class="score" data-sel-score></span></div>
+  <p style="font-size:13px;color:var(--muted)">Barrick, Swider and Stewart (2010) is a real study published in the <i>Journal of Applied Psychology</i>.</p>
+</section>
+
+<section class="card" id="partA">
+  <p class="eyebrow">Part 4 · Module 1 review</p>
+  <h2>Yuki wrote down some things she said at a networking event. Each one has a mistake. Correct it.</h2>
+  <div class="item" data-ok="what do you do"><p><span class="n">1</span><span class="wrongq">What you do?</span></p><input type="text" aria-label="Sentence 1"><span class="fb"></span><span class="model">What do you do?</span></div>
+  <div class="item" data-ok="could you tell me where the conference room is"><p><span class="n">2</span><span class="wrongq">Could you tell me where is the conference room?</span></p><input type="text" aria-label="Sentence 2"><span class="fb"></span><span class="model">Could you tell me where the conference room is?</span></div>
+  <div class="item" data-ok="who told you about this job"><p><span class="n">3</span><span class="wrongq">Who did tell you about this job?</span></p><input type="text" aria-label="Sentence 3"><span class="fb"></span><span class="model">Who told you about this job?</span></div>
+  <div class="item" data-ok="i finished my phd in 2021"><p><span class="n">4</span><span class="wrongq">I have finished my PhD in 2021.</span></p><input type="text" aria-label="Sentence 4"><span class="fb"></span><span class="model">I finished my PhD in 2021.</span></div>
+  <div class="item" data-ok="i've worked at the aquarium since 2022|i have worked at the aquarium since 2022|i've been working at the aquarium since 2022|i have been working at the aquarium since 2022"><p><span class="n">5</span><span class="wrongq">I work at the aquarium since 2022.</span></p><input type="text" aria-label="Sentence 5"><span class="fb"></span><span class="model">I've worked at the aquarium since 2022.</span></div>
+  <div class="item" data-ok="it was my grandmother who taught me to swim|it was my grandmother that taught me to swim"><p><span class="n">6</span><span class="wrongq">Was my grandmother who taught me to swim.</span></p><input type="text" aria-label="Sentence 6"><span class="fb"></span><span class="model">It was my grandmother who taught me to swim.</span></div>
+  <div class="item" data-ok="what i love is working at night"><p><span class="n">7</span><span class="wrongq">What I love it is working at night.</span></p><input type="text" aria-label="Sentence 7"><span class="fb"></span><span class="model">What I love is working at night.</span></div>
+  <div class="item" data-ok="it was not until 2012 that i saw a coral reef|it wasn't until 2012 that i saw a coral reef"><p><span class="n">8</span><span class="wrongq">It was not until 2012 when I saw a coral reef.</span></p><input type="text" aria-label="Sentence 8"><span class="fb"></span><span class="model">It was not until 2012 that I saw a coral reef.</span></div>
+  <div class="row"><button class="btn" id="checkA">Check my answers</button><button class="btn ghost" id="modelsA">Show model answers</button><span class="score" id="scoreA"></span></div>
+</section>
+
+<section class="card">
+  <p class="eyebrow">Part 5 · Your turn to write</p>
+  <h2>Write your speaker bio for the Three-Minute Stories website.</h2>
+  <p>Before each talk, the Student Society publishes a short bio of the speaker. Bios are written in the <b>third person</b> (she, not I). Read Yuki's bio, then write yours: 90–120 words.</p>
+  <div class="card post" style="padding:14px 16px">
+    <p class="by">Model · Speaker bio</p>
+    <p>Dr Yuki Tanaka is a marine biologist who grew up on a small island in Okinawa, Japan. She majored in biology at university and completed her PhD in 2021. Since 2022, she has worked at a public aquarium, where she has helped thousands of visitors understand coral reefs. It was a night dive at the age of nineteen that made her want to study the ocean. Yuki comes across as calm and approachable, but she is passionate about one thing: helping reefs recover. In her talk, she explains in plain language what corals can teach us about resilience.</p>
+  </div>
+  <textarea id="column" rows="7" aria-label="Your bio" placeholder="Laís … is …"></textarea>
+  <p class="score" id="wc">0 words</p>
+  <ul class="checklist">
+    <li><label><input type="checkbox"><span>I wrote in the third person all the way through.</span></label></li>
+    <li><label><input type="checkbox"><span>I used the past simple for finished events and the present perfect for "up to now" (Since…, she has…).</span></label></li>
+    <li><label><input type="checkbox"><span>I used one cleft sentence (It was… that… / What… is…).</span></label></li>
+    <li><label><input type="checkbox"><span>I used at least four expressions from Module 1.</span></label></li>
+    <li><label><input type="checkbox"><span>It's concise and tailored to a general audience: no unexplained technical words.</span></label></li>
+  </ul>
+  <div class="row"><button class="btn ghost" id="copyJ">Copy my text</button><span class="score" id="copyMsg"></span></div>
+  <p class="score">Send your text to your teacher.</p>
+</section>
+
+<section class="card">
+  <p class="eyebrow">Part 6 · Speak</p>
+  <h2>Record the final version of "My Story in 3 Minutes".</h2>
+  <p>Give your talk again, at home, and record it. This time, focus on the <b>wish</b> your teacher gave you in class. Then listen to your recording and tick the list. Send the recording to your teacher.</p>
+  <ul class="checklist">
+    <li><label><input type="checkbox"><span>My talk is between 2:45 and 3:15.</span></label></li>
+    <li><label><input type="checkbox"><span>I opened with a hook and told the audience the plan.</span></label></li>
+    <li><label><input type="checkbox"><span>I used a signpost at the start of each part, and paused after it.</span></label></li>
+    <li><label><input type="checkbox"><span>I didn't read: I used keywords only.</span></label></li>
+    <li><label><input type="checkbox"><span>I improved the thing my teacher asked me to work on.</span></label></li>
+  </ul>
+</section>
+
+<section class="tip">
+  <p class="eyebrow">Tip of the week</p>
+  <h2>Silence is a signpost</h2>
+  <p>When Brazilian speakers need time to think in English, they often fill the gap with Portuguese sounds: <i>é…</i>, <i>tipo…</i>, <i>né?</i> Your listener notices them immediately, and they can make you come across as less confident. In English, a short pause sounds more confident than a filler. When you really need time, use an English phrase instead:</p>
+  <div class="tt">
+    <div><b>✗ é… né? tipo…</b>✓ (a short pause)</div>
+    <div><b>✓ Well, …</b>✓ Let me think about that for a second.<br>✓ That's a good question.</div>
+  </div>
+  <p>Try this: record yourself answering one question for 30 seconds. Count the fillers. Record again and try to replace every filler with a pause.</p>
+</section>
+</div>
+<script>
+(function(){
+const shuffle=a=>{for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]/g,' ').replace(/\s+/g,' ').trim();
+const vg=[...document.querySelectorAll('#vprof select')];const vo=vg.map(g=>g.dataset.gap).concat(['a setback','rapport']).sort((a,b)=>a.localeCompare(b));
+vg.forEach(g=>{g.innerHTML='<option value="">……</option>'+vo.map(o=>`<option>${o}</option>`).join('');g.setAttribute('aria-label','Gap')});
+document.getElementById('checkV').onclick=()=>{let r=0;vg.forEach(g=>{const ok=g.value===g.dataset.gap;if(ok)r++;g.className=g.value?(ok?'ok':'no'):''});document.getElementById('scoreV').textContent=`${r} / ${vg.length}`};
+document.querySelectorAll('select[data-opts]').forEach(s=>{s.innerHTML='<option value="">……</option>'+shuffle(s.dataset.opts.split('|')).map(o=>`<option>${o}</option>`).join('');s.setAttribute('aria-label','Choose the words')});
+document.querySelectorAll('[data-sel-check]').forEach(b=>b.onclick=()=>{const p=b.closest('.card'),ss=[...p.querySelectorAll('select[data-ans]')];let r=0;ss.forEach(s=>{const ok=s.value===s.dataset.ans;if(ok)r++;s.className=s.value?(ok?'ok':'no'):''});p.querySelector('[data-sel-score]').textContent=`${r} / ${ss.length}`});
+document.getElementById('checkA').onclick=()=>{
+  const items=[...document.querySelectorAll('#partA .item')];let r=0;
+  items.forEach(it=>{const inp=it.querySelector('input'),fb=it.querySelector('.fb');const oks=it.dataset.ok.split('|');
+    if(!inp.value.trim()){inp.className='';fb.className='fb';fb.textContent='';return}
+    const ok=oks.includes(norm(inp.value));if(ok)r++;inp.className=ok?'ok':'no';fb.className='fb '+(ok?'ok':'no');
+    fb.textContent=ok?'Correct.':'Not yet. Which lesson is this from: questions, tenses or clefts?';});
+  document.getElementById('scoreA').textContent=`${r} / ${items.length}`;
+};
+document.getElementById('modelsA').onclick=e=>{const p=document.getElementById('partA');p.classList.toggle('show-models');e.target.textContent=p.classList.contains('show-models')?'Hide model answers':'Show model answers'};
+const j=document.getElementById('column'),wc=document.getElementById('wc');
+j.oninput=()=>{const n=(j.value.trim().match(/\S+/g)||[]).length;wc.textContent=n+' words'+(n>=90&&n<=120?' · good length':'')};
+document.getElementById('copyJ').onclick=async()=>{const m=document.getElementById('copyMsg');
+  try{await navigator.clipboard.writeText(j.value);m.textContent='Copied.'}catch(e){j.focus();j.select();m.textContent='Text selected. Press Ctrl+C or Cmd+C to copy.'}};
+})();
+</script>
+</body></html>

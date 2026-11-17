@@ -1,0 +1,841 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>
+<title>First Impressions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one slide at a time, like a projected deck; highlighter-yellow marks what to notice */
+:root{
+  --paper:#F4F6F9; --card:#FFFFFF; --ink:#16203A; --muted:#566079; --line:#D9DFE9;
+  --hl:#F6CB45; --hl-soft:#FCEFC0; --teal:#1E7568; --teal-soft:#DCEFEB; --wrong:#B93C26; --wrong-soft:#F8E1DB;
+  --display:"Young Serif", Georgia, serif; --body:"Figtree", system-ui, sans-serif; --mono:"JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0F1420; --card:#171E2E; --ink:#E7EBF4; --muted:#9BA4BA; --line:#2A3349;
+  --hl:#E9BC36; --hl-soft:#3A3218; --teal:#58B9A9; --teal-soft:#16302C; --wrong:#E6765F; --wrong-soft:#3A1F1A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0F1420; --card:#171E2E; --ink:#E7EBF4; --muted:#9BA4BA; --line:#2A3349;
+  --hl:#E9BC36; --hl-soft:#3A3218; --teal:#58B9A9; --teal-soft:#16302C; --wrong:#E6765F; --wrong-soft:#3A1F1A; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.top .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.top .name{font-family:var(--display);font-size:17px}
+.top .count{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{height:3px;background:var(--line)}.bar i{display:block;height:100%;background:var(--hl);width:0;transition:width .3s}
+main{flex:1;padding-block:28px 110px;padding-inline:16px;width:100%;max-width:1000px;margin:0 auto}
+.slide{display:none}.slide.on{display:block;animation:in .35s ease}
+@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.on{animation:none}}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:0 0 6px}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.15;text-wrap:balance;margin:0 0 14px}
+h1{font-size:clamp(38px,7vw,68px)} h2{font-size:clamp(26px,4vw,38px)}
+h3{font-size:18px;margin:0 0 8px}
+p{margin:0 0 12px;max-width:68ch}
+.lead{font-size:20px;color:var(--muted)}
+mark{background:var(--hl-soft);color:inherit;padding:0 3px;border-radius:3px;box-shadow:inset 0 -2px 0 var(--hl)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px}
+.grid2>*,.grid3>*{min-width:0}
+.stack{display:flex;flex-direction:column;gap:14px}
+ol.prompts{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px;font-size:19px}
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:9px 18px;font-weight:600;font-size:15px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn:focus-visible,.opt:focus-visible,.chip:focus-visible,.tile:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,.bin:focus-visible,.flip:focus-visible,.wordbtn:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.cover{display:grid;gap:22px;padding-top:4vh}
+.cover .meta{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--muted);background:var(--card)}
+.spin-card{min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--display);font-size:clamp(22px,3.4vw,30px);line-height:1.25;padding:24px}
+.spin-card.rolling{color:var(--muted)}
+/* article */
+.article{font-family:var(--body);font-size:17px;line-height:1.7}
+.article h3{font-family:var(--display);font-weight:400;font-size:24px;line-height:1.2;margin-bottom:4px}
+.article .src{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.03em;margin-bottom:14px}
+.article p{margin-bottom:12px}
+.article .pn{font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:6px}
+/* dialogue */
+.dialogue{display:flex;flex-direction:column;gap:4px;font-size:16px}
+.line{display:grid;grid-template-columns:70px 1fr;gap:10px;padding:5px 8px;border-radius:8px}
+.line b{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding-top:3px}
+.line.m b{color:var(--teal)} .line.d b{color:var(--muted)}
+.line.speaking{background:var(--hl-soft)}
+.context{font-style:italic;color:var(--muted)}
+/* quiz */
+.item{display:flex;flex-direction:column;gap:8px;padding:12px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0;padding-top:0}
+.item .q{font-weight:500}
+.n{font-family:var(--mono);font-size:12px;color:var(--muted);margin-right:6px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:6px 12px;font-size:15px;text-align:left}
+.opt.right{background:var(--teal-soft);border-color:var(--teal)}
+.opt.wrong{background:var(--wrong-soft);border-color:var(--wrong)}
+.fb{font-size:14px;min-height:1.2em}.fb.ok{color:var(--teal)}.fb.no{color:var(--wrong)}
+.build{min-height:44px;border:1px dashed var(--line);border-radius:8px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;background:var(--paper)}
+.tiles{display:flex;flex-wrap:wrap;gap:6px}
+.tile{border:1px solid var(--ink);background:var(--card);color:var(--ink);border-radius:6px;padding:4px 10px;font-size:15px}
+.tile.used{visibility:hidden}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 10px;font-size:15px;text-align:left}
+.chip.sel{border-color:var(--ink);box-shadow:0 0 0 2px var(--hl)}
+.chip.right{border-color:var(--teal);background:var(--teal-soft)} .chip.wrong{border-color:var(--wrong);background:var(--wrong-soft)}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+.bin{border:2px dashed var(--line);border-radius:12px;padding:12px;min-height:130px;background:var(--card);text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:8px}
+.bin h4{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.bin .chips{flex-direction:column}
+details.reveal{border:1px solid var(--line);border-radius:10px;background:var(--card)}
+details.reveal summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style:none}
+details.reveal summary::-webkit-details-marker{display:none}
+details.reveal summary::after{content:"Show";float:right;font-family:var(--mono);font-size:12px;color:var(--teal);padding-top:3px}
+details.reveal[open] summary::after{content:"Hide"}
+details.reveal .body{padding:0 16px 14px}
+.formula{display:flex;flex-wrap:wrap;gap:6px}
+.formula span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 12px;text-align:center;min-width:90px}
+.formula span small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.into{font-size:21px;font-family:var(--display)}
+.into em{font-style:normal;color:var(--teal)}
+input[type=text],textarea{width:100%;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--paper);color:var(--ink)}
+select{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:var(--paper);color:var(--ink);max-width:100%}
+select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border-color:var(--wrong);background:var(--wrong-soft)}
+.profile{font-size:17px;line-height:2.1}
+.model{font-size:14px;color:var(--teal);display:none}.show-models .model{display:block}
+.flip{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:14px;min-height:110px;text-align:left;color:var(--ink);display:flex;flex-direction:column;gap:6px}
+.flip .w{font-family:var(--display);font-size:20px}
+.flip .back{display:none;font-size:14px;color:var(--muted)}
+.flip.on .back{display:block}
+.flip .hint{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:auto}
+/* challenge */
+.challenge{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:18px}
+.challenge>*{min-width:0}
+.words3{display:flex;flex-wrap:wrap;gap:10px}
+.wordbtn{border:2px solid var(--ink);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 14px;font-family:var(--display);font-size:20px}
+.wordbtn.used{background:var(--teal-soft);border-color:var(--teal);text-decoration:line-through;text-decoration-color:var(--teal)}
+.bank{display:flex;flex-wrap:wrap;gap:6px}
+.bank span{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--muted)}
+.role{border:2px solid var(--ink);border-radius:14px;background:var(--card);padding:20px;display:flex;flex-direction:column;gap:6px;min-height:200px}
+.role .who{font-family:var(--display);font-size:28px}
+.role dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:6px 0 0;font-size:15px}
+.role dt{font-family:var(--mono);font-size:11px;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.role dd{margin:0}
+.timer{font-family:var(--mono);font-size:40px;font-variant-numeric:tabular-nums}
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+.checklist label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.checklist input{margin-top:5px;width:18px;height:18px;accent-color:var(--teal);flex:none}
+.score{font-family:var(--mono);font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.big{font-family:var(--display);font-size:34px}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-between;gap:10px;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);z-index:5}
+.nav .mid{font-family:var(--mono);font-size:12px;color:var(--muted);align-self:center;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}
+.talk{display:flex;flex-direction:column;gap:2px;font-size:16px;line-height:1.65}
+.talk p{max-width:none;margin:0;padding:6px 10px;border-radius:8px}
+.talk p.speaking{background:var(--hl-soft)}
+.talk .pn{font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:6px}
+.talk.scroll{max-height:62vh;overflow-y:auto}
+.stage-card{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.stage-card .art{width:56px;height:56px;border-radius:50%;background:var(--ink);color:var(--hl);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:20px;flex:none}
+.stage-card .t{font-weight:600}.stage-card .s{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.bio{line-height:2.1}
+.focus{background:var(--hl-soft);box-shadow:inset 0 -2px 0 var(--hl);border-radius:3px;padding:0 3px}
+.frame{font-family:var(--mono);font-size:14px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 12px;line-height:1.7}
+.answer{border:1px solid var(--line);border-radius:10px;background:var(--card);padding:10px 14px;display:none}
+.answer.on{display:block}
+.mythcard{border:2px solid var(--ink);border-radius:14px;background:var(--card);padding:20px;display:flex;flex-direction:column;gap:10px;min-height:220px}
+.mythcard .myth{font-family:var(--display);font-size:clamp(20px,3vw,26px);line-height:1.3}
+.mythcard .ev{display:none;border-top:1px solid var(--line);padding-top:10px;font-size:15px}
+.mythcard.open .ev{display:block}
+.mythcard .tag{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--wrong)}
+.mythcard.open .tag{color:var(--teal)}
+.bld{display:flex;flex-direction:column;gap:8px;padding:12px 0;border-top:1px solid var(--line)}
+.bld:first-of-type{border-top:0;padding-top:0}
+.build .tile{visibility:visible}
+.interview{line-height:2.2}
+.interview .q{font-weight:600;color:var(--teal);display:block;margin-top:8px;line-height:1.5}
+.interview .q:first-child{margin-top:0}
+/* Lesson 4 additions: Asch flash cards, infographic, quiz show board, talk planner, rubric */
+.flash{min-height:150px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;padding:20px;text-align:center}
+.flash span{font-family:var(--display);font-size:clamp(20px,3vw,28px);opacity:0;transition:opacity .25s}
+.flash span.in{opacity:1}
+.rate{display:flex;align-items:center;gap:12px}
+.rate input[type=range]{flex:1;accent-color:var(--teal)}
+.rate output{font-family:var(--mono);font-size:22px;min-width:2ch;text-align:right}
+.ig{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));gap:14px}
+.ig>*{min-width:0}
+.igcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;position:relative}
+.igcard .stat{font-family:var(--display);font-size:clamp(30px,4.5vw,44px);line-height:1;color:var(--teal)}
+.igcard .ref{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.igcard p{font-size:15px;margin:0}
+.igcard.warn{border:2px solid var(--wrong)}
+.igcard.warn .stat{color:var(--wrong)}
+.igcard.tips{grid-column:1/-1;background:var(--hl-soft);border-color:var(--hl)}
+.igcard.tips ul{margin:0;padding-left:1.2em;columns:2 260px;column-gap:28px;font-size:15px}
+.igcard.tips li{margin-bottom:6px;break-inside:avoid}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.board .cat{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center;padding:6px 2px}
+.board button.val{border:2px solid var(--ink);background:var(--ink);color:var(--hl);border-radius:10px;padding:14px 4px;font-family:var(--display);font-size:24px}
+.board button.val.done{background:var(--card);color:var(--line);border-color:var(--line)}
+.board button.val:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.qs-card{min-height:170px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.qs-card .task{font-family:var(--display);font-size:clamp(20px,3vw,26px);line-height:1.3}
+.planner td:first-child{width:150px}
+.planner .tm{font-family:var(--mono);font-size:11px;color:var(--muted);display:block}
+.rubric{display:flex;flex-direction:column;gap:8px}
+.rubric .crit{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-top:1px solid var(--line);padding-top:8px}
+.rubric .crit:first-child{border-top:0;padding-top:0}
+.rubric .crit small{display:block;color:var(--muted);font-size:13px}
+.rubric .pts{display:flex;gap:4px}
+.rubric .pts button{width:36px;height:36px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;font-family:var(--mono)}
+.rubric .pts button.sel{background:var(--teal);border-color:var(--teal);color:var(--paper)}
+.rubric .pts button:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.timer.warn{color:var(--wrong)}
+.stagecue{font-family:var(--mono);font-size:13px;color:var(--teal)}
+.chunk{font-size:20px;line-height:1.9}
+.chunk .p1{color:var(--muted);padding:0 4px}
+.chunk .p2{color:var(--wrong);padding:0 4px;font-weight:700}
+.chunk b{background:var(--hl-soft);box-shadow:inset 0 -2px 0 var(--hl);font-weight:600;padding:0 2px;border-radius:3px}
+.conf{line-height:2.2}
+</style>
+
+<header class="top">
+  <span class="tag">Module 1 · Lesson 4</span>
+  <span class="name">First Impressions</span>
+  <span class="count" id="count">1 / 19</span>
+</header>
+<div class="bar"><i id="prog"></i></div>
+
+<main id="deck">
+
+<!-- 1 -->
+<section class="slide" data-label="Welcome">
+  <div class="cover">
+    <p class="eyebrow">Academic English &amp; Conversation · Module 1 · Identity &amp; First Impressions</p>
+    <h1>First <mark>Impressions</mark></h1>
+    <p class="lead">Today you will find out how quickly people judge us, listen to a short talk, learn the phrases that guide an audience through a presentation, and give your own talk: <b>My Story in 3 Minutes</b>.</p>
+    <div class="meta"><span class="pill">Infographic</span><span class="pill">Three real studies</span><span class="pill">Model talk</span><span class="pill">Signposting</span><span class="pill">Module 1 project</span></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-label="Warm-up: Meet the candidate">
+  <p class="eyebrow">Warm-up · Meet the candidate</p>
+  <h2>A university is choosing a new research assistant. Read six words about the candidate.</h2>
+  <div class="grid2">
+    <div class="stack">
+      <div class="panel flash" id="flashBox" aria-live="polite"><span class="in" style="font-family:var(--body);font-size:17px;color:var(--muted)">Press Show Candidate 1. The words appear one by one.</span></div>
+      <div class="row"><button class="btn" id="cand1">Show Candidate 1</button><button class="btn ghost" id="cand2" disabled>Show Candidate 2</button><button class="btn ghost" id="candReveal" disabled>What's the trick?</button></div>
+      <div class="panel stack">
+        <div class="rate"><label for="r1" style="min-width:110px">Candidate 1</label><input type="range" id="r1" min="1" max="10" value="5" disabled><output id="o1">–</output></div>
+        <div class="rate"><label for="r2" style="min-width:110px">Candidate 2</label><input type="range" id="r2" min="1" max="10" value="5" disabled><output id="o2">–</output></div>
+        <p style="font-size:14px;color:var(--muted);margin:0">1 = I wouldn't hire this person · 10 = hire them today</p>
+      </div>
+      <div class="answer" id="candAns"><b>Same six words. Different order.</b> Candidate 1 started with the positive words; Candidate 2 started with the negative ones. Did your score change? Psychologists call this the <b>primacy effect</b>: the first information colours everything that follows.</div>
+    </div>
+    <div class="panel">
+      <h3>Let's talk</h3>
+      <ol class="prompts">
+        <li>How long does it take you to form an opinion of a new teacher or colleague?</li>
+        <li>Have you ever been completely wrong about someone? What happened?</li>
+        <li>Before you give a presentation, what do you worry about most?</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-label="Read: the infographic">
+  <p class="eyebrow">Read · Infographic</p>
+  <h2>The First Few Seconds: what research says about first impressions</h2>
+  <p style="color:var(--muted)">We make <mark>snap judgements</mark> about people almost instantly. Here is what three classic studies found, and why we should be careful.</p>
+  <div class="ig">
+    <div class="igcard">
+      <span class="stat">Order</span>
+      <span class="ref">Asch (1946) · Journal of Abnormal and Social Psychology</span>
+      <p>Participants heard six words describing a person. One group heard <i>intelligent, industrious, impulsive, critical, stubborn, envious</i>. Another group heard the same words in reverse order. The first group formed a much more positive impression. The first words shaped how people understood the rest.</p>
+    </div>
+    <div class="igcard">
+      <span class="stat">30 sec</span>
+      <span class="ref">Ambady &amp; Rosenthal (1993) · Journal of Personality and Social Psychology</span>
+      <p>Strangers watched silent video clips of university teachers, about 30 seconds long, and rated them. Their ratings significantly predicted the teachers' end-of-semester evaluations from real students. Later clips of only a few seconds gave similar results. Body language can <mark>convey</mark> a lot before we say a word.</p>
+    </div>
+    <div class="igcard">
+      <span class="stat">0.1 sec</span>
+      <span class="ref">Willis &amp; Todorov (2006) · Psychological Science</span>
+      <p>Participants saw photos of faces for just 100 milliseconds. Their judgements of how trustworthy a face looked were very similar to judgements made with no time limit. With more time, people became more confident, but their opinions hardly changed.</p>
+    </div>
+    <div class="igcard warn">
+      <span class="stat">But…</span>
+      <span class="ref">Todorov et al. (2015) · Annual Review of Psychology</span>
+      <p>Fast is not the same as accurate. A major review concluded that impressions based on faces are consistent, because many people agree, but they are often wrong. First impressions can change, but it takes time and new information.</p>
+    </div>
+    <div class="igcard tips">
+      <h3 style="margin:0">What this means for your three-minute talk</h3>
+      <ul>
+        <li>Your opening will <mark>make a lasting impression</mark>, so <mark>rehearse</mark> it until it feels natural.</li>
+        <li>Audiences decide quickly whether you <mark>come across as</mark> <mark>credible</mark> and <mark>approachable</mark>.</li>
+        <li>Use your voice, your pauses and your body language to convey confidence.</li>
+        <li>An <mark>engaging</mark> hook, such as a question, a surprising fact or a short story, wins attention in the first ten seconds.</li>
+        <li>Be <mark>concise</mark>: in three minutes, one clear idea per part is enough.</li>
+        <li><mark>Tailor</mark> your story <mark>to</mark> your audience. What do they already know?</li>
+      </ul>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-top:10px">All four studies are real. The tips are general presentation advice.</p>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-label="Read again: details">
+  <p class="eyebrow">Read again</p>
+  <h2>Which study? Then think like a researcher.</h2>
+  <div class="grid2">
+    <div class="panel" data-quiz>
+      <div class="item" data-answer="am"><div class="q"><span class="n">1</span>Participants never heard the people speak.</div><div class="opts"><button class="opt" data-v="as">Asch</button><button class="opt" data-v="am">Ambady &amp; Rosenthal</button><button class="opt" data-v="wt">Willis &amp; Todorov</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="as"><div class="q"><span class="n">2</span>Participants never saw the person at all.</div><div class="opts"><button class="opt" data-v="as">Asch</button><button class="opt" data-v="am">Ambady &amp; Rosenthal</button><button class="opt" data-v="wt">Willis &amp; Todorov</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="wt"><div class="q"><span class="n">3</span>More time made people more confident, not more open-minded.</div><div class="opts"><button class="opt" data-v="as">Asch</button><button class="opt" data-v="am">Ambady &amp; Rosenthal</button><button class="opt" data-v="wt">Willis &amp; Todorov</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="am"><div class="q"><span class="n">4</span>Quick ratings were compared with the opinions of people who knew the targets for months.</div><div class="opts"><button class="opt" data-v="as">Asch</button><button class="opt" data-v="am">Ambady &amp; Rosenthal</button><button class="opt" data-v="wt">Willis &amp; Todorov</button></div><div class="fb"></div></div>
+      <div class="item" data-answer="F" data-why="False. The review says face-based impressions are consistent, but often wrong."><div class="q"><span class="n">5</span>True or false? The 2015 review shows that snap judgements of faces are usually accurate.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+      <p class="score" data-score></p>
+    </div>
+    <div class="panel stack">
+      <h3>Think deeper</h3>
+      <ol class="prompts" style="font-size:17px">
+        <li>Ambady's clips were silent. Why do you think the researchers removed the sound?</li>
+        <li>Teachers' ratings "significantly predicted" their evaluations. Does that prove the strangers were <i>right</i> about the teachers? What else could explain it?</li>
+        <li>Asch used a list of words, not a real person. Is that a strength or a limitation of the study?</li>
+        <li>Consistent but often wrong: what does this mean for job interviews?</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-label="Vocabulary in context">
+  <p class="eyebrow">Vocabulary · Making an impression</p>
+  <h2>Words from the infographic: guess the meaning, then tap to check.</h2>
+  <p style="color:var(--muted)">Every quote is from the infographic. Use the context to guess before you tap.</p>
+  <div class="grid3" id="voices">
+    <button class="flip"><span>"We make <mark>snap judgements</mark> about people."</span><span class="back"><b>a very quick opinion, made without much thought</b> · make a snap judgement about someone</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"Body language can <mark>convey</mark> a lot."</span><span class="back"><b>communicate an idea or feeling</b> · convey confidence / a message / emotion</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"Your opening will <mark>make a lasting impression</mark>."</span><span class="back"><b>be remembered for a long time</b> · make a lasting / good / strong impression on someone</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"…<mark>rehearse</mark> it until it feels natural."</span><span class="back"><b>practise something before you do it in public</b> · rehearse a talk / a presentation · a rehearsal (n.)</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"…whether you <mark>come across as</mark> credible."</span><span class="back"><b>seem to be, give other people this impression</b> · come across as + adjective / noun</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"…come across as <mark>credible</mark>."</span><span class="back"><b>easy to believe and trust</b> · a credible source / speaker · credibility (n.)</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"…credible and <mark>approachable</mark>."</span><span class="back"><b>friendly and easy to talk to</b> · an approachable teacher / manager</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"An <mark>engaging</mark> hook wins attention."</span><span class="back"><b>interesting, so people want to keep listening</b> · an engaging speaker / talk / story</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"Be <mark>concise</mark>."</span><span class="back"><b>saying a lot in few words, without anything unnecessary</b> · a concise summary / answer</span><span class="hint">tap</span></button>
+    <button class="flip"><span>"<mark>Tailor</mark> your story <mark>to</mark> your audience."</span><span class="back"><b>change something so it is right for a particular person or group</b> · tailor X to Y</span><span class="hint">tap</span></button>
+  </div>
+  <div class="row" style="margin-top:14px"><button class="btn ghost" id="allMeanings">Show all meanings</button></div>
+  <div class="panel" style="margin-top:14px">
+    <h3>Notice</h3>
+    <p style="margin:0">Which two expressions need a preposition? Which three adjectives describe a good speaker? Which word from Lesson 1 means almost the same as <i>come across as</i>? (Clue: <i>be perceived as</i>.)</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-label="The coach's notes">
+  <p class="eyebrow">Vocabulary · The coach's notes</p>
+  <h2>Daniel is preparing a talk for Thursday. His coach sent him notes after his rehearsal. Complete them.</h2>
+  <div class="grid2">
+    <div class="panel profile" id="bioGaps">
+      <p class="eyebrow" style="margin:0 0 6px">From: Marta, Student Society · To: Daniel</p>
+      Hi Daniel, thanks for yesterday. Some notes before Thursday. Your first version was too long, so try to be more <select data-gap="concise"></select>. People make a <select data-gap="snap judgement"></select> in seconds, so your opening needs to <select data-gap="make a lasting impression"></select>. The flood story is very <select data-gap="engaging"></select>: start with it earlier! You <select data-gap="come across as"></select> very <select data-gap="approachable"></select> when you smile, but when you read from your phone, you lose eye contact and seem less <select data-gap="credible"></select>. Use pauses to <select data-gap="convey"></select> emotion. And please <select data-gap="tailor"></select> the technical part to your audience: most of them won't be engineers. Finally, <select data-gap="rehearse"></select> your opening at least five times. You'll be great! Marta
+      <div class="row" style="margin-top:10px"><button class="btn" id="gapCheck">Check</button><span class="score" id="gapScore"></span></div>
+    </div>
+    <div class="stack">
+      <details class="reveal"><summary>Check the patterns</summary><div class="body">
+        <div class="tbl"><table><thead><tr><th>Expression</th><th>Pattern</th></tr></thead><tbody>
+          <tr><td>come across as</td><td>+ adjective / noun: <i>She comes across as confident. He comes across as an expert.</i></td></tr>
+          <tr><td>tailor</td><td>X <b>to</b> Y: <i>tailor your talk to the audience</i></td></tr>
+          <tr><td>make an impression</td><td>a lasting / good / strong impression <b>on</b> someone</td></tr>
+          <tr><td>convey</td><td>+ noun: <i>convey confidence, convey a message</i></td></tr>
+          <tr><td>credible</td><td>credibility (n.) · <i>lose / gain credibility</i></td></tr>
+          <tr><td>rehearse</td><td>rehearsal (n.) · <i>a dress rehearsal</i></td></tr>
+        </tbody></table></div>
+      </div></details>
+      <div class="panel">
+        <h3>Your turn</h3>
+        <p>Think of a speaker or teacher who made a lasting impression on you. How did they come across? What did they do to convey that?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-label="First Impression Wheel">
+  <p class="eyebrow">Speaking challenge · First Impression Wheel</p>
+  <h2>Spin. Talk for 60 seconds and use all three words.</h2>
+  <div class="challenge">
+    <div class="panel stack">
+      <div class="big" id="chQ" aria-live="polite">Press Spin to start round 1.</div>
+      <div class="words3" id="chW"></div>
+      <p style="font-size:15px;color:var(--muted)">Tap a word when you use it correctly. Your teacher then asks one follow-up question. Answer it with a new word from the bank for a bonus point.</p>
+      <div class="row"><button class="btn" id="chDeal">Spin</button><button class="btn ghost" id="chBonus" disabled>+1 bonus</button></div>
+    </div>
+    <div class="panel stack">
+      <div class="row" style="justify-content:space-between"><span class="timer" id="chT">1:00</span><button class="btn ghost" id="chStart">Start timer</button></div>
+      <div><span class="score">Round</span> <span class="big" id="chR">0</span> <span class="score" style="margin-left:18px">Points</span> <span class="big" id="chP">0</span></div>
+      <h3>Word bank</h3>
+      <div class="bank"><span>a snap judgement</span><span>convey</span><span>make a lasting impression</span><span>rehearse</span><span>come across as</span><span>credible</span><span>approachable</span><span>engaging</span><span>concise</span><span>tailor to</span><span>be perceived as</span><span>rapport</span><span>in hindsight</span><span>a role model</span></div>
+      <p style="font-size:15px;color:var(--muted)">Swap roles in round 3: you spin, your teacher talks, and you ask the follow-up.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-label="Listen: Daniel's talk">
+  <p class="eyebrow">Listen · Model talk</p>
+  <h2>Three-Minute Stories night · "Car Parks and Floods"</h2>
+  <div class="grid2">
+    <div class="stack">
+      <div class="stage-card"><div class="art">DO</div><div><div class="t">Daniel Okafor</div><div class="s">Master's student, environmental engineering · 2½ min</div></div></div>
+      <p class="context">The International Students' Society runs a Three-Minute Stories night. Each speaker has three minutes to tell the story of their journey so far. This is Daniel's talk, after Marta's notes.</p>
+      <audio id="talkAudio" controls preload="metadata" src="audio/talk.mp3" style="width:100%"></audio>
+      <div class="row"><button class="btn ghost" id="hideTx">Hide transcript</button><a class="btn ghost" href="audio/talk.mp3" download>Download audio</a></div>
+      <div class="panel" data-quiz>
+        <h3>First listening · the structure</h3>
+        <p style="font-size:15px;color:var(--muted)">What is the order of Daniel's talk?</p>
+        <div class="item" data-answer="b"><div class="opts" style="flex-direction:column">
+          <button class="opt" data-v="a">his name → his research → his family → a question for the audience</button>
+          <button class="opt" data-v="b">a question → a plan in three parts → past → what shaped him → present and future → summary</button>
+          <button class="opt" data-v="c">a story about a flood → his master's → a list of his projects → thanks</button>
+        </div><div class="fb"></div></div>
+      </div>
+      <div class="panel" data-quiz>
+        <h3>Second listening · details</h3>
+        <div class="item" data-answer="F" data-why="False. He chose it because he was good at maths, not because he was passionate about it."><div class="q"><span class="n">1</span>Daniel chose civil engineering because he loved it.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+        <div class="item" data-answer="T"><div class="q"><span class="n">2</span>A flood at his parents' house was the pivotal moment.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+        <div class="item" data-answer="F" data-why="False. He failed his first statistics module, and calls it a setback."><div class="q"><span class="n">3</span>Daniel's master's has been easy so far.</div><div class="opts"><button class="opt" data-v="T">True</button><button class="opt" data-v="F">False</button></div><div class="fb"></div></div>
+        <p class="score" data-score></p>
+      </div>
+    </div>
+    <div class="panel talk scroll" id="talk">
+      <p><span class="pn">1</span>Good evening, everyone. Let me start with a question. How long does it take you to decide what you think of someone? Research suggests it's probably less than a second. So I have three minutes to change your first impression of me. Let's see if I can do it.</p>
+      <p><span class="pn">2</span>My name is Daniel Okafor, and I'm doing a master's in environmental engineering here. I'd like to tell you my story in three parts: where I started, what shaped me, and where I'm going.</p>
+      <p><span class="pn">3</span>So, let's begin with where I started. I grew up in Lagos, in Nigeria, in a neighbourhood where the streets flooded every rainy season. I majored in civil engineering because I was good at maths, not because I was passionate about it. After I graduated in 2018, I spent four years designing car parks. I gained a lot of experience, but I wasn't proud of my work.</p>
+      <p><span class="pn">4</span>That brings me to the second part: what shaped me. It wasn't a book or a class that changed my mind. It was a flood. In 2020, the water came into my parents' house, and my mother lost everything on the ground floor. Standing in that water, I asked myself a simple question: why am I designing car parks when my own street can't handle the rain? In hindsight, that was the most pivotal moment of my life. What I realised was that engineering is not about concrete. It's about people.</p>
+      <p><span class="pn">5</span>Now let me move on to where I am today. Since then, I've made the transition from civil to environmental engineering. I've broadened my research interests to include urban drainage and climate adaptation, and to date, I've worked on two projects on flood risk in West African cities. It hasn't been easy. I failed my first statistics module here, which was a real setback. But it taught me resilience.</p>
+      <p><span class="pn">6</span>So, where am I going? I aspire to work with city governments to design streets that absorb water instead of flooding. The reason I'm here tonight is that I believe engineers need to tell stories, not just show numbers.</p>
+      <p><span class="pn">7</span>To sum up: I started with car parks, a flood shaped me, and now I want to help cities live with water. If you remember just one thing, let it be this: the best engineering starts with listening to people. Thank you. I'd be happy to answer any questions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-label="Notice: signposting">
+  <p class="eyebrow">Notice · Signposting</p>
+  <h2>Some of Daniel's sentences don't tell a story. They guide the audience. Sort them.</h2>
+  <p style="color:var(--muted)">Tap a sentence, then tap a group.</p>
+  <div class="panel stack" data-sorter>
+    <div class="chips pool">
+      <button class="chip" data-g="a">Let me start with a question.</button>
+      <button class="chip" data-g="b">That brings me to the second part.</button>
+      <button class="chip" data-g="c">What I realised was that engineering is not about concrete.</button>
+      <button class="chip" data-g="d">To sum up: …</button>
+      <button class="chip" data-g="a">I'd like to tell you my story in three parts.</button>
+      <button class="chip" data-g="b">Now let me move on to where I am today.</button>
+      <button class="chip" data-g="c">If you remember just one thing, let it be this: …</button>
+      <button class="chip" data-g="d">I'd be happy to answer any questions.</button>
+      <button class="chip" data-g="b">So, let's begin with where I started.</button>
+      <button class="chip" data-g="c">It wasn't a book or a class that changed my mind.</button>
+    </div>
+    <div class="bins">
+      <button class="bin" data-bin="a"><h4>Opening and outline</h4><div class="chips"></div></button>
+      <button class="bin" data-bin="b"><h4>Moving between parts</h4><div class="chips"></div></button>
+      <button class="bin" data-bin="c"><h4>Emphasising the key idea</h4><div class="chips"></div></button>
+      <button class="bin" data-bin="d"><h4>Closing</h4><div class="chips"></div></button>
+    </div>
+    <div class="row"><button class="btn" data-sort-check>Check</button><button class="btn ghost" data-sort-reset>Start again</button><span class="score" data-sort-score></span></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-label="Signposting: the rules">
+  <p class="eyebrow">Notice · Signposting in talks and academic presentations</p>
+  <h2>Why does Daniel tell us the plan before he starts?</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <ol class="prompts" style="font-size:17px">
+        <li>Why does Daniel say "in three parts" at the start? How does it help the listener?</li>
+        <li>Find two places where Daniel uses Lesson 3 grammar (clefts). Why does he use them there?</li>
+        <li>Which tense does he use for "where I started", and which for "where I am today"? Why?</li>
+        <li>Daniel's talk is a personal story. Which of his signposts would you change for a conference presentation?</li>
+      </ol>
+      <p class="frame">Tell them what you'll tell them.<br>Tell them.<br>Tell them what you told them.</p>
+    </div>
+    <div class="stack">
+      <details class="reveal"><summary>Signposts: story talk and academic presentation</summary><div class="body">
+        <div class="tbl"><table><thead><tr><th>Function</th><th>Story talk</th><th>Academic presentation</th></tr></thead><tbody>
+          <tr><td>Open</td><td>Let me start with a question.</td><td>In this talk, I'll present…</td></tr>
+          <tr><td>Outline</td><td>I'd like to tell you my story in three parts.</td><td>I'll start by… Then I'll move on to… Finally, I'll…</td></tr>
+          <tr><td>Move on</td><td>That brings me to… · Now let me move on to…</td><td>Let me now turn to… · This brings me to my second point.</td></tr>
+          <tr><td>Refer to visuals</td><td>–</td><td>As you can see on this slide, … · This graph shows…</td></tr>
+          <tr><td>Emphasise</td><td>What I realised was… · It wasn't X. It was Y.</td><td>What our data suggest is that… · It is X, rather than Y, that…</td></tr>
+          <tr><td>Close</td><td>To sum up… · If you remember one thing…</td><td>To sum up / In conclusion, … · The main implication is…</td></tr>
+          <tr><td>Questions</td><td>I'd be happy to answer any questions.</td><td>I'd be happy to take any questions.</td></tr>
+        </tbody></table></div>
+      </div></details>
+      <details class="reveal"><summary>Three rules</summary><div class="body">
+        <p><b>1 · Announce, then deliver.</b> Give the number of parts and keep the promise.</p>
+        <p><b>2 · Pause after a signpost.</b> The signpost tells the listener a new part is starting; the pause gives them time to follow.</p>
+        <p><b>3 · Don't over-signpost.</b> In three minutes, one signpost per part is enough. Be concise.</p>
+      </div></details>
+      <details class="reveal"><summary>Common mistakes</summary><div class="body">
+        <p><s>I'd be happy to answer to any questions.</s> → answer any questions (no <i>to</i>)<br><s>Resuming, …</s> (false friend: <i>resumir</i>) → <b>To sum up</b>, … · In short, …<br><s>Now I will talk about…</s> (correct, but flat) → <b>Let me move on to</b>…</p>
+      </div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="slide" data-label="Say it naturally">
+  <p class="eyebrow">Say it naturally</p>
+  <h2>Speak in chunks. Pause after signposts. Stress the key words.</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <p class="chunk">Good <b>EVE</b>ning, everyone. <span class="p2">||</span> Let me start with a <b>QUES</b>tion. <span class="p2">||</span> How <b>LONG</b> does it take you <span class="p1">|</span> to decide what you <b>THINK</b> of someone? <span class="p2">||</span></p>
+      <p class="chunk">That brings me to the <b>SEC</b>ond part: <span class="p1">|</span> what <b>SHAPED</b> me. <span class="p2">||</span> It wasn't a <b>BOOK</b>. <span class="p1">|</span> It was a <b>FLOOD</b>.</p>
+      <div class="row"><button class="btn ghost" data-audio="audio/model-1.mp3">Listen 1</button><button class="btn ghost" data-audio="audio/model-2.mp3">Listen 2</button></div>
+      <p style="font-size:15px;color:var(--muted)"><b style="color:var(--muted)">|</b> short pause · <b style="color:var(--wrong)">||</b> longer pause</p>
+    </div>
+    <div class="panel stack">
+      <h3>Your turn</h3>
+      <ol class="prompts" style="font-size:17px">
+        <li>Read Daniel's two chunks aloud. Exaggerate the pauses.</li>
+        <li>Now write the first line of your own talk below. Mark the pauses and the stressed words.</li>
+        <li>Say it three times: faster, slower, then natural. Which version comes across as most confident?</li>
+      </ol>
+      <input type="text" aria-label="Your opening line" placeholder="Let me start with a question: …">
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide" data-label="Practice 1: the conference talk">
+  <p class="eyebrow">Practice 1</p>
+  <h2>A month later, Daniel presents his research at a conference. Choose the right words.</h2>
+  <div class="grid2">
+    <div class="panel conf">
+      <p class="eyebrow" style="margin:0">Urban Water Conference · Session 3</p>
+      Good morning. <select data-ans="In this talk" data-opts="In this talk|In this talking|On this talk"></select>, I'll present a study of flood risk in three neighbourhoods of Lagos. <select data-ans="I'll start by" data-opts="I'll start by|I'll start of|I start to"></select> describing the problem. Then I'll <select data-ans="move on to" data-opts="move on to|move on|move to on"></select> our method, and <select data-ans="finally" data-opts="finally|at last|in the end of"></select>, I'll discuss what our results mean for city planners. …
+      <br><select data-ans="As you can see" data-opts="As you can see|As you can look|As you see it"></select> on this map, the three areas have very different drainage systems. <select data-ans="This brings me to" data-opts="This brings me to|This brings me|This is bringing to"></select> our main finding. <select data-ans="What our data suggest" data-opts="What our data suggest|What suggest our data|What our data suggest it"></select> is that the oldest drains are not the main problem. <select data-ans="It is" data-opts="It is|Is|There is"></select> the lack of green space <select data-ans="that" data-opts="that|what|where"></select> makes flooding worse. …
+      <br><select data-ans="To sum up" data-opts="To sum up|Resuming|To summary"></select>, small parks may protect cities better than bigger pipes. I'd be happy to <select data-ans="take any questions" data-opts="take any questions|answer to any questions|make any questions"></select>.
+      <div class="row" style="margin-top:8px"><button class="btn" data-sel-check>Check</button><span class="score" data-sel-score></span></div>
+    </div>
+    <div class="panel stack">
+      <h3>Explain it</h3>
+      <ol class="prompts" style="font-size:17px">
+        <li>Compare this opening with Daniel's story talk. What's different? What's the same?</li>
+        <li>Why is "Resuming" wrong here? What does <i>resume</i> mean in English?</li>
+        <li>Find the two cleft sentences. What do they do: interpret, correct or point to a gap?</li>
+      </ol>
+      <p style="color:var(--muted);font-size:15px">The study in this presentation is fictional.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section class="slide" data-label="Module 1 Quiz Show">
+  <p class="eyebrow">Practice 2 · Game · Module 1 checkpoint</p>
+  <h2>Quiz Show: everything from Lessons 1 to 4</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <div class="board" id="board"></div>
+      <div class="row"><span class="score">You</span> <span class="big" id="qsYou">0</span> <span class="score" style="margin-left:14px">Teacher</span> <span class="big" id="qsT">0</span></div>
+    </div>
+    <div class="stack">
+      <div class="panel qs-card" id="qsCard" aria-live="polite"><span class="score">Choose a category and a value.</span></div>
+      <div class="answer" id="qsAns"></div>
+      <div class="row"><button class="btn ghost" id="qsShow" disabled>Show the answer</button><button class="btn ghost" id="qsYes" disabled>Correct: +points</button><button class="btn ghost" id="qsNo" disabled>Wrong: teacher steals</button></div>
+      <p style="font-size:14px;color:var(--muted);margin:0">If your answer is wrong, the teacher can steal the points by answering correctly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide" data-label="Plan your talk">
+  <p class="eyebrow">Project · Step 1 · Plan (5 minutes)</p>
+  <h2>My Story in 3 Minutes: plan your talk. Notes only, not full sentences.</h2>
+  <div class="panel tbl planner">
+    <table><thead><tr><th>Part</th><th>Your notes</th><th>Language to use</th></tr></thead><tbody>
+      <tr><td>1 · Hook<span class="tm">0:00–0:20</span></td><td><input type="text" aria-label="Hook"></td><td>a question · a surprising fact · <i>What really shaped me wasn't… It was…</i></td></tr>
+      <tr><td>2 · Outline<span class="tm">0:20–0:30</span></td><td><input type="text" aria-label="Outline"></td><td><i>I'd like to tell you my story in three parts: …</i></td></tr>
+      <tr><td>3 · Where I started<span class="tm">0:30–1:15</span></td><td><input type="text" aria-label="Where I started"></td><td>past simple · <i>majored in · grew up · gained experience · upbringing</i> (Lessons 1–3)</td></tr>
+      <tr><td>4 · What shaped me<span class="tm">1:15–2:00</span></td><td><input type="text" aria-label="What shaped me"></td><td>clefts · <i>a pivotal moment · in hindsight · role model · instil</i> (Lesson 3)</td></tr>
+      <tr><td>5 · Now and next<span class="tm">2:00–2:40</span></td><td><input type="text" aria-label="Now and next"></td><td>present perfect · <i>to date · make the transition · broaden · aspire to</i> (Lessons 1–2)</td></tr>
+      <tr><td>6 · Close<span class="tm">2:40–3:00</span></td><td><input type="text" aria-label="Close"></td><td><i>To sum up… · If you remember one thing… · I'd be happy to answer any questions.</i></td></tr>
+    </tbody></table>
+  </div>
+  <p style="color:var(--muted);font-size:15px;margin-top:10px">Use your notes from Lesson 2 (My Journey So Far) and Lesson 3 (What Really Shaped Me). Tailor it to your audience: your teacher is not an expert in your field.</p>
+</section>
+
+<!-- 15 -->
+<section class="slide" data-label="Give your talk">
+  <p class="eyebrow">Project · Step 2 · Give your talk</p>
+  <h2>Three minutes. The stage is yours.</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <div class="row" style="justify-content:space-between"><span class="timer big" id="talkT" style="font-size:56px">3:00</span>
+        <span class="row"><button class="btn" id="talkStart">Start</button><button class="btn ghost" id="talkReset">Reset</button></span></div>
+      <p class="stagecue" id="talkCue">Part 1 · Hook</p>
+      <p style="color:var(--muted);font-size:15px">The cue changes with the time on your plan. At 2:30 the timer turns red: start your close.</p>
+    </div>
+    <div class="panel stack">
+      <h3>Teacher's rubric</h3>
+      <div class="rubric" id="rubric">
+        <div class="crit"><span>Opening<small>engaging hook + clear outline</small></span><span class="pts"></span></div>
+        <div class="crit"><span>Structure<small>signposts between parts, one idea per part</small></span><span class="pts"></span></div>
+        <div class="crit"><span>Grammar<small>past simple vs present perfect · clefts for emphasis</small></span><span class="pts"></span></div>
+        <div class="crit"><span>Vocabulary<small>at least six expressions from Module 1</small></span><span class="pts"></span></div>
+        <div class="crit"><span>Delivery<small>pauses, stress, eye contact, comes across as confident</small></span><span class="pts"></span></div>
+      </div>
+      <p class="score" id="rubScore">0 / 15</p>
+    </div>
+  </div>
+</section>
+
+<!-- 16 -->
+<section class="slide" data-label="Questions from the audience">
+  <p class="eyebrow">Project · Step 3 · Q&amp;A</p>
+  <h2>Questions from the audience</h2>
+  <div class="grid2">
+    <div class="stack">
+      <div class="panel spin-card" id="qaCard" aria-live="polite">Press Next question.</div>
+      <div class="row"><button class="btn" id="qaBtn">Next question</button><span class="score" id="qaLeft"></span></div>
+      <p style="color:var(--muted);font-size:15px">Answer three questions. Then swap: you ask your teacher two follow-up questions and one polite question about their own journey (Lesson 1).</p>
+    </div>
+    <div class="panel stack">
+      <h3>Buying time and answering well</h3>
+      <p>That's a great question. · Let me think about that for a second. · I'm not sure, but I'd say… · To be honest, … · Does that answer your question?</p>
+      <h3>Asking (Lesson 1)</h3>
+      <p>What made you…? · How did you…? · Could you tell me more about…? · I was wondering if…</p>
+    </div>
+  </div>
+</section>
+
+<!-- 17 -->
+<section class="slide" data-label="Feedback and Module 1 review">
+  <p class="eyebrow">Feedback · Module 1 review</p>
+  <h2>Two stars and a wish, then look back at Module 1</h2>
+  <div class="grid2">
+    <div class="panel stack">
+      <h3>Your teacher's feedback</h3>
+      <div><label for="st1">★ Star 1: something that worked well</label><input type="text" id="st1"></div>
+      <div><label for="st2">★ Star 2: something that worked well</label><input type="text" id="st2"></div>
+      <div><label for="w1">Wish: one thing to improve in your recording at home</label><input type="text" id="w1"></div>
+      <p style="color:var(--muted);font-size:15px">And you: which part of your talk do you think made the strongest first impression? Why?</p>
+    </div>
+    <div class="panel stack">
+      <h3>After Module 1, I can…</h3>
+      <ul class="checklist">
+        <li><label><input type="checkbox"><span>ask direct, subject and polite questions, and follow up on answers (Lesson 1)</span></label></li>
+        <li><label><input type="checkbox"><span>tell the story of my path with the past simple and present perfect (Lesson 2)</span></label></li>
+        <li><label><input type="checkbox"><span>use cleft sentences to emphasise, contrast and correct (Lesson 3)</span></label></li>
+        <li><label><input type="checkbox"><span>organise a short talk with signposts and deliver it with pauses and stress (Lesson 4)</span></label></li>
+        <li><label><input type="checkbox"><span>separate findings from interpretation, choose tenses for research, and use academic emphasis frames</span></label></li>
+      </ul>
+      <p style="color:var(--muted);font-size:15px">Not sure about one? Tell your teacher. It goes into your review plan for Module 2.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 18 -->
+<section class="slide" data-label="Phrases to keep">
+  <p class="eyebrow">Take these with you</p>
+  <h2>Phrases for presentations</h2>
+  <div class="grid3">
+    <div class="panel"><h3>Opening and outline</h3><p>Let me start with a question.<br>In this talk, I'll present…<br>I'd like to tell you my story in three parts.<br>I'll start by… Then I'll move on to…</p></div>
+    <div class="panel"><h3>Moving on and emphasising</h3><p>That brings me to…<br>Let me now turn to…<br>As you can see on this slide, …<br>What I realised was…<br>What our data suggest is that…</p></div>
+    <div class="panel"><h3>Closing and questions</h3><p>To sum up, …<br>If you remember just one thing, let it be this: …<br>The main implication is…<br>I'd be happy to answer / take any questions.</p></div>
+  </div>
+</section>
+
+<!-- 19 -->
+<section class="slide" data-label="Before you go">
+  <p class="eyebrow">Before you go</p>
+  <h2>Three quick questions</h2>
+  <div class="panel stack" style="max-width:760px">
+    <div><label for="e1">1. In one sentence, what did Asch's study show about first impressions?</label><textarea id="e1" rows="2"></textarea></div>
+    <div><label for="e2">2. Complete the signpost: "That ______ me to my second point."</label><textarea id="e2" rows="2"></textarea></div>
+    <div><label for="e3">3. Make this ending suitable for a conference: "OK, that's it. Any questions?"</label><textarea id="e3" rows="2"></textarea></div>
+  </div>
+</section>
+
+</main>
+
+<nav class="nav">
+  <button class="btn ghost" id="prev">← Back</button>
+  <span class="mid" id="mid"></span>
+  <button class="btn" id="next">Next →</button>
+</nav>
+
+<script>
+(function(){
+const slides=[...document.querySelectorAll('.slide')];
+let i=0;
+const count=document.getElementById('count'),prog=document.getElementById('prog'),mid=document.getElementById('mid');
+function show(n){
+  i=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+  count.textContent=(i+1)+' / '+slides.length;
+  prog.style.width=((i+1)/slides.length*100)+'%';
+  mid.textContent=slides[i].dataset.label||'';
+  document.getElementById('prev').disabled=i===0;
+  document.getElementById('next').disabled=i===slides.length-1;
+  try{history.replaceState(null,'','#s'+(i+1))}catch(e){}
+  window.scrollTo(0,0);
+}
+document.getElementById('prev').onclick=()=>show(i-1);
+document.getElementById('next').onclick=()=>show(i+1);
+document.addEventListener('keydown',e=>{
+  if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;
+  if(e.key==='ArrowRight'||e.key==='PageDown')show(i+1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp')show(i-1);
+});
+const m=/^#s(\d+)$/.exec(location.hash);show(m?+m[1]-1:0);
+const shuffle=a=>{for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// warm-up: Asch candidates
+const listA=["intelligent","industrious","impulsive","critical","stubborn","envious"];
+const flashBox=document.getElementById('flashBox'),c1=document.getElementById('cand1'),c2=document.getElementById('cand2'),cr=document.getElementById('candReveal');
+const r1=document.getElementById('r1'),r2=document.getElementById('r2'),o1=document.getElementById('o1'),o2=document.getElementById('o2');
+function flash(words,label,done){
+  flashBox.innerHTML='<span class="in" style="font-family:var(--mono);font-size:12px;color:var(--muted);width:100%">'+label+'</span>'+words.map(w=>`<span>${w}</span>`).join('');
+  const sp=[...flashBox.querySelectorAll('span')].slice(1);let k=0;
+  const step=()=>{if(k<sp.length){sp[k++].classList.add('in');setTimeout(step,reduce?0:900)}else if(done)done()};step();
+}
+c1.onclick=()=>{c1.disabled=true;flash(listA,'Candidate 1',()=>{r1.disabled=false;o1.textContent=r1.value;c2.disabled=false})};
+c2.onclick=()=>{c2.disabled=true;flash([...listA].reverse(),'Candidate 2',()=>{r2.disabled=false;o2.textContent=r2.value;cr.disabled=false})};
+r1.oninput=()=>o1.textContent=r1.value;r2.oninput=()=>o2.textContent=r2.value;
+cr.onclick=()=>{document.getElementById('candAns').classList.add('on');cr.disabled=true};
+
+// audio
+const clip=new Audio();
+const talk=document.getElementById('talk');
+const paras=[...talk.querySelectorAll('p')];
+const talkAudio=document.getElementById('talkAudio');
+document.querySelectorAll('[data-audio]').forEach(b=>b.onclick=()=>{talkAudio.pause();clip.src=b.dataset.audio;clip.currentTime=0;clip.play()});
+const starts=[0.4,16.87,30.09,54.68,88.36,114.34,129.54];
+let cur=-1;
+talkAudio.addEventListener('play',()=>clip.pause());
+talkAudio.addEventListener('timeupdate',()=>{
+  let k=-1;starts.forEach((t,i)=>{if(talkAudio.currentTime>=t-0.1)k=i});
+  if(talkAudio.ended)k=-1;
+  if(k===cur)return;cur=k;
+  paras.forEach((l,i)=>l.classList.toggle('speaking',i===k));
+  if(k>=0&&talk.style.visibility!=='hidden')paras[k].scrollIntoView({block:'nearest',behavior:'smooth'});
+});
+talkAudio.addEventListener('ended',()=>paras.forEach(l=>l.classList.remove('speaking')));
+paras.forEach((l,i)=>{l.style.cursor='pointer';l.title='Play from here';l.onclick=()=>{talkAudio.currentTime=starts[i];talkAudio.play()}});
+document.getElementById('hideTx').onclick=e=>{const h=talk.style.visibility==='hidden';talk.style.visibility=h?'':'hidden';e.target.textContent=h?'Hide transcript':'Show transcript'};
+
+// quizzes
+document.querySelectorAll('[data-quiz]').forEach(q=>{
+  const items=[...q.querySelectorAll('.item')];const score=q.querySelector('[data-score]');
+  const upd=()=>{const done=items.filter(it=>it.dataset.done);const right=done.filter(it=>it.dataset.done==='1').length;if(score)score.textContent=done.length?`Score: ${right} / ${items.length}`:''};
+  items.forEach(it=>{
+    const fb=it.querySelector('.fb');
+    it.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+      if(it.dataset.done)return;
+      const ok=o.dataset.v===it.dataset.answer;o.classList.add(ok?'right':'wrong');
+      if(!ok)it.querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===it.dataset.answer)x.classList.add('right')});
+      it.dataset.done=ok?'1':'0';
+      fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?(it.dataset.why?'Correct. '+it.dataset.why:'Correct.'):(it.dataset.why||'Not quite. Look at the correct answer.');
+      upd();
+    });
+  });
+});
+
+// flip cards
+document.querySelectorAll('.flip').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+document.getElementById('allMeanings').onclick=e=>{const cards=[...document.querySelectorAll('#voices .flip')];const open=!cards.every(c=>c.classList.contains('on'));cards.forEach(c=>c.classList.toggle('on',open));e.target.textContent=open?'Hide all meanings':'Show all meanings'};
+
+// coach's notes gap fill
+const gaps=[...document.querySelectorAll('#bioGaps select')];
+const gopts=gaps.map(g=>g.dataset.gap).sort((a,b)=>a.localeCompare(b));
+gaps.forEach(g=>{g.innerHTML='<option value="">……</option>'+gopts.map(o=>`<option>${o}</option>`).join('');g.setAttribute('aria-label','Gap')});
+document.getElementById('gapCheck').onclick=()=>{let r=0;gaps.forEach(g=>{const ok=g.value===g.dataset.gap;if(ok)r++;g.className=g.value?(ok?'ok':'no'):''});document.getElementById('gapScore').textContent=`${r} / ${gaps.length}`};
+
+// inline selects
+document.querySelectorAll('select[data-opts]').forEach(s=>{s.innerHTML='<option value="">……</option>'+shuffle(s.dataset.opts.split('|')).map(o=>`<option>${o}</option>`).join('');s.setAttribute('aria-label','Choose the words')});
+document.querySelectorAll('[data-sel-check]').forEach(b=>b.onclick=()=>{const p=b.closest('.panel'),ss=[...p.querySelectorAll('select[data-ans]')];let r=0;ss.forEach(s=>{const ok=s.value===s.dataset.ans;if(ok)r++;s.className=s.value?(ok?'ok':'no'):''});p.querySelector('[data-sel-score]').textContent=`${r} / ${ss.length}`});
+
+// first impression wheel
+const chQs=["Describe someone who made a great first impression on you.","Talk about a time your first impression of someone was completely wrong.","Describe the first class of the best teacher you remember.","Give advice to a friend before a job interview.","Talk about a presentation you remember, good or bad.","How do you want to come across in your first week at a new university or job?","Is it fair to judge people quickly? Why or why not?","Describe your first impression of a city you visited."];
+const chWords=["a snap judgement","convey","make a lasting impression","rehearse","come across as","credible","approachable","engaging","concise","tailor to"];
+let chPool=[],rounds=0,points=0,bonusUsed=false;
+const chQ=document.getElementById('chQ'),chW=document.getElementById('chW'),chR=document.getElementById('chR'),chP=document.getElementById('chP'),chB=document.getElementById('chBonus');
+document.getElementById('chDeal').onclick=()=>{
+  if(!chPool.length)chPool=shuffle([...chQs]);
+  const final=chPool.pop();rounds++;chR.textContent=rounds;
+  let t=0;
+  const tick=()=>{chQ.textContent=chQs[Math.floor(Math.random()*chQs.length)];if(++t<8&&!reduce)setTimeout(tick,60+t*14);else chQ.textContent=final};tick();
+  chW.innerHTML='';shuffle([...chWords]).slice(0,3).forEach(w=>{const b=document.createElement('button');b.className='wordbtn';b.textContent=w;b.onclick=()=>{b.classList.toggle('used');points+=b.classList.contains('used')?1:-1;chP.textContent=points};chW.appendChild(b)});
+  chB.disabled=false;bonusUsed=false;resetCh();
+};
+chB.onclick=()=>{if(bonusUsed)return;bonusUsed=true;points++;chP.textContent=points;chB.disabled=true};
+let cs=60,cid=null;const chT=document.getElementById('chT'),chS=document.getElementById('chStart');
+const cf=()=>chT.textContent=Math.floor(cs/60)+':'+String(cs%60).padStart(2,'0');
+function resetCh(){clearInterval(cid);cid=null;cs=60;cf();chS.textContent='Start timer'}
+chS.onclick=()=>{if(cid){clearInterval(cid);cid=null;chS.textContent='Start timer';return}if(cs<=0)cs=60;chS.textContent='Pause';cid=setInterval(()=>{cs--;cf();if(cs<=0){clearInterval(cid);cid=null;chS.textContent='Start timer';chT.textContent="Time's up"}},1000)};
+
+// sorter
+document.querySelectorAll('[data-sorter]').forEach(S=>{
+  const poolEl=S.querySelector('.pool'),chips=[...poolEl.children],bins=[...S.querySelectorAll('.bin')],out=S.querySelector('[data-sort-score]');let sel=null;
+  chips.forEach(c=>c.onclick=e=>{e.stopPropagation();const inBin=c.closest('.bin');if(sel&&sel!==c&&inBin){sel.classList.remove('sel','right','wrong');inBin.querySelector('.chips').appendChild(sel);sel=null;return}chips.forEach(x=>x.classList.remove('sel'));if(sel===c){sel=null;return}sel=c;c.classList.add('sel')});
+  bins.forEach(b=>b.onclick=()=>{if(!sel)return;sel.classList.remove('sel','right','wrong');b.querySelector('.chips').appendChild(sel);sel=null});
+  S.querySelector('[data-sort-check]').onclick=()=>{let r=0,n=0;bins.forEach(b=>b.querySelectorAll('.chip').forEach(c=>{n++;const ok=c.dataset.g===b.dataset.bin;if(ok)r++;c.classList.toggle('right',ok);c.classList.toggle('wrong',!ok)}));out.textContent=`${r} / ${chips.length} correct`+(n<chips.length?` · ${chips.length-n} still to sort`:'')};
+  S.querySelector('[data-sort-reset]').onclick=()=>{chips.forEach(c=>{c.classList.remove('sel','right','wrong');poolEl.appendChild(c)});sel=null;out.textContent=''};
+});
+
+// quiz show
+const cats=["Questions","My journey","Clefts","Words"];
+const qs={
+ "Questions":[
+  ["Correct the question: \"Where you are from?\"","Where are you from?"],
+  ["Make it polite: \"What's your research about?\"","Could you tell me what your research is about?  (After \"Could you tell me\", use statement word order.)"],
+  ["Ask about the subject: \"Someone inspired you to study abroad.\"","Who inspired you to study abroad?  (Subject question: no do / did.)"]],
+ "My journey":[
+  ["Correct it: \"I have graduated in 2018.\"","I graduated in 2018.  (Finished time → past simple.)"],
+  ["Complete: \"______, I ______ (publish) two papers.\"","To date, I've published two papers."],
+  ["What's the difference? \"I've lived in Lisbon for five years.\" / \"I lived in Lisbon for five years.\"","The first: I still live there. The second: that period is finished."]],
+ "Clefts":[
+  ["Correct it: \"Was my mother who taught me.\"","It was my mother who taught me."],
+  ["Add emphasis: \"I need more practice.\" → What…","What I need is more practice."],
+  ["Rewrite: \"I didn't understand clefts until Lesson 3.\" → It was not until…","It was not until Lesson 3 that I understood clefts."]],
+ "Words":[
+  ["A moment when things change direction: a t______ p______","a turning point"],
+  ["Prepositions: \"I attribute my success ___ my teacher.\" \"Tailor your talk ___ the audience.\"","to · to"],
+  ["Say it another way: \"She seems confident when she speaks.\"","She comes across as confident when she speaks."]]
+};
+const board=document.getElementById('board'),qsCard=document.getElementById('qsCard'),qsAns=document.getElementById('qsAns'),qsShow=document.getElementById('qsShow'),qsYes=document.getElementById('qsYes'),qsNo=document.getElementById('qsNo');
+let qCur=null,you=0,teach=0;
+cats.forEach(c=>{const h=document.createElement('div');h.className='cat';h.textContent=c;board.appendChild(h)});
+[0,1,2].forEach(r=>cats.forEach(c=>{const b=document.createElement('button');b.className='val';b.textContent=(r+1)*100;b.onclick=()=>{if(b.classList.contains('done'))return;b.classList.add('done');qCur={c,r,pts:(r+1)*100};qsCard.innerHTML=`<span class="score">${c} · ${(r+1)*100}</span><span class="task">${qs[c][r][0]}</span>`;qsAns.classList.remove('on');qsAns.textContent='';qsShow.disabled=false;qsYes.disabled=false;qsNo.disabled=false};board.appendChild(b)}));
+qsShow.onclick=()=>{if(!qCur)return;qsAns.textContent=qs[qCur.c][qCur.r][1];qsAns.classList.add('on');qsShow.disabled=true};
+qsYes.onclick=()=>{if(!qCur)return;you+=qCur.pts;document.getElementById('qsYou').textContent=you;qsYes.disabled=qsNo.disabled=true;qCur=null};
+qsNo.onclick=()=>{if(!qCur)return;teach+=qCur.pts;document.getElementById('qsT').textContent=teach;qsYes.disabled=qsNo.disabled=true;qCur=null};
+
+// talk timer with stage cues
+const cues=[[0,"Part 1 · Hook"],[20,"Part 2 · Outline"],[30,"Part 3 · Where I started"],[75,"Part 4 · What shaped me"],[120,"Part 5 · Now and next"],[160,"Part 6 · Close"]];
+let ts=180,tid=null;const tEl=document.getElementById('talkT'),tS=document.getElementById('talkStart'),cue=document.getElementById('talkCue');
+const tf=()=>{tEl.textContent=Math.floor(ts/60)+':'+String(ts%60).padStart(2,'0');const el=180-ts;let c=cues[0][1];cues.forEach(([s,l])=>{if(el>=s)c=l});cue.textContent=c;tEl.classList.toggle('warn',ts<=30)};
+tS.onclick=()=>{if(tid){clearInterval(tid);tid=null;tS.textContent='Start';return}if(ts<=0)ts=180;tS.textContent='Pause';tid=setInterval(()=>{ts--;tf();if(ts<=0){clearInterval(tid);tid=null;tS.textContent='Start';tEl.textContent="Time's up"}},1000)};
+document.getElementById('talkReset').onclick=()=>{clearInterval(tid);tid=null;ts=180;tf();tS.textContent='Start'};
+
+// rubric
+const rubScore=document.getElementById('rubScore');
+document.querySelectorAll('#rubric .crit').forEach(cr=>{const p=cr.querySelector('.pts');[1,2,3].forEach(n=>{const b=document.createElement('button');b.textContent=n;b.setAttribute('aria-label',n+' points');b.onclick=()=>{p.querySelectorAll('button').forEach(x=>x.classList.toggle('sel',x===b));cr.dataset.v=n;let t=0;document.querySelectorAll('#rubric .crit').forEach(c=>t+=+(c.dataset.v||0));rubScore.textContent=t+' / 15'};p.appendChild(b)})});
+
+// audience questions
+const qa=["What was the hardest part of your journey so far?","Could you tell us a bit more about the moment that shaped you?","If you could go back, what would you do differently?","Who has been your most important role model, and why?","What do you hope to be doing in five years?","What advice would you give to someone starting your course?","How has learning English changed your plans?","What's one thing people often get wrong about your field?"];
+let qaPool=[];const qaCard=document.getElementById('qaCard'),qaLeft=document.getElementById('qaLeft');
+document.getElementById('qaBtn').onclick=()=>{if(!qaPool.length)qaPool=shuffle([...qa]);qaCard.textContent=qaPool.pop();qaLeft.textContent=qaPool.length+' left'};
+})();
+</script>
+</body></html>
