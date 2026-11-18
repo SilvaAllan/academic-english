@@ -1,0 +1,166 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body>
+<title>Review: Lessons 1–3</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a single study sheet; Sofía's magazine pages are the shared context, tasks follow it */
+:root{--paper:#F4F6F9;--card:#FFFFFF;--ink:#16203A;--muted:#566079;--line:#D9DFE9;--hl:#F6CB45;--hl-soft:#FCEFC0;--teal:#1E7568;--teal-soft:#DCEFEB;--wrong:#B93C26;--wrong-soft:#F8E1DB;
+--display:"Young Serif",Georgia,serif;--body:"Figtree",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#0F1420;--card:#171E2E;--ink:#E7EBF4;--muted:#9BA4BA;--line:#2A3349;--hl:#E9BC36;--hl-soft:#3A3218;--teal:#58B9A9;--teal-soft:#16302C;--wrong:#E6765F;--wrong-soft:#3A1F1A;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0F1420;--card:#171E2E;--ink:#E7EBF4;--muted:#9BA4BA;--line:#2A3349;--hl:#E9BC36;--hl-soft:#3A3218;--teal:#58B9A9;--teal-soft:#16302C;--wrong:#E6765F;--wrong-soft:#3A1F1A;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:780px;margin:0 auto;padding-inline:16px;padding-block:32px 64px;display:flex;flex-direction:column;gap:22px}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(30px,5vw,42px)} h2{font-size:22px}
+p{margin:0}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin:0 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.post{border-left:4px solid var(--hl)}
+.post .by{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.item{display:flex;flex-direction:column;gap:6px;padding-top:10px;border-top:1px solid var(--line)}
+.item .wrongq{font-style:italic;color:var(--muted)}
+.n{font-family:var(--mono);font-size:12px;color:var(--muted);margin-right:6px}
+input[type=text],textarea{width:100%;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--paper);color:var(--ink)}
+input.ok{border-color:var(--teal);background:var(--teal-soft)} input.no{border-color:var(--wrong);background:var(--wrong-soft)}
+.fb{font-size:14px;min-height:1.2em}.fb.ok{color:var(--teal)}.fb.no{color:var(--wrong)}
+.btn{font:inherit;cursor:pointer;border:1px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;padding:8px 18px;font-weight:600;font-size:15px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.build{min-height:42px;border:1px dashed var(--line);border-radius:8px;padding:6px;display:flex;flex-wrap:wrap;gap:6px;background:var(--paper)}
+.tiles{display:flex;flex-wrap:wrap;gap:6px}
+.tile{font:inherit;font-size:15px;cursor:pointer;border:1px solid var(--ink);background:var(--card);color:var(--ink);border-radius:6px;padding:3px 10px}
+.tile.used{visibility:hidden}
+.score{font-family:var(--mono);font-size:14px;color:var(--muted)}
+.checklist{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.checklist label{display:flex;gap:10px;cursor:pointer}
+.checklist input{margin-top:5px;width:18px;height:18px;accent-color:var(--teal)}
+.profile{line-height:2.1}
+select{font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;padding:2px 6px;background:var(--paper);color:var(--ink);max-width:100%}
+select.ok{border-color:var(--teal);background:var(--teal-soft)} select.no{border-color:var(--wrong);background:var(--wrong-soft)}
+select:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.tip{background:var(--hl-soft);border:1px solid var(--hl);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+.aaa{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
+.aaa div{background:var(--card);border-radius:8px;padding:10px 12px}
+.aaa b{font-family:var(--display);font-size:20px;font-weight:400;display:block}
+.btn:focus-visible,.tile:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.lit{line-height:2.1}
+.tt{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.tt div{background:var(--card);border-radius:8px;padding:10px 12px}
+.tt b{font-family:var(--display);font-size:18px;font-weight:400;display:block}
+.model{font-size:14px;color:var(--teal);display:none}.show-models .model{display:block}
+.task{font-size:13px;font-family:var(--mono);color:var(--teal)}
+details.reveal{border:1px solid var(--line);border-radius:10px;padding:8px 14px;margin:0 0 12px;background:var(--paper)}
+details.reveal summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--teal)}
+details.reveal .body p{margin:8px 0 2px;font-size:15px;line-height:1.7}
+ol.prompts{padding-left:1.3em;font-size:17px}ol.prompts li{margin-bottom:8px}
+.item small{color:var(--muted)}
+</style>
+<div class="wrap">
+<header>
+  <p class="eyebrow">Review · Module 1 · Lessons 1–3 · about 30 minutes</p>
+  <h1>Grace's Scholarship Interview</h1>
+</header>
+
+<section class="card post">
+  <p class="by">The situation</p>
+  <p><b>Grace Mwangi</b> is from Kenya. She has applied for a master's scholarship in public health, and her interview is next week. You are going to help her prepare: check her interview questions, her personal statement and her mentor's feedback. Then it's your turn to answer the interview questions.</p>
+  <p style="font-size:13px;color:var(--muted);margin:0">Grace and the people in her story are fictional.</p>
+</section>
+
+<section class="card" id="partA">
+  <p class="eyebrow">Part 1 · Questions (Lesson 1)</p>
+  <h2>Grace wrote down questions for the interview. Each one has a mistake. Correct it.</h2>
+  <details class="reveal"><summary>Quick reminder</summary><div class="body">
+    <p><b>Word order:</b> question word + auxiliary + subject + verb: <i>Where <b>did you</b> grow up?</i><br>
+    <b>Subject questions:</b> no do / did: <i>Who <b>told</b> you?</i><br>
+    <b>Prepositions</b> stay at the end: <i>What does it focus <b>on</b>?</i><br>
+    <b>Polite questions</b> use statement word order: <i>Could you tell me where the office <b>is</b>?</i></p>
+  </div></details>
+  <div class="item" data-ok="where did you do your undergraduate degree|where did you take your undergraduate degree"><p><span class="n">1</span><span class="wrongq">Where you did your undergraduate degree?</span></p><input type="text" aria-label="Question 1"><span class="fb"></span><span class="model">Where did you do your undergraduate degree?</span></div>
+  <div class="item" data-ok="who inspired you to apply"><p><span class="n">2</span><span class="wrongq">Who did inspire you to apply?</span> <small>(Grace wants to know the person.)</small></p><input type="text" aria-label="Question 2"><span class="fb"></span><span class="model">Who inspired you to apply?</span></div>
+  <div class="item" data-ok="what does your research focus on|what does the research focus on"><p><span class="n">3</span><span class="wrongq">What does your research focus?</span></p><input type="text" aria-label="Question 3"><span class="fb"></span><span class="model">What does your research focus on?</span></div>
+  <div class="item" data-ok="could you tell me when the deadline is"><p><span class="n">4</span><span class="wrongq">Could you tell me when is the deadline?</span></p><input type="text" aria-label="Question 4"><span class="fb"></span><span class="model">Could you tell me when the deadline is?</span></div>
+  <div class="item" data-ok="how long have you been interested in public health"><p><span class="n">5</span><span class="wrongq">How long you have been interested in public health?</span></p><input type="text" aria-label="Question 5"><span class="fb"></span><span class="model">How long have you been interested in public health?</span></div>
+  <div class="item" data-ok="can you tell me more about the funding|could you tell me more about the funding"><p><span class="n">6</span><span class="wrongq">Do you can tell me more about the funding?</span></p><input type="text" aria-label="Question 6"><span class="fb"></span><span class="model">Could you tell me more about the funding?</span></div>
+  <div class="row"><button class="btn" data-check-items>Check my answers</button><button class="btn ghost" data-models>Show model answers</button><span class="score" data-items-score></span></div>
+</section>
+
+<section class="card" id="partB">
+  <p class="eyebrow">Part 2 · Past simple or present perfect? (Lesson 2)</p>
+  <h2>The first paragraph of Grace's personal statement. Choose the right form.</h2>
+  <details class="reveal"><summary>Quick reminder</summary><div class="body">
+    <p><b>Past simple:</b> finished time or one specific study: <i>in 2016, two years ago, after I graduated · Otieno (2021) found…</i><br>
+    <b>Present perfect:</b> up to now or the research field in general: <i>since then, to date, ever · Research has shown…</i></p>
+  </div></details>
+  <div class="lit sel">
+    I <select data-ans="grew up" data-opts="grew up|have grown up"></select> in Nakuru, a city in the Rift Valley. In 2016, I <select data-ans="started" data-opts="started|have started"></select> a degree in biology, and after I graduated, I <select data-ans="worked" data-opts="worked|have worked"></select> as a lab assistant for two years. In 2020, I <select data-ans="made" data-opts="made|have made"></select> the transition to community health. Since then, I <select data-ans="have gained" data-opts="have gained|gained"></select> a lot of experience in vaccination programmes, and to date, I <select data-ans="have contributed" data-opts="have contributed|contributed"></select> to three local studies. Last year, I <select data-ans="failed" data-opts="failed|have failed"></select> the writing part of an English exam, which was a real setback, but I passed it six months later.
+    <br>Research <select data-ans="has shown" data-opts="has shown|showed"></select> that trust in health workers is essential for vaccination. However, few studies <select data-ans="have examined" data-opts="have examined|examined"></select> rural communities in East Africa. In a 2021 study, Otieno and colleagues <select data-ans="interviewed" data-opts="interviewed|have interviewed"></select> 40 families in one district.
+  </div>
+  <div class="row"><button class="btn" data-sel-check>Check</button><span class="score" data-sel-score></span></div>
+  <p style="font-size:13px;color:var(--muted)">The Otieno study is fictional.</p>
+</section>
+
+<section class="card" id="partC">
+  <p class="eyebrow">Part 3 · Make it stronger (Lesson 3)</p>
+  <h2>Grace wants to emphasise the key ideas in her statement. Rewrite each sentence with a cleft, starting with the words given.</h2>
+  <details class="reveal"><summary>Quick reminder</summary><div class="body">
+    <p><i><b>It was</b> my teacher <b>who</b> changed my mind.</i> (never drop <i>It</i>)<br>
+    <i><b>What</b> I need <b>is</b> more time.</i> (no extra <i>it</i>)<br>
+    <i><b>It was not until</b> 2015 <b>that</b> I understood.</i><br>
+    <i><b>It is</b> X, <b>rather than</b> Y, <b>that</b>…</i> (to correct a belief)</p>
+  </div></details>
+  <div class="item" data-ok="it was my grandmother who inspired me to work in health|it was my grandmother that inspired me to work in health"><p><span class="n">1</span><span class="wrongq">My grandmother inspired me to work in health.</span> → It was…</p><input type="text" aria-label="Sentence 1"><span class="fb"></span><span class="model">It was my grandmother who inspired me to work in health.</span></div>
+  <div class="item" data-ok="what i need is more research experience|what i need now is more research experience"><p><span class="n">2</span><span class="wrongq">I need more research experience.</span> → What…</p><input type="text" aria-label="Sentence 2"><span class="fb"></span><span class="model">What I need is more research experience.</span></div>
+  <div class="item" data-ok="it was not until 2020 that i understood the value of community work|it wasn't until 2020 that i understood the value of community work"><p><span class="n">3</span><span class="wrongq">I didn't understand the value of community work until 2020.</span> → It was not until…</p><input type="text" aria-label="Sentence 3"><span class="fb"></span><span class="model">It was not until 2020 that I understood the value of community work.</span></div>
+  <div class="item" data-ok="it is trust rather than money that makes families accept vaccines|it's trust rather than money that makes families accept vaccines|it is trust not money that makes families accept vaccines|it's trust not money that makes families accept vaccines"><p><span class="n">4</span><span class="wrongq">Trust, not money, makes families accept vaccines.</span> → It is trust, rather than…</p><input type="text" aria-label="Sentence 4"><span class="fb"></span><span class="model">It is trust, rather than money, that makes families accept vaccines.</span></div>
+  <div class="row"><button class="btn" data-check-items>Check my answers</button><button class="btn ghost" data-models>Show model answers</button><span class="score" data-items-score></span></div>
+</section>
+
+<section class="card" id="partV">
+  <p class="eyebrow">Part 4 · Vocabulary (Lessons 1–3)</p>
+  <h2>Grace's mentor read her statement and sent feedback. Complete the email.</h2>
+  <div class="profile" id="vprof">
+    Dear Grace, I've read your statement, and it's strong! You explain your academic <select data-gap="background"></select> clearly, and it's easy to see why you were <select data-gap="drawn to"></select> public health. The story about your grandmother shows how your <select data-gap="upbringing"></select> <select data-gap="shaped"></select> you, so keep it. Present the move to community health in 2020 as a <select data-gap="turning point"></select>, and describe the exam result as a <select data-gap="setback"></select> you overcame: it shows <select data-gap="resilience"></select>. Mention the <select data-gap="transferable skills"></select> you developed in the lab, like data management. Finally, say what you <select data-gap="aspire to"></select> do after the master's. In <select data-gap="hindsight"></select>, I think your first paragraph is a little long, so try to cut it. Best wishes, Dr Achieng
+  </div>
+  <div class="row"><button class="btn" id="checkV">Check</button><span class="score" id="scoreV"></span></div>
+  <p style="font-size:13px;color:var(--muted)">Two words in the list are extra.</p>
+</section>
+
+<section class="card">
+  <p class="eyebrow">Part 5 · Speak</p>
+  <h2>Now it's your interview.</h2>
+  <p>Imagine you are applying for a scholarship. Answer each question aloud for about one minute and record yourself. Send the recording to your teacher.</p>
+  <ol class="prompts">
+    <li>Could you tell us a bit about your academic background?</li>
+    <li>What has been the biggest setback in your journey so far, and what did you learn from it?</li>
+    <li>Who or what has had the most profound impact on you?</li>
+  </ol>
+  <ul class="checklist">
+    <li><label><input type="checkbox"><span>I used the past simple for finished events and the present perfect for "up to now".</span></label></li>
+    <li><label><input type="checkbox"><span>I used at least one cleft sentence (It was… who… / What… is…).</span></label></li>
+    <li><label><input type="checkbox"><span>I used at least four expressions from Lessons 1–3.</span></label></li>
+    <li><label><input type="checkbox"><span>At the end, I asked the panel one polite question (Could you tell me…?).</span></label></li>
+  </ul>
+</section>
+</div>
+<script>
+(function(){
+const shuffle=a=>{for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a};
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]/g,' ').replace(/\s+/g,' ').trim();
+document.querySelectorAll('[data-check-items]').forEach(btn=>btn.onclick=()=>{
+  const card=btn.closest('.card'),items=[...card.querySelectorAll('.item')];let r=0;
+  items.forEach(it=>{const inp=it.querySelector('input'),fb=it.querySelector('.fb');const oks=it.dataset.ok.split('|');
+    if(!inp.value.trim()){inp.className='';fb.className='fb';fb.textContent='';return}
+    const ok=oks.includes(norm(inp.value));if(ok)r++;inp.className=ok?'ok':'no';fb.className='fb '+(ok?'ok':'no');
+    fb.textContent=ok?'Correct.':'Not yet. Check the reminder above, or compare with the model answer.';});
+  card.querySelector('[data-items-score]').textContent=`${r} / ${items.length}`;
+});
+document.querySelectorAll('[data-models]').forEach(b=>b.onclick=()=>{const c=b.closest('.card');c.classList.toggle('show-models');b.textContent=c.classList.contains('show-models')?'Hide model answers':'Show model answers'});
+document.querySelectorAll('select[data-opts]').forEach(s=>{s.innerHTML='<option value="">……</option>'+shuffle(s.dataset.opts.split('|')).map(o=>`<option>${o}</option>`).join('');s.setAttribute('aria-label','Choose the form')});
+document.querySelectorAll('[data-sel-check]').forEach(b=>b.onclick=()=>{const p=b.closest('.card'),ss=[...p.querySelectorAll('select[data-ans]')];let r=0;ss.forEach(s=>{const ok=s.value===s.dataset.ans;if(ok)r++;s.className=s.value?(ok?'ok':'no'):''});p.querySelector('[data-sel-score]').textContent=`${r} / ${ss.length}`});
+const vg=[...document.querySelectorAll('#vprof select')];const vo=vg.map(g=>g.dataset.gap).concat(['a role model','pursue']).sort((a,b)=>a.localeCompare(b));
+vg.forEach(g=>{g.innerHTML='<option value="">……</option>'+vo.map(o=>`<option>${o}</option>`).join('');g.setAttribute('aria-label','Gap')});
+document.getElementById('checkV').onclick=()=>{let r=0;vg.forEach(g=>{const ok=g.value===g.dataset.gap;if(ok)r++;g.className=g.value?(ok?'ok':'no'):''});document.getElementById('scoreV').textContent=`${r} / ${vg.length}`};
+})();
+</script>
+</body></html>
